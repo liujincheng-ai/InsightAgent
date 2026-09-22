@@ -1,0 +1,82 @@
+version: week1-v1
+metrics:
+  - id: sales_amount
+    name: 销售额
+    triggers: [销售额, 销售, 营收, 业绩, 下降, 增长, 贡献]
+    definition: 成交后的销售收入，不是销量，也不是目录价金额
+    sql: SUM(fact_sales.sales_amount)
+    unit: CNY
+  - id: sales_quantity
+    name: 销量
+    triggers: [销量, 数量, 件数]
+    definition: 售出产品件数，不得用销售明细行数代替
+    sql: SUM(fact_sales.quantity)
+    unit: 件
+  - id: gross_margin
+    name: 加权毛利率
+    triggers: [毛利率, 毛利]
+    definition: 总毛利除以总销售额；不得平均每行或每组毛利率
+    sql: SUM(fact_sales.gross_profit) / NULLIF(SUM(fact_sales.sales_amount), 0)
+    unit: 百分比；跨期差异用百分点
+  - id: qoq
+    name: 环比
+    triggers: [环比, 上一季度, 上月, 变化]
+    definition: 当前周期与紧邻的上一同长度周期比较
+    sql: (current_value - previous_value) / NULLIF(previous_value, 0)
+    unit: 百分比
+  - id: yoy
+    name: 同比
+    triggers: [同比, 去年同期]
+    definition: 当前周期与上年相同自然周期比较
+    sql: (current_value - prior_year_value) / NULLIF(prior_year_value, 0)
+    unit: 百分比
+  - id: decline_contribution
+    name: 下降贡献率
+    triggers: [下降贡献, 贡献率, 主要渠道, 主要客户]
+    definition: 分项下降金额除以同一查询范围的整体净下降金额；分母不是所有下降项之和
+    sql: component_decline / NULLIF(scope_previous_total - scope_current_total, 0)
+    unit: 百分比；增长项可为负贡献
+  - id: active_dealer
+    name: 活跃经销商
+    triggers: [活跃经销商, 活跃客户]
+    definition: 所选期间内至少存在一笔销售记录且客户渠道为经销商
+    sql: COUNT(DISTINCT customer_id) FILTER (WHERE channel = '经销商')
+    unit: 家
+  - id: weighted_discount
+    name: 销售额加权平均折扣率
+    triggers: [加权平均折扣率, 加权折扣]
+    definition: 每条销售明细的折扣率按该行销售额加权；普通平均折扣需由问题明确指定
+    sql: SUM(sales_amount * discount_rate) / NULLIF(SUM(sales_amount), 0)
+    unit: 百分比
+schema_semantics:
+  - triggers: [区域, 华东, 华南, 华北, 西南, 东北]
+    definition: fact_sales.region_id 表示交易发生区域；dim_customer.region_id 是客户所属区域，经营销售分析默认以前者连接 dim_region。
+  - triggers: [产品, 品类, 刹车系统, 照明系统, 滤清系统, 点火系统, 悬挂系统, 传动系统]
+    definition: 产品名和品类来自 dim_product；fact_sales 必须按 product_id 连接，不能从销售事实表臆测品类。
+  - triggers: [客户, 经销商, 客户等级, 渠道]
+    definition: 客户名称、等级和类型来自 dim_customer；交易渠道以 fact_sales.channel 为准，连接客户维表时必须按 customer_id，避免多对多重复。
+  - triggers: [折扣]
+    definition: discount_rate=0.10 表示九折；销售额已经扣除折扣，不得再次乘以 (1-discount_rate)。
+  - triggers: [2026, Q1, Q2, 季度, 月]
+    definition: 数据范围是 2025-01-01 至 2026-06-30；日期区间使用左闭右开边界，2026Q2 为 [2026-04-01, 2026-07-01)。
+  - triggers: [季度, Q1, Q2, 毛利率, 渠道销售]
+    definition: 可选只读视图 insight_quarterly_sales 已治理季度、交易区域、品类、渠道、销量、销售额和加权毛利率口径；原始表题仍可直接查询事实表。
+  - triggers: [季度客户, 客户销售, 客户贡献]
+    definition: 可选只读视图 insight_quarterly_customer_sales 按季度、交易区域、品类、渠道和客户汇总销售额，避免明细 JOIN 重复。
+ambiguity_rules:
+  - id: unspecified_metric
+    triggers: [表现怎么样, 情况如何, 哪个最好, 哪个最差, 最好, 最差]
+    resolved_by: [销售额, 销量, 毛利率, 折扣, 客户数]
+    question: 请确认要比较销售额、销量、毛利率还是其他指标。
+  - id: unspecified_ranking_period
+    triggers: [最好, 最差]
+    resolved_by: [2025, 2026, Q1, Q2, 一季度, 二季度, 月, 年]
+    question: 请确认排名对应的具体时间范围。
+  - id: unspecified_period
+    triggers: [最近, 当前, 近期]
+    resolved_by: [2025, 2026, Q1, Q2, 一季度, 二季度, 月, 年]
+    question: 请确认具体时间范围和比较基准（同比或环比）。
+  - id: unspecified_region_dimension
+    triggers: [客户区域]
+    resolved_by: [交易区域, 所属区域]
+    question: 请确认“客户区域”指交易发生区域还是客户所属区域。

@@ -1,0 +1,65 @@
+{
+  "dataset_version": "day2-v1",
+  "knowledge_base": "汽车配件企业制度库",
+  "baseline_model": "deepseek-v4-flash",
+  "embedding": "BAAI/bge-small-zh-v1.5",
+  "vector_store": "ChromaDB",
+  "retrieval": {
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 5
+  },
+  "conversation_policy": {
+    "questions_1_to_3_are_sequential": true,
+    "question_4_is_a_citation_follow_up": true,
+    "score_first_answer_only": true,
+    "pro_results_may_replace_flash_baseline": false
+  },
+  "cases": [
+    {
+      "id": "rag-01",
+      "question": "A 级经销商连续销售下降时应采取什么措施？",
+      "gold_document": "经销商分级与考核管理制度.md",
+      "gold_section": "4.2 A级经销商连续下降处置",
+      "expected_facts": [
+        "触发专项预警",
+        "5个工作日内提交整改计划",
+        "10个工作日内完成联合拜访",
+        "设置30日整改观察期",
+        "观察期未改善时复核等级和资源支持"
+      ]
+    },
+    {
+      "id": "rag-02",
+      "question": "核心客户出现流失风险时由谁负责？",
+      "gold_document": "重点客户流失预警办法.md",
+      "gold_section": "3.3 责任分工",
+      "expected_facts": [
+        "客户经理为第一责任人",
+        "区域销售经理负责协调资源和复核方案",
+        "客户运营部负责预警监控和闭环督办"
+      ]
+    },
+    {
+      "id": "rag-03",
+      "question": "折扣超过标准时需要什么审批？",
+      "gold_document": "汽车配件价格与折扣管理办法.md",
+      "gold_section": "4.2 超标准折扣审批",
+      "expected_facts": [
+        "超过8%且不超过12%由区域销售经理和财务经理审批",
+        "超过12%且不超过15%由销售总监和财务总监审批",
+        "超过15%还需总经理批准",
+        "不得拆单规避审批"
+      ]
+    },
+    {
+      "id": "rag-04",
+      "question": "以上三个答案分别来自哪份制度、哪个章节？",
+      "gold_sources": [
+        {"document": "经销商分级与考核管理制度.md", "section": "4.2 A级经销商连续下降处置"},
+        {"document": "重点客户流失预警办法.md", "section": "3.3 责任分工"},
+        {"document": "汽车配件价格与折扣管理办法.md", "section": "4.2 超标准折扣审批"}
+      ]
+    }
+  ]
+}

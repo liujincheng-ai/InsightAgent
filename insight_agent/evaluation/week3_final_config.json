@@ -1,0 +1,22 @@
+{
+  "dataset_version": "1.0.2",
+  "dataset_sha256": "a2f56ba2c08187fc5d2e12867a259316463ffa817d0396b1a8a284f287824bd4f",
+  "retriever": "vector",
+  "embedding_model": "BAAI/bge-small-zh-v1.5",
+  "chunk_size": 512,
+  "chunk_overlap": 50,
+  "top_k": 5,
+  "query_strategy": "decompose",
+  "model": "deepseek-v4-pro",
+  "temperature": 0.0,
+  "split": "all",
+  "final_run_policy": "Run exactly once and preserve the result without retrying failures.",
+  "acceptance_thresholds": {
+    "document_hit_at_5": 0.9,
+    "mrr": 0.8,
+    "answer_fact_accuracy": 0.9,
+    "citation_precision": 0.9,
+    "no_answer_accuracy": 1.0,
+    "fabricated_citation_count": 0
+  }
+}

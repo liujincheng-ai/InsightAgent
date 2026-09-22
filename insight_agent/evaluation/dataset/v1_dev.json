@@ -1,0 +1,150 @@
+{
+  "dataset_version": "insight-agent-v1-2026-09-08",
+  "dataset_status": "frozen-before-model-run",
+  "split": "dev",
+  "database": "insight_agent",
+  "knowledge_base": "汽车配件企业制度库",
+  "synthetic_data_notice": "全部经营数据与制度均为确定性合成演示数据。",
+  "policy": {
+    "fresh_conversation_per_case": true,
+    "preserve_raw_trajectory": true,
+    "do_not_modify_gold_after_failure": true,
+    "manual_review_requires_reason": true
+  },
+  "cases": [
+    {
+      "id": "v1-dev-sql-01", "type": "text_to_sql",
+      "question": "2026 年第二季度哪个区域销售额环比下降最多？请给出区域和环比变化率。",
+      "expected_facts": [{"name": "region", "value": "华东"}, {"name": "qoq_pct", "kind": "numeric", "value": -3.17, "accepted_values": [-0.0317], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "WITH q AS (SELECT r.region_name, SUM(s.sales_amount) FILTER (WHERE s.sale_date >= DATE '2026-04-01' AND s.sale_date < DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date >= DATE '2026-01-01' AND s.sale_date < DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id GROUP BY r.region_name) SELECT region_name, ROUND((q2-q1)/NULLIF(q1,0)*100,2) qoq_pct FROM q ORDER BY qoq_pct LIMIT 1;"
+    },
+    {
+      "id": "v1-dev-sql-02", "type": "text_to_sql",
+      "question": "华东区域 2026 Q2 销售额是多少？环比和同比分别是多少？",
+      "expected_facts": [{"name": "sales", "kind": "numeric", "value": 15228822.09, "tolerance": 0.02}, {"name": "qoq_pct", "kind": "numeric", "value": -3.17, "accepted_values": [-0.0317], "tolerance": 0.02}, {"name": "yoy_pct", "kind": "numeric", "value": 1.85, "accepted_values": [0.0185], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "SELECT SUM(sales_amount) FILTER (WHERE sale_date>=DATE '2026-04-01' AND sale_date<DATE '2026-07-01') q2_sales FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id WHERE r.region_name='华东';"
+    },
+    {
+      "id": "v1-dev-sql-03", "type": "text_to_sql",
+      "question": "华东 2026 Q2 哪个汽车配件品类销售额环比下降最多？下降比例是多少？",
+      "expected_facts": [{"name": "category", "value": "刹车系统"}, {"name": "qoq_pct", "kind": "numeric", "value": -32.68, "accepted_values": [-0.3268], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "WITH q AS (SELECT p.category, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-04-01' AND s.sale_date<DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-01-01' AND s.sale_date<DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id WHERE r.region_name='华东' GROUP BY p.category) SELECT category, ROUND((q2-q1)/NULLIF(q1,0)*100,2) FROM q ORDER BY 2 LIMIT 1;"
+    },
+    {
+      "id": "v1-dev-sql-04", "type": "text_to_sql",
+      "question": "比较华东与华南刹车系统 2026 Q2 的销售额环比变化率。",
+      "expected_facts": [{"name": "east", "value": "华东"}, {"name": "east_qoq", "kind": "numeric", "value": -32.68, "accepted_values": [-0.3268], "tolerance": 0.02}, {"name": "south", "value": "华南"}, {"name": "south_qoq", "kind": "numeric", "value": 9.51, "accepted_values": [0.0951], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "SELECT r.region_name, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-04-01' AND s.sale_date<DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-01-01' AND s.sale_date<DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id WHERE r.region_name IN ('华东','华南') AND p.category='刹车系统' GROUP BY r.region_name;"
+    },
+    {
+      "id": "v1-dev-sql-05", "type": "text_to_sql",
+      "question": "华东刹车系统的加权毛利率从 2026 Q1 到 Q2 变化了多少个百分点？",
+      "expected_facts": [{"name": "q1_margin_pct", "kind": "numeric", "value": 28.91, "accepted_values": [0.2891], "tolerance": 0.02}, {"name": "q2_margin_pct", "kind": "numeric", "value": 26.13, "accepted_values": [0.2613], "tolerance": 0.02}, {"name": "change_pp", "kind": "numeric", "value": -2.78, "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "SELECT SUM(gross_profit) FILTER (WHERE sale_date>=DATE '2026-04-01' AND sale_date<DATE '2026-07-01')/NULLIF(SUM(sales_amount) FILTER (WHERE sale_date>=DATE '2026-04-01' AND sale_date<DATE '2026-07-01'),0) q2_margin FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id WHERE r.region_name='华东' AND p.category='刹车系统';"
+    },
+    {
+      "id": "v1-dev-rag-01", "type": "rag",
+      "question": "A 级经销商连续销售下降后，公司要求采取哪些处置措施？请注明制度和章节。",
+      "expected_facts": [{"name": "warning", "value": "专项预警"}, {"name": "plan", "value": "整改计划"}, {"name": "visit", "value": "联合客户拜访"}, {"name": "observation", "value": "30 天", "accepted_values": ["30日"]}],
+      "expected_documents": ["经销商分级与考核管理制度"], "expected_sections": ["4.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-rag-02", "type": "rag",
+      "question": "核心客户出现流失预警时由哪些岗位负责，各自职责是什么？请引用制度 3.3 节。",
+      "expected_facts": [{"name": "owner", "value": "客户经理"}, {"name": "manager", "value": "区域销售经理"}, {"name": "operations", "value": "客户运营部"}],
+      "expected_documents": ["重点客户流失预警办法"], "expected_sections": ["3.3"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-rag-03", "type": "rag",
+      "question": "订单折扣超过 8%、12% 和 15% 时分别需要谁审批？请注明制度 4.2 节，并说明禁止事项。",
+      "expected_facts": [{"name": "eight", "value": "区域销售经理"}, {"name": "finance_manager", "value": "财务经理"}, {"name": "director", "value": "销售总监"}, {"name": "gm", "value": "总经理"}, {"name": "prohibition", "value": "拆分订单"}],
+      "expected_documents": ["汽车配件价格与折扣管理办法"], "expected_sections": ["4.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-rag-04", "type": "rag",
+      "question": "公司 2026 年经营目标规定毛利率应该怎样计算，何种下降需要联合检查？请注明章节。",
+      "expected_facts": [{"name": "weighted_margin", "value": "总毛利除以总销售额"}, {"name": "no_average", "value": "禁止直接平均"}, {"name": "threshold", "value": "2 个百分点", "accepted_values": ["2个百分点"]}],
+      "expected_documents": ["2026 年度经营目标"], "expected_sections": ["2.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-sales-01", "type": "sales_diagnosis",
+      "question": "用销售诊断工具分析华东刹车系统 2026Q2 的销售变化和主要下降渠道。",
+      "expected_facts": [{"name": "sales", "kind": "numeric", "value": 1087378.79, "tolerance": 0.02}, {"name": "qoq", "kind": "numeric", "value": -0.3268, "accepted_values": [-32.68], "tolerance": 0.001}, {"name": "channel", "value": "经销商"}, {"name": "channel_contribution", "kind": "numeric", "value": 0.7489, "accepted_values": [74.89], "tolerance": 0.001}],
+      "expected_tool": "sales_diagnosis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-sales-02", "type": "sales_diagnosis",
+      "question": "调用销售诊断工具，分析华南刹车系统 2026Q2 的销售额及环比变化。",
+      "expected_facts": [{"name": "region", "value": "华南"}, {"name": "sales", "kind": "numeric", "value": 1761223.10, "tolerance": 0.02}, {"name": "qoq", "kind": "numeric", "value": 0.0951, "accepted_values": [9.51], "tolerance": 0.001}],
+      "expected_tool": "sales_diagnosis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-customer-01", "type": "customer_loss",
+      "question": "用客户流失分析工具找出华东刹车系统 2026Q2 风险客户，给出风险数量和前三名。",
+      "expected_facts": [{"name": "count", "kind": "numeric", "value": 7, "tolerance": 0}, {"name": "first", "value": "华东核心经销商三号"}, {"name": "second", "value": "华东核心经销商一号"}, {"name": "third", "value": "华东核心经销商二号"}],
+      "expected_tool": "customer_loss_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-customer-02", "type": "customer_loss",
+      "question": "调用客户流失分析工具，说明华东刹车系统中核心经销商三号在 2026Q2 的下降金额、下降率及对净下降的贡献。",
+      "expected_facts": [{"name": "customer", "value": "华东核心经销商三号"}, {"name": "decline_amount", "kind": "numeric", "value": 158586.31, "tolerance": 0.02}, {"name": "decline_rate", "kind": "numeric", "value": 0.912348, "accepted_values": [91.2348], "tolerance": 0.001}, {"name": "contribution", "kind": "numeric", "value": 0.300441, "accepted_values": [30.0441], "tolerance": 0.001}],
+      "expected_tool": "customer_loss_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-dealer-01", "type": "dealer_health",
+      "question": "用经销商健康度工具分析华东 2026Q2 风险最高的经销商、得分、风险等级和扣分项。",
+      "expected_facts": [{"name": "dealer", "value": "华东核心经销商一号"}, {"name": "score", "kind": "numeric", "value": 62, "tolerance": 0}, {"name": "level", "value": "medium"}, {"name": "sales_deduction", "kind": "numeric", "value": 28, "tolerance": 0}, {"name": "discount_deduction", "kind": "numeric", "value": 6, "tolerance": 0}],
+      "expected_tool": "dealer_health_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-dealer-02", "type": "dealer_health",
+      "question": "调用经销商健康度工具，给出华东 2026Q2 经销商总数以及 medium、low 风险数量。",
+      "expected_facts": [{"name": "dealer_count", "kind": "numeric", "value": 10, "tolerance": 0}, {"name": "medium_count", "kind": "numeric", "value": 5, "tolerance": 0}, {"name": "low_count", "kind": "numeric", "value": 5, "tolerance": 0}],
+      "expected_tool": "dealer_health_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-dev-integrated-01", "type": "integrated",
+      "question": "分析华东刹车系统 2026Q2 下滑，必须先调用销售诊断工具，再引用《经销商分级与考核管理制度》4.2 节提出整改建议。",
+      "expected_facts": [{"name": "sales", "kind": "numeric", "value": 1087378.79, "tolerance": 0.02}, {"name": "qoq", "kind": "numeric", "value": -0.3268, "accepted_values": [-32.68], "tolerance": 0.001}, {"name": "channel", "value": "经销商"}, {"name": "plan", "value": "整改计划"}],
+      "expected_tool": "sales_diagnosis_tool", "expected_documents": ["经销商分级与考核管理制度"], "expected_sections": ["4.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-integrated-02", "type": "integrated",
+      "question": "分析华东刹车系统 2026Q2 的客户流失风险，先调用客户流失分析工具，再引用《重点客户流失预警办法》3.3 节说明责任分工。",
+      "expected_facts": [{"name": "count", "kind": "numeric", "value": 7, "tolerance": 0}, {"name": "top", "value": "华东核心经销商三号"}, {"name": "owner", "value": "客户经理"}],
+      "expected_tool": "customer_loss_analysis_tool", "expected_documents": ["重点客户流失预警办法"], "expected_sections": ["3.3"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-integrated-03", "type": "integrated",
+      "question": "评估华东 2026Q2 经销商健康度，先调用经销商健康度工具，再引用《汽车配件价格与折扣管理办法》3.1 节解释折扣扣分依据。",
+      "expected_facts": [{"name": "dealer", "value": "华东核心经销商一号"}, {"name": "score", "kind": "numeric", "value": 62, "tolerance": 0}, {"name": "standard", "value": "8%", "accepted_values": ["8 %"]}],
+      "expected_tool": "dealer_health_analysis_tool", "expected_documents": ["汽车配件价格与折扣管理办法"], "expected_sections": ["3.1"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-integrated-04", "type": "integrated",
+      "question": "调用销售诊断工具判断华东刹车系统 2026Q2 是否达到专项诊断条件，并引用《2026 年度经营目标》2.1 节说明阈值。",
+      "expected_facts": [{"name": "qoq", "kind": "numeric", "value": -32.68, "accepted_values": [-0.3268], "tolerance": 0.02}, {"name": "qoq_threshold", "value": "10%"}, {"name": "yoy_threshold", "value": "15%"}],
+      "expected_tool": "sales_diagnosis_tool", "expected_documents": ["2026 年度经营目标"], "expected_sections": ["2.1"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-dev-integrated-05", "type": "integrated",
+      "question": "先用销售诊断工具分析华东刹车系统 2026Q2 下滑，再引用《库存与补货管理规范》4.1 节说明为什么不能仅凭销售额归因于需求下降。",
+      "expected_facts": [{"name": "qoq", "kind": "numeric", "value": -32.68, "accepted_values": [-0.3268], "tolerance": 0.02}, {"name": "inventory", "value": "缺货"}, {"name": "boundary", "value": "不能"}],
+      "expected_tool": "sales_diagnosis_tool", "expected_documents": ["库存与补货管理规范"], "expected_sections": ["4.1"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "dataset_version": "insight-agent-week5-long-context-v1.0.0",
+  "dataset_status": "frozen-before-baseline-run",
+  "created_date": "2026-09-19",
+  "database": "insight_agent",
+  "knowledge_base": "汽车配件企业制度库",
+  "synthetic_data_notice": "全部经营数据与制度均为确定性合成演示资产。",
+  "split_policy": {"dev": 12, "test": 6, "challenge": 2},
+  "cases": [
+    {
+      "id": "w5-dev-integrated-01",
+      "split": "dev",
+      "category": "domain_rag_report",
+      "mode": "integrated",
+      "turns": ["依次调用销售诊断、客户流失和经销商健康度工具，分析华东刹车系统 2026Q2 下滑；再结合《经销商分级与考核管理制度》3.2、4.2 节和《重点客户流失预警办法》3.2 节，生成带引用的 HTML 经营分析报告。必须保留销售额、环比、渠道贡献、风险客户数和最高风险经销商。"],
+      "expected_tools": ["sales_diagnosis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "sales", "kind": "numeric", "accepted_values": [1087378.79], "tolerance": 0.02},
+        {"name": "qoq", "kind": "numeric", "accepted_values": [-32.6794, -32.68], "tolerance": 0.02},
+        {"name": "channel_contribution", "kind": "numeric", "accepted_values": [74.8917, 74.89], "tolerance": 0.02},
+        {"name": "risk_customers", "kind": "numeric", "accepted_values": [7], "tolerance": 0},
+        {"name": "dealer", "accepted_values": ["华东核心经销商一号"]}
+      ],
+      "expected_documents": ["经销商分级与考核管理制度", "重点客户流失预警办法"],
+      "expected_sections": ["3.2", "4.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-integrated-02",
+      "split": "dev",
+      "category": "customer_risk",
+      "mode": "integrated",
+      "turns": ["先调用客户流失分析工具分析华东刹车系统 2026Q2，再调用销售诊断工具核对整体下降和渠道贡献；结合《重点客户流失预警办法》2.2、3.1、4.1 节形成带引用 HTML 报告，并说明为什么只能称为风险预警。"],
+      "expected_tools": ["customer_loss_analysis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "risk_count", "kind": "numeric", "accepted_values": [7], "tolerance": 0},
+        {"name": "top_customer", "accepted_values": ["华东核心经销商三号"]},
+        {"name": "warning_boundary", "accepted_values": ["预警", "不能把预警分数直接当作流失事实"]}
+      ],
+      "expected_documents": ["重点客户流失预警办法"],
+      "expected_sections": ["2.2", "3.1", "4.1"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-integrated-03",
+      "split": "dev",
+      "category": "dealer_discount",
+      "mode": "integrated",
+      "turns": ["调用经销商健康度工具和销售诊断工具分析华东 2026Q2 经销商风险，再检索《汽车配件价格与折扣管理办法》4.2、5.2 节，生成带引用 HTML 报告，保留最高风险经销商、健康分、折扣变化和毛利变化。"],
+      "expected_tools": ["dealer_health_analysis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "dealer", "accepted_values": ["华东核心经销商一号"]},
+        {"name": "health_score", "kind": "numeric", "accepted_values": [62], "tolerance": 0},
+        {"name": "discount_change", "kind": "numeric", "accepted_values": [4.1782, 4.18], "tolerance": 0.03},
+        {"name": "margin_change", "kind": "numeric", "accepted_values": [-2.7839, -2.78], "tolerance": 0.03}
+      ],
+      "expected_documents": ["汽车配件价格与折扣管理办法"],
+      "expected_sections": ["4.2", "5.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-integrated-04",
+      "split": "dev",
+      "category": "quality_boundary",
+      "mode": "integrated",
+      "turns": ["先用销售诊断工具分析华东刹车系统 2026Q2，再用客户流失分析工具列出重点客户风险；检索《产品质量与售后处理规范》第 5 节和《库存与补货管理规范》4.1 节，生成 HTML 报告，明确质量与库存只能作为待验证因素。"],
+      "expected_tools": ["sales_diagnosis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "sales", "kind": "numeric", "accepted_values": [1087378.79], "tolerance": 0.02},
+        {"name": "customer", "accepted_values": ["华东核心经销商三号"]},
+        {"name": "causal_boundary", "accepted_values": ["待验证因素", "不能仅凭时间相关性"]}
+      ],
+      "expected_documents": ["产品质量与售后处理规范", "库存与补货管理规范"],
+      "expected_sections": ["5", "4.1"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-rag-01",
+      "split": "dev",
+      "category": "cross_document_rag",
+      "mode": "rag",
+      "turns": ["综合《经销商分级与考核管理制度》4.2 节和《重点客户流失预警办法》3.1、4.1 节，列出 A 级经销商下降后的预警、整改、拜访、客户核验和升级时限；每项结论必须标注文档与章节。"],
+      "expected_tools": ["semantic_search"],
+      "expected_facts": [
+        {"name": "dealer_warning", "accepted_values": ["1个工作日", "1 个工作日"]},
+        {"name": "plan", "accepted_values": ["5个工作日", "5 个工作日"]},
+        {"name": "visit", "accepted_values": ["10个工作日", "10 个工作日"]},
+        {"name": "customer_check", "accepted_values": ["2个工作日", "2 个工作日"]}
+      ],
+      "expected_documents": ["经销商分级与考核管理制度", "重点客户流失预警办法"],
+      "expected_sections": ["4.2", "3.1", "4.1"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-rag-02",
+      "split": "dev",
+      "category": "cross_document_rag",
+      "mode": "rag",
+      "turns": ["重点安全类产品同时面临 7 天内缺货和一级质量风险时，应采取哪些补货、停发和上报动作？请联合引用《库存与补货管理规范》3.2 节与《产品质量与售后处理规范》2.1 节。"],
+      "expected_tools": ["semantic_search"],
+      "expected_facts": [
+        {"name": "shortage", "accepted_values": ["7天", "7 天"]},
+        {"name": "approver", "accepted_values": ["供应链经理"]},
+        {"name": "stop", "accepted_values": ["停止相关批次继续出库"]},
+        {"name": "report", "accepted_values": ["2小时", "2 小时"]}
+      ],
+      "expected_documents": ["库存与补货管理规范", "产品质量与售后处理规范"],
+      "expected_sections": ["3.2", "2.1"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-sql-01",
+      "split": "dev",
+      "category": "multi_metric_sql",
+      "mode": "database",
+      "turns": ["用只读 SQL 同时比较华东刹车系统 2026Q2、2026Q1 和 2025Q2 的销售额，计算环比与同比，并说明统计时间采用左闭右开区间。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "sales", "kind": "numeric", "accepted_values": [1087378.79], "tolerance": 0.02},
+        {"name": "qoq", "kind": "numeric", "accepted_values": [-32.6794, -32.68], "tolerance": 0.02},
+        {"name": "yoy", "kind": "numeric", "accepted_values": [-29.2719, -29.27], "tolerance": 0.02}
+      ],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-sql-02",
+      "split": "dev",
+      "category": "multi_metric_sql",
+      "mode": "database",
+      "turns": ["用只读 SQL 找出华东刹车系统 2026Q2 相比 2026Q1 下降金额最大的 5 个客户，保留客户等级、渠道、两期销售额和下降金额，并总结前三名。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "first", "accepted_values": ["华东核心经销商三号"]},
+        {"name": "first_decline", "kind": "numeric", "accepted_values": [158586.31], "tolerance": 0.02},
+        {"name": "second", "accepted_values": ["华东核心经销商一号"]},
+        {"name": "third", "accepted_values": ["华东核心经销商二号"]}
+      ],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-large-01",
+      "split": "dev",
+      "category": "large_sql_result",
+      "mode": "database",
+      "turns": ["用只读 SQL 按客户列出华东 2026Q2 全部客户的销售额、成本、毛利、订单行数和活跃采购天数，按销售额降序；回答中只总结前 10 名，但完整查询结果必须可追溯。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "region", "accepted_values": ["华东"]},
+        {"name": "period", "accepted_values": ["2026Q2", "2026 年第二季度"]}
+      ],
+      "track_persistence": true,
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-large-02",
+      "split": "dev",
+      "category": "large_sql_result",
+      "mode": "database",
+      "turns": ["用只读 SQL 列出 2026Q2 五个区域、六个品类和五类渠道的销售额、销量、毛利额及加权毛利率明细，回答只展示销售额最低的 10 个组合，完整结果需要可追溯。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "period", "accepted_values": ["2026Q2", "2026 年第二季度"]},
+        {"name": "weighted_margin", "accepted_values": ["加权毛利率", "毛利率"]}
+      ],
+      "track_persistence": true,
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-followup-01",
+      "split": "dev",
+      "category": "multi_turn_followup",
+      "mode": "integrated",
+      "turns": [
+        "调用销售诊断工具分析华东刹车系统 2026Q2，并引用《2026年度经营目标》2.1、2.2 节说明是否触发专项诊断和毛利检查。",
+        "基于刚才已经取得的数据和引用，不要改变统计口径，补充经销商渠道下降贡献与毛利率下降百分点，并明确哪些结论是事实、哪些只是建议。"
+      ],
+      "expected_tools": ["sales_diagnosis_tool", "semantic_search"],
+      "expected_facts": [
+        {"name": "qoq", "kind": "numeric", "accepted_values": [-32.6794, -32.68], "tolerance": 0.02},
+        {"name": "contribution", "kind": "numeric", "accepted_values": [74.8917, 74.89], "tolerance": 0.02},
+        {"name": "margin", "kind": "numeric", "accepted_values": [-2.7839, -2.78], "tolerance": 0.03}
+      ],
+      "expected_documents": ["2026年度经营目标"],
+      "expected_sections": ["2.1", "2.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-dev-no-data-01",
+      "split": "dev",
+      "category": "no_data_boundary",
+      "mode": "database",
+      "turns": ["查询华东刹车系统 2027Q1 的销售额、环比和同比。如果数据库没有该时间范围的数据，必须明确说明无数据，不得根据 2026 年结果推测。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [],
+      "expected_completion": "no_data"
+    },
+    {
+      "id": "w5-test-integrated-05",
+      "split": "test",
+      "category": "domain_rag_report",
+      "mode": "integrated",
+      "turns": ["调用销售诊断工具对比华东与华南刹车系统 2026Q2 同比趋势，再引用《2026年度经营目标》2.3、4.2 节，生成带引用 HTML 报告，说明为什么华东下降不能解释为全国性品类下降。"],
+      "expected_tools": ["sales_diagnosis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "east_yoy", "kind": "numeric", "accepted_values": [-29.2719, -29.27], "tolerance": 0.02},
+        {"name": "south_yoy", "kind": "numeric", "accepted_values": [17.0038, 17.0], "tolerance": 0.03},
+        {"name": "boundary", "accepted_values": ["不是全国性", "不能解释为全国性"]}
+      ],
+      "expected_documents": ["2026年度经营目标"],
+      "expected_sections": ["2.3", "4.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-test-integrated-06",
+      "split": "test",
+      "category": "customer_dealer_report",
+      "mode": "integrated",
+      "turns": ["先调用客户流失分析工具识别华东刹车系统 2026Q2 风险客户，再调用经销商健康度工具确定干预优先级；结合《经销商分级与考核管理制度》4.2 节生成 HTML 行动清单。"],
+      "expected_tools": ["customer_loss_analysis_tool", "semantic_search", "html_interpreter"],
+      "expected_facts": [
+        {"name": "customer", "accepted_values": ["华东核心经销商三号"]},
+        {"name": "dealer", "accepted_values": ["华东核心经销商一号"]},
+        {"name": "visit", "accepted_values": ["10个工作日", "10 个工作日"]},
+        {"name": "observation", "accepted_values": ["30日", "30 日"]}
+      ],
+      "expected_documents": ["经销商分级与考核管理制度"],
+      "expected_sections": ["4.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-test-rag-03",
+      "split": "test",
+      "category": "cross_document_rag",
+      "mode": "rag",
+      "turns": ["客户流失风险需要申请超过 12% 且不超过 15% 的折扣时，谁负责风险处置、谁负责折扣审批、不得采用什么规避方式？联合引用《重点客户流失预警办法》3.2、3.3 节和《汽车配件价格与折扣管理办法》4.2 节。"],
+      "expected_tools": ["semantic_search"],
+      "expected_facts": [
+        {"name": "owner", "accepted_values": ["客户经理"]},
+        {"name": "coordination", "accepted_values": ["区域销售经理"]},
+        {"name": "approval", "accepted_values": ["销售总监和财务总监共同审批"]},
+        {"name": "prohibition", "accepted_values": ["拆分订单"]}
+      ],
+      "expected_documents": ["重点客户流失预警办法", "汽车配件价格与折扣管理办法"],
+      "expected_sections": ["3.2", "3.3", "4.2"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-test-sql-03",
+      "split": "test",
+      "category": "multi_metric_sql",
+      "mode": "database",
+      "turns": ["用只读 SQL 计算华东刹车系统 2026Q2 与 2026Q1 的订单行平均折扣率和加权毛利率变化，并分别说明两个指标的聚合口径。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "discount", "kind": "numeric", "accepted_values": [4.1782, 4.18], "tolerance": 0.03},
+        {"name": "margin", "kind": "numeric", "accepted_values": [-2.7839, -2.78], "tolerance": 0.03},
+        {"name": "weighted", "accepted_values": ["总毛利除以总销售额", "加权毛利率"]}
+      ],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-test-large-03",
+      "split": "test",
+      "category": "large_sql_result",
+      "mode": "database",
+      "turns": ["用只读 SQL 按销售日期和产品列出华东刹车系统 2026Q2 的每日产品销售额、销量、折扣率和毛利率。回答中仅总结下降最明显的 10 个日期产品组合，但完整查询结果必须可追溯。"],
+      "expected_tools": ["sql_query"],
+      "expected_facts": [
+        {"name": "region", "accepted_values": ["华东"]},
+        {"name": "category", "accepted_values": ["刹车系统"]},
+        {"name": "period", "accepted_values": ["2026Q2", "2026 年第二季度"]}
+      ],
+      "track_persistence": true,
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-test-followup-02",
+      "split": "test",
+      "category": "multi_turn_followup",
+      "mode": "integrated",
+      "turns": [
+        "调用客户流失分析工具分析华东刹车系统 2026Q2，并引用《重点客户流失预警办法》说明处置责任。",
+        "沿用上一轮的客户和季度口径，补充前三名 A 级客户的下降金额，并按制度给出核验、方案和升级时限，不要重新定义流失。"
+      ],
+      "expected_tools": ["customer_loss_analysis_tool", "semantic_search"],
+      "expected_facts": [
+        {"name": "first", "kind": "numeric", "accepted_values": [158586.31], "tolerance": 0.02},
+        {"name": "second", "kind": "numeric", "accepted_values": [131145.36], "tolerance": 0.02},
+        {"name": "third", "kind": "numeric", "accepted_values": [64321.46], "tolerance": 0.02},
+        {"name": "owner", "accepted_values": ["客户经理"]}
+      ],
+      "expected_documents": ["重点客户流失预警办法"],
+      "expected_sections": ["3.1", "3.2", "4.1"],
+      "expected_completion": "success"
+    },
+    {
+      "id": "w5-challenge-ambiguous-01",
+      "split": "challenge",
+      "category": "clarification_boundary",
+      "mode": "database",
+      "turns": ["哪个区域的经营表现最好？请直接给结论。"],
+      "expected_tools": [],
+      "expected_facts": [],
+      "expected_completion": "clarification"
+    },
+    {
+      "id": "w5-challenge-partial-01",
+      "split": "challenge",
+      "category": "evidence_boundary",
+      "mode": "integrated",
+      "turns": ["分析华东刹车系统 2026Q2 下滑，并判断是否由库存短缺造成。先取得销售数据，再检索库存制度；如果没有实际库存或缺货数据，只能返回已完成的销售事实和未完成的库存归因，不能编造。"],
+      "expected_tools": ["sales_diagnosis_tool", "semantic_search"],
+      "expected_facts": [
+        {"name": "sales", "kind": "numeric", "accepted_values": [1087378.79], "tolerance": 0.02},
+        {"name": "insufficient", "accepted_values": ["无法确认库存原因", "没有库存数据", "缺少实际库存"]}
+      ],
+      "expected_documents": ["库存与补货管理规范"],
+      "expected_sections": ["4.1", "6"],
+      "expected_completion": "success"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+[project]
+name = "dbgpt-client"
+version = "0.8.2"
+description = "Add your description here"
+authors = [
+    { name = "csunny", email = "cfqcsunny@gmail.com" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">= 3.10"
+
+dependencies = [
+    "dbgpt[client,cli]",
+    "dbgpt_ext",
+    "shortuuid",
+    # 2.0.29 not support duckdb now
+    "SQLAlchemy>=2.0.25, <2.0.29",
+    # for cache
+    "msgpack",
+    # for AWEL operator serialization
+    "cloudpickle",
+]
+
+[project.urls]
+Homepage = "https://github.com/liujincheng-ai/InsightAgent"
+Documentation = "https://liujincheng-ai.github.io/InsightAgent/docs/overview"
+Repository = "https://github.com/liujincheng-ai/InsightAgent.git"
+Issues = "https://github.com/liujincheng-ai/InsightAgent/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dbgpt_client"]
+exclude = [
+    "src/dbgpt_client/**/tests",
+    "src/dbgpt_client/**/tests/*",
+    "src/dbgpt_client/tests",
+    "src/dbgpt_client/tests/*",
+    "src/dbgpt_client/**/examples",
+    "src/dbgpt_client/**/examples/*"
+]

@@ -1,0 +1,83 @@
+{
+  "dataset_version": "insight-agent-v1-2026-09-08",
+  "dataset_status": "frozen-before-model-run",
+  "split": "test",
+  "database": "insight_agent",
+  "knowledge_base": "汽车配件企业制度库",
+  "synthetic_data_notice": "全部经营数据与制度均为确定性合成演示数据。",
+  "policy": {
+    "fresh_conversation_per_case": true,
+    "preserve_raw_trajectory": true,
+    "do_not_modify_gold_after_failure": true,
+    "manual_review_requires_reason": true
+  },
+  "cases": [
+    {
+      "id": "v1-test-sql-06", "type": "text_to_sql",
+      "question": "华东刹车系统 2026Q2 环比下降金额最大的产品是什么，下降金额是多少？",
+      "expected_facts": [{"name": "product", "value": "恒驰制动片"}, {"name": "decline_amount", "kind": "numeric", "value": 113086.58, "accepted_values": [-113086.58], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "WITH q AS (SELECT p.product_name, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-04-01' AND s.sale_date<DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-01-01' AND s.sale_date<DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id WHERE r.region_name='华东' AND p.category='刹车系统' GROUP BY p.product_name) SELECT product_name, q1-q2 decline_amount FROM q ORDER BY decline_amount DESC LIMIT 1;"
+    },
+    {
+      "id": "v1-test-sql-07", "type": "text_to_sql",
+      "question": "华东刹车系统 2026Q2 销售下降主要来自哪个渠道？给出该渠道下降金额和贡献率。",
+      "expected_facts": [{"name": "channel", "value": "经销商"}, {"name": "decline", "kind": "numeric", "value": 395312.25, "accepted_values": [-395312.25], "tolerance": 0.02}, {"name": "contribution", "kind": "numeric", "value": 74.89, "accepted_values": [0.7489], "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "WITH q AS (SELECT s.channel, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-04-01' AND s.sale_date<DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-01-01' AND s.sale_date<DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id WHERE r.region_name='华东' AND p.category='刹车系统' GROUP BY s.channel) SELECT channel,q1-q2 FROM q ORDER BY q1-q2 DESC LIMIT 1;"
+    },
+    {
+      "id": "v1-test-sql-08", "type": "text_to_sql",
+      "question": "华东刹车系统 2026Q2 相比 Q1 下降金额最大的 A 级客户是谁？下降了多少？",
+      "expected_facts": [{"name": "customer", "value": "华东核心经销商三号"}, {"name": "decline", "kind": "numeric", "value": 158586.31, "tolerance": 0.02}],
+      "numeric_tolerance": 0.01, "grading": "deterministic",
+      "gold_sql": "WITH q AS (SELECT c.customer_name, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-04-01' AND s.sale_date<DATE '2026-07-01') q2, SUM(s.sales_amount) FILTER (WHERE s.sale_date>=DATE '2026-01-01' AND s.sale_date<DATE '2026-04-01') q1 FROM fact_sales s JOIN dim_region r ON r.region_id=s.region_id JOIN dim_product p ON p.product_id=s.product_id JOIN dim_customer c ON c.customer_id=s.customer_id WHERE r.region_name='华东' AND p.category='刹车系统' AND c.customer_level='A' GROUP BY c.customer_name) SELECT customer_name,q1-q2 FROM q ORDER BY q1-q2 DESC LIMIT 1;"
+    },
+    {
+      "id": "v1-test-rag-05", "type": "rag",
+      "question": "重点安全类产品预计 7 天内缺货时怎样申请紧急补货？请给出审批人并注明制度章节。",
+      "expected_facts": [{"name": "days", "value": "7 天", "accepted_values": ["7天"]}, {"name": "impact", "value": "客户影响"}, {"name": "cost", "value": "运输成本"}, {"name": "approver", "value": "供应链经理"}],
+      "expected_documents": ["库存与补货管理规范"], "expected_sections": ["3.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-test-rag-06", "type": "rag",
+      "question": "涉及人身安全风险或批量失效的一级质量问题应如何处理？请引用《产品质量与售后处理规范》2.1 节。",
+      "expected_facts": [{"name": "stop", "value": "停止相关批次继续出库"}, {"name": "time", "value": "2 小时", "accepted_values": ["2小时"]}, {"name": "owner", "value": "质量负责人"}],
+      "expected_documents": ["产品质量与售后处理规范"], "expected_sections": ["2.1"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-test-sales-03", "type": "sales_diagnosis",
+      "question": "调用销售诊断工具，分析华东刹车系统 2026Q1 的销售额和环比变化。",
+      "expected_facts": [{"name": "sales", "kind": "numeric", "value": 1615224.29, "tolerance": 0.02}, {"name": "qoq", "kind": "numeric", "value": 0.0917, "accepted_values": [9.17], "tolerance": 0.001}],
+      "expected_tool": "sales_diagnosis_tool", "numeric_tolerance": 0.01, "grading": "deterministic"
+    },
+    {
+      "id": "v1-test-customer-03", "type": "customer_loss",
+      "question": "使用客户流失分析工具检查华东刹车系统 2026Q2，并说明为什么结果只能叫风险预警而不是确认流失。",
+      "expected_facts": [{"name": "count", "kind": "numeric", "value": 7, "tolerance": 0}, {"name": "warning", "value": "风险"}, {"name": "not_confirmed", "value": "不", "accepted_values": ["不能"]}],
+      "expected_tool": "customer_loss_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-test-dealer-03", "type": "dealer_health",
+      "question": "使用经销商健康度工具检查华东 2026Q2，并说明最高风险经销商的四项得分和评分版本边界。",
+      "expected_facts": [{"name": "dealer", "value": "华东核心经销商一号"}, {"name": "score", "kind": "numeric", "value": 62, "tolerance": 0}, {"name": "version", "value": "insight-agent-v1-demo"}, {"name": "boundary", "value": "不是", "accepted_values": ["演示规则"]}],
+      "expected_tool": "dealer_health_analysis_tool", "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-test-integrated-06", "type": "integrated",
+      "question": "先调用客户流失分析工具评估华东刹车系统 2026Q2 风险，再引用《产品质量与售后处理规范》第 5 节说明质量问题只能作为待验证因素。",
+      "expected_facts": [{"name": "count", "kind": "numeric", "value": 7, "tolerance": 0}, {"name": "quality", "value": "待验证因素"}, {"name": "causality", "value": "不能"}],
+      "expected_tool": "customer_loss_analysis_tool", "expected_documents": ["产品质量与售后处理规范"], "expected_sections": ["5"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    },
+    {
+      "id": "v1-test-integrated-07", "type": "integrated",
+      "question": "先调用经销商健康度工具分析华东 2026Q2，再引用《汽车配件价格与折扣管理办法》4.2 节说明超标准折扣审批要求。",
+      "expected_facts": [{"name": "dealer", "value": "华东核心经销商一号"}, {"name": "score", "kind": "numeric", "value": 62, "tolerance": 0}, {"name": "approval", "value": "共同审批"}, {"name": "prohibition", "value": "拆分订单"}],
+      "expected_tool": "dealer_health_analysis_tool", "expected_documents": ["汽车配件价格与折扣管理办法"], "expected_sections": ["4.2"],
+      "numeric_tolerance": 0.01, "grading": "deterministic_and_manual"
+    }
+  ]
+}

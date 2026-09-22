@@ -1,0 +1,63 @@
+{
+  "dataset_version": "v1",
+  "scope": {
+    "region": "华东",
+    "category": "刹车系统",
+    "current_quarter": "2026Q2",
+    "baseline_quarter": "2026Q1"
+  },
+  "customer_loss": {
+    "decline_threshold": 0.5,
+    "expected_risk_customer_count": 7,
+    "expected_top_customers": [
+      {
+        "customer_name": "华东核心经销商三号",
+        "customer_level": "A",
+        "previous_sales": 173822.25,
+        "current_sales": 15235.94,
+        "decline_amount": 158586.31,
+        "decline_rate": 0.912348,
+        "decline_contribution_rate": 0.300441
+      },
+      {
+        "customer_name": "华东核心经销商一号",
+        "customer_level": "A",
+        "previous_sales": 156841.37,
+        "current_sales": 25696.01,
+        "decline_amount": 131145.36,
+        "decline_rate": 0.836166,
+        "decline_contribution_rate": 0.248454
+      },
+      {
+        "customer_name": "华东核心经销商二号",
+        "customer_level": "A",
+        "previous_sales": 90182.13,
+        "current_sales": 25860.67,
+        "decline_amount": 64321.46,
+        "decline_rate": 0.71324,
+        "decline_contribution_rate": 0.121857
+      }
+    ]
+  },
+  "dealer_health": {
+    "expected_dealer_count": 10,
+    "expected_highest_risk_dealer": "华东核心经销商一号",
+    "expected_highest_risk_raw_metrics": {
+      "customer_level": "A",
+      "current_sales": 1198160.42,
+      "previous_sales": 1513597.98,
+      "prior_year_sales": 1384646.92,
+      "active_days": 79,
+      "previous_active_days": 79,
+      "average_discount_rate": 0.088482,
+      "gross_margin": 0.279152,
+      "previous_gross_margin": 0.27998
+    },
+    "expected_highest_risk_score": 62,
+    "expected_highest_risk_level": "medium"
+  },
+  "notes": [
+    "客户风险结果是停止采购或大幅下滑预警，不是已确认流失事实。",
+    "健康度评分分段是 InsightAgent V1 演示规则，不是行业统一标准。"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "acceptance": {
+    "threshold": "at_least_26_of_30_and_all_four_day5_known_failures_fixed",
+    "accepted": true
+  },
+  "benchmark": {
+    "run_id": "day6-pro-all-issues-fixed-20260909-run3",
+    "model": "deepseek-v4-pro",
+    "total": 30,
+    "passed": 30,
+    "pass_rate": 1.0,
+    "day5_known_failures_fixed": 4,
+    "day5_known_failures_total": 4,
+    "sql_execution_success_rate": 1.0,
+    "answer_fact_accuracy": 1.0,
+    "expected_tool_call_rate": 1.0,
+    "rag_document_hit_rate": 1.0,
+    "citation_section_accuracy": 1.0,
+    "integrated_task_pass_rate": 1.0,
+    "average_latency_seconds": 16.398,
+    "remaining_failures": []
+  },
+  "fault_benchmark": {
+    "total_cases": 9,
+    "classification_accuracy": 1.0,
+    "safe_observation_rate": 1.0,
+    "baseline_final_execution_success_rate": 0.0,
+    "retryable_final_execution_success_rate": 1.0,
+    "average_attempts": 1.7778
+  },
+  "stability": {
+    "run_id": "day6-main-demo-fixed-20260909-run1",
+    "runs": 5,
+    "strict_all_criteria_passed": 5,
+    "pass_rate": 1.0,
+    "acceptance_threshold": 4,
+    "accepted": true,
+    "all_nine_criteria_pass_counts": 5,
+    "average_latency_seconds": 68.04,
+    "before_fix_strict_all_criteria_passed": 0
+  },
+  "quality": {
+    "pytest_passed": 139,
+    "pytest_failed": 0,
+    "pytest_warnings": 3,
+    "project_asyncio_warning_fixed": true,
+    "remaining_warning_scope": "upstream_starlette_and_pydantic_deprecations",
+    "ruff": "passed"
+  },
+  "cost_note": "The service did not return auditable token usage; no cost was estimated."
+}

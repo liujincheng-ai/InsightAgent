@@ -1,0 +1,474 @@
+{
+  "version.label": {
+    "message": "dev",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Quick Start": {
+    "message": "快速开始",
+    "description": "The label for category Quick Start in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Core Concepts": {
+    "message": "核心概念",
+    "description": "The label for category Core Concepts in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Installation": {
+    "message": "安装部署",
+    "description": "The label for category Installation in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.doc.Quick Install": {
+    "message": "快速安装",
+    "description": "The label for the doc item Quick Install in sidebar docsSidebar, linking to the doc installation/quick-install"
+  },
+  "sidebar.docsSidebar.doc.CLI Install": {
+    "message": "CLI 安装",
+    "description": "The label for the doc item CLI Install in sidebar docsSidebar, linking to the doc getting-started/cli-quickstart"
+  },
+  "sidebar.docsSidebar.doc.Source Install": {
+    "message": "源码安装",
+    "description": "The label for the doc item Source Install in sidebar docsSidebar, linking to the doc getting-started/deploy/source-code"
+  },
+  "sidebar.docsSidebar.category.Docker Deployment": {
+    "message": "Docker 部署",
+    "description": "The label for category Docker Deployment in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.doc.Docker": {
+    "message": "Docker",
+    "description": "The label for the doc item Docker in sidebar docsSidebar, linking to the doc installation/docker"
+  },
+  "sidebar.docsSidebar.doc.Docker Compose": {
+    "message": "Docker Compose",
+    "description": "The label for the doc item Docker Compose in sidebar docsSidebar, linking to the doc installation/docker_compose"
+  },
+  "sidebar.docsSidebar.doc.Docker Build Guide": {
+    "message": "Docker 镜像构建",
+    "description": "The label for the doc item Docker Build Guide in sidebar docsSidebar, linking to the doc installation/docker-build-guide"
+  },
+  "sidebar.docsSidebar.category.Model Service Deployment": {
+    "message": "模型服务部署",
+    "description": "The label for category Model Service Deployment in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Other Integrations": {
+    "message": "其他集成",
+    "description": "The label for category Other Integrations in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Datasource Integrations": {
+    "message": "数据源集成",
+    "description": "The label for category Datasource Integrations in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.RAG Integrations": {
+    "message": "RAG 集成",
+    "description": "The label for category RAG Integrations in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Skills": {
+    "message": "技能",
+    "description": "The label for category Skills in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Built-in Skills": {
+    "message": "内置技能",
+    "description": "The label for category Built-in Skills in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Datasources": {
+    "message": "数据源",
+    "description": "The label for category Datasources in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Application": {
+    "message": "应用管理",
+    "description": "The label for category Application in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.App Guides": {
+    "message": "应用指南",
+    "description": "The label for category App Guides in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.AWEL": {
+    "message": "AWEL",
+    "description": "The label for category AWEL in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Cookbook": {
+    "message": "实战示例",
+    "description": "The label for category Cookbook in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Cookbook.link.generated-index.description": {
+    "message": "适用于常见场景的 AWEL 工作流示例。",
+    "description": "The generated-index page description for category Cookbook in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Tutorial": {
+    "message": "教程",
+    "description": "The label for category Tutorial in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Tutorial.link.generated-index.description": {
+    "message": "从基础到高级模式的分步 AWEL 教程。",
+    "description": "The generated-index page description for category Tutorial in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.1. Getting Started": {
+    "message": "1. 入门",
+    "description": "The label for category 1. Getting Started in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.2. Basic Syntax": {
+    "message": "2. 基础语法",
+    "description": "The label for category 2. Basic Syntax in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.3. Network Programming": {
+    "message": "3. 网络编程",
+    "description": "The label for category 3. Network Programming in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.4. Advanced Guide": {
+    "message": "4. 高级指南",
+    "description": "The label for category 4. Advanced Guide in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.5. Templates": {
+    "message": "5. 模板",
+    "description": "The label for category 5. Templates in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Knowledge": {
+    "message": "知识库",
+    "description": "The label for category Knowledge in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Tools": {
+    "message": "工具",
+    "description": "The label for category Tools in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Built-in tools": {
+    "message": "内置工具",
+    "description": "The label for category Built-in tools in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Models": {
+    "message": "模型",
+    "description": "The label for category Models in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Inference Backends": {
+    "message": "推理后端",
+    "description": "The label for category Inference Backends in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Fine Tuning": {
+    "message": "微调",
+    "description": "The label for category Fine Tuning in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Reference": {
+    "message": "参考",
+    "description": "The label for category Reference in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.API Reference": {
+    "message": "API 参考",
+    "description": "The label for category API Reference in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Config Reference": {
+    "message": "配置参考",
+    "description": "The label for category Config Reference in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Config Reference.link.generated-index.title": {
+    "message": "配置参考",
+    "description": "The generated-index page title for category Config Reference in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Config Reference.link.generated-index.description": {
+    "message": "系统全部可配置参数及其详细说明",
+    "description": "The generated-index page description for category Config Reference in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.app": {
+    "message": "app",
+    "description": "The label for category app in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.datasource": {
+    "message": "datasource",
+    "description": "The label for category datasource in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.embedding": {
+    "message": "embedding",
+    "description": "The label for category embedding in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.graph_store": {
+    "message": "graph_store",
+    "description": "The label for category graph_store in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.llm": {
+    "message": "llm",
+    "description": "The label for category llm in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.memory": {
+    "message": "memory",
+    "description": "The label for category memory in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.reranker": {
+    "message": "reranker",
+    "description": "The label for category reranker in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.serve": {
+    "message": "serve",
+    "description": "The label for category serve in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.service": {
+    "message": "service",
+    "description": "The label for category service in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.utils": {
+    "message": "utils",
+    "description": "The label for category utils in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.vector_store": {
+    "message": "vector_store",
+    "description": "The label for category vector_store in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.CLI & Advanced": {
+    "message": "CLI 与高级用法",
+    "description": "The label for category CLI & Advanced in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Help": {
+    "message": "帮助",
+    "description": "The label for category Help in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.FAQ": {
+    "message": "FAQ",
+    "description": "The label for category FAQ in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.ChangeLog": {
+    "message": "更新日志",
+    "description": "The label for category ChangeLog in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Upgrade": {
+    "message": "升级",
+    "description": "The label for category Upgrade in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.doc.Overview": {
+    "message": "概览",
+    "description": "The label for the doc item Overview in sidebar docsSidebar, linking to the doc agents/modules/resource/tools"
+  },
+  "sidebar.docsSidebar.doc.Show Cases": {
+    "message": "案例展示",
+    "description": "The label for the doc item Show Cases in sidebar docsSidebar, linking to the doc use_cases"
+  },
+  "sidebar.docsSidebar.doc.Architecture": {
+    "message": "架构",
+    "description": "The label for the doc item Architecture in sidebar docsSidebar, linking to the doc getting-started/concepts/architecture"
+  },
+  "sidebar.docsSidebar.doc.Agents": {
+    "message": "智能体",
+    "description": "The label for the doc item Agents in sidebar docsSidebar, linking to the doc getting-started/concepts/agents"
+  },
+  "sidebar.docsSidebar.doc.AWEL": {
+    "message": "AWEL",
+    "description": "The label for the doc item AWEL in sidebar docsSidebar, linking to the doc getting-started/concepts/awel"
+  },
+  "sidebar.docsSidebar.doc.RAG": {
+    "message": "RAG",
+    "description": "The label for the doc item RAG in sidebar docsSidebar, linking to the doc getting-started/concepts/rag"
+  },
+  "sidebar.docsSidebar.doc.SMMF": {
+    "message": "SMMF",
+    "description": "The label for the doc item SMMF in sidebar docsSidebar, linking to the doc getting-started/concepts/smmf"
+  },
+  "sidebar.docsSidebar.doc.Data Sources": {
+    "message": "数据源",
+    "description": "The label for the doc item Data Sources in sidebar docsSidebar, linking to the doc getting-started/concepts/data-sources"
+  },
+  "sidebar.docsSidebar.doc.agent-browser": {
+    "message": "agent-browser",
+    "description": "The label for the doc item agent-browser in sidebar docsSidebar, linking to the doc dbgpts/built-in-skills/agent-browser"
+  },
+  "sidebar.docsSidebar.doc.csv-data-analysis": {
+    "message": "csv-data-analysis",
+    "description": "The label for the doc item csv-data-analysis in sidebar docsSidebar, linking to the doc dbgpts/built-in-skills/csv-data-analysis"
+  },
+  "sidebar.docsSidebar.doc.financial-report-analyzer": {
+    "message": "financial-report-analyzer",
+    "description": "The label for the doc item financial-report-analyzer in sidebar docsSidebar, linking to the doc dbgpts/built-in-skills/financial-report-analyzer"
+  },
+  "sidebar.docsSidebar.doc.skill-creator": {
+    "message": "skill-creator",
+    "description": "The label for the doc item skill-creator in sidebar docsSidebar, linking to the doc dbgpts/built-in-skills/skill-creator"
+  },
+  "sidebar.docsSidebar.doc.walmart-sales-analyzer": {
+    "message": "walmart-sales-analyzer",
+    "description": "The label for the doc item walmart-sales-analyzer in sidebar docsSidebar, linking to the doc dbgpts/built-in-skills/walmart-sales-analyzer"
+  },
+  "sidebar.docsSidebar.doc.How to Use Skill": {
+    "message": "如何使用技能",
+    "description": "The label for the doc item How to Use Skill in sidebar docsSidebar, linking to the doc dbgpts/how-to-use-skill"
+  },
+  "sidebar.docsSidebar.doc.Connections Overview": {
+    "message": "连接概览",
+    "description": "The label for the doc item Connections Overview in sidebar docsSidebar, linking to the doc modules/connections"
+  },
+  "sidebar.docsSidebar.doc.Datasources": {
+    "message": "数据源",
+    "description": "The label for the doc item Datasources in sidebar docsSidebar, linking to the doc application/datasources"
+  },
+  "sidebar.docsSidebar.doc.Agent + Database": {
+    "message": "Agent + 数据库",
+    "description": "The label for the doc item Agent + Database in sidebar docsSidebar, linking to the doc agents/introduction/database"
+  },
+  "sidebar.docsSidebar.doc.Chat Data": {
+    "message": "Chat Data",
+    "description": "The label for the doc item Chat Data in sidebar docsSidebar, linking to the doc application/apps/chat_data"
+  },
+  "sidebar.docsSidebar.doc.Chat DB": {
+    "message": "Chat DB",
+    "description": "The label for the doc item Chat DB in sidebar docsSidebar, linking to the doc application/apps/chat_db"
+  },
+  "sidebar.docsSidebar.doc.Chat Excel": {
+    "message": "Chat Excel",
+    "description": "The label for the doc item Chat Excel in sidebar docsSidebar, linking to the doc application/apps/chat_excel"
+  },
+  "sidebar.docsSidebar.doc.Chat Dashboard": {
+    "message": "Chat Dashboard",
+    "description": "The label for the doc item Chat Dashboard in sidebar docsSidebar, linking to the doc application/apps/chat_dashboard"
+  },
+  "sidebar.docsSidebar.doc.What is AWEL?": {
+    "message": "What is AWEL?",
+    "description": "The label for the doc item What is AWEL? in sidebar docsSidebar, linking to the doc awel/awel"
+  },
+  "sidebar.docsSidebar.doc.AWEL in Application": {
+    "message": "应用中的 AWEL",
+    "description": "The label for the doc item AWEL in Application in sidebar docsSidebar, linking to the doc application/awel"
+  },
+  "sidebar.docsSidebar.doc.RAG Overview": {
+    "message": "RAG 概览",
+    "description": "The label for the doc item RAG Overview in sidebar docsSidebar, linking to the doc modules/rag"
+  },
+  "sidebar.docsSidebar.doc.GraphRAG": {
+    "message": "GraphRAG",
+    "description": "The label for the doc item GraphRAG in sidebar docsSidebar, linking to the doc application/graph_rag"
+  },
+  "sidebar.docsSidebar.doc.App Manage": {
+    "message": "应用管理",
+    "description": "The label for the doc item App Manage in sidebar docsSidebar, linking to the doc application/apps/app_manage"
+  },
+  "sidebar.docsSidebar.doc.Chat Knowledge Base": {
+    "message": "知识库对话",
+    "description": "The label for the doc item Chat Knowledge Base in sidebar docsSidebar, linking to the doc application/apps/chat_knowledge"
+  },
+  "sidebar.docsSidebar.doc.Advanced RAG": {
+    "message": "高级 RAG",
+    "description": "The label for the doc item Advanced RAG in sidebar docsSidebar, linking to the doc application/advanced_tutorial/rag"
+  },
+  "sidebar.docsSidebar.doc.Tools Overview": {
+    "message": "工具概览",
+    "description": "The label for the doc item Tools Overview in sidebar docsSidebar, linking to the doc agents/introduction/tools"
+  },
+  "sidebar.docsSidebar.doc.load_skill": {
+    "message": "load_skill",
+    "description": "The label for the doc item load_skill in sidebar docsSidebar, linking to the doc agents/modules/resource/tools/load-skill"
+  },
+  "sidebar.docsSidebar.doc.code_interpreter": {
+    "message": "code_interpreter",
+    "description": "The label for the doc item code_interpreter in sidebar docsSidebar, linking to the doc agents/modules/resource/tools/code-interpreter"
+  },
+  "sidebar.docsSidebar.doc.shell_interpreter": {
+    "message": "shell_interpreter",
+    "description": "The label for the doc item shell_interpreter in sidebar docsSidebar, linking to the doc agents/modules/resource/tools/shell-interpreter"
+  },
+  "sidebar.docsSidebar.doc.sql_query": {
+    "message": "sql_query",
+    "description": "The label for the doc item sql_query in sidebar docsSidebar, linking to the doc agents/modules/resource/tools/sql-query"
+  },
+  "sidebar.docsSidebar.doc.html_interpreter": {
+    "message": "html_interpreter",
+    "description": "The label for the doc item html_interpreter in sidebar docsSidebar, linking to the doc agents/modules/resource/tools/html-interpreter"
+  },
+  "sidebar.docsSidebar.doc.Prompts": {
+    "message": "提示词",
+    "description": "The label for the doc item Prompts in sidebar docsSidebar, linking to the doc application/prompts"
+  },
+  "sidebar.docsSidebar.doc.SMMF Overview": {
+    "message": "SMMF 概览",
+    "description": "The label for the doc item SMMF Overview in sidebar docsSidebar, linking to the doc modules/smmf"
+  },
+  "sidebar.docsSidebar.doc.LLMs": {
+    "message": "LLMs",
+    "description": "The label for the doc item LLMs in sidebar docsSidebar, linking to the doc application/llms"
+  },
+  "sidebar.docsSidebar.doc.Advanced SMMF": {
+    "message": "高级 SMMF",
+    "description": "The label for the doc item Advanced SMMF in sidebar docsSidebar, linking to the doc application/advanced_tutorial/smmf"
+  },
+  "sidebar.docsSidebar.doc.Visual": {
+    "message": "可视化",
+    "description": "The label for the doc item Visual in sidebar docsSidebar, linking to the doc modules/visual"
+  },
+  "sidebar.docsSidebar.doc.Evaluation": {
+    "message": "评测",
+    "description": "The label for the doc item Evaluation in sidebar docsSidebar, linking to the doc modules/eval"
+  },
+  "sidebar.docsSidebar.doc.Benchmark": {
+    "message": "基准测试",
+    "description": "The label for the doc item Benchmark in sidebar docsSidebar, linking to the doc modules/benchmark"
+  },
+  "sidebar.docsSidebar.doc.Use Cases": {
+    "message": "使用案例",
+    "description": "The label for the doc item Use Cases in sidebar docsSidebar, linking to the doc use_cases"
+  },
+  "sidebar.sidebarApplication.category.MCP Connectors": {
+    "message": "MCP 连接器",
+    "description": "The label for category MCP Connectors in sidebar sidebarApplication"
+  },
+  "sidebar.sidebarApplication.doc.MCP Connectors": {
+    "message": "MCP 连接器",
+    "description": "The label for the doc item MCP Connectors in sidebar sidebarApplication, linking to the doc application/mcp_connectors"
+  },
+  "sidebar.sidebarApplication.category.Scheduled Tasks": {
+    "message": "定时任务",
+    "description": "The label for category Scheduled Tasks in sidebar sidebarApplication"
+  },
+  "sidebar.sidebarApplication.doc.Scheduled Tasks": {
+    "message": "定时任务",
+    "description": "The label for the doc item Scheduled Tasks in sidebar sidebarApplication, linking to the doc application/scheduled_tasks"
+  },
+  "sidebar.sidebarApplication.category.App Guides": {
+    "message": "应用指南",
+    "description": "The label for category App Guides in sidebar sidebarApplication"
+  },
+  "sidebar.sidebarApplication.category.Functional Components": {
+    "message": "功能组件",
+    "description": "The label for category Functional Components in sidebar sidebarApplication"
+  },
+  "sidebar.sidebarApplication.doc.App Manage": {
+    "message": "应用管理",
+    "description": "The label for the doc item App Manage in sidebar sidebarApplication, linking to the doc application/apps/app_manage"
+  },
+  "sidebar.sidebarApplication.doc.Chat Knowledge Base": {
+    "message": "知识库对话",
+    "description": "The label for the doc item Chat Knowledge Base in sidebar sidebarApplication, linking to the doc application/apps/chat_knowledge"
+  },
+  "sidebar.sidebarApplication.doc.Chat Data": {
+    "message": "Chat Data",
+    "description": "The label for the doc item Chat Data in sidebar sidebarApplication, linking to the doc application/apps/chat_data"
+  },
+  "sidebar.sidebarApplication.doc.Chat DB": {
+    "message": "Chat DB",
+    "description": "The label for the doc item Chat DB in sidebar sidebarApplication, linking to the doc application/apps/chat_db"
+  },
+  "sidebar.sidebarApplication.doc.Chat Excel": {
+    "message": "Chat Excel",
+    "description": "The label for the doc item Chat Excel in sidebar sidebarApplication, linking to the doc application/apps/chat_excel"
+  },
+  "sidebar.sidebarApplication.doc.Chat Dashboard": {
+    "message": "Chat Dashboard",
+    "description": "The label for the doc item Chat Dashboard in sidebar sidebarApplication, linking to the doc application/apps/chat_dashboard"
+  },
+  "sidebar.sidebarApplication.doc.Prompts": {
+    "message": "提示词",
+    "description": "The label for the doc item Prompts in sidebar sidebarApplication, linking to the doc application/prompts"
+  },
+  "sidebar.sidebarApplication.doc.LLMs": {
+    "message": "模型管理",
+    "description": "The label for the doc item LLMs in sidebar sidebarApplication, linking to the doc application/llms"
+  },
+  "sidebar.sidebarApplication.doc.Use Data App With AWEL": {
+    "message": "使用 AWEL 构建数据应用",
+    "description": "The label for the doc item Use Data App With AWEL in sidebar sidebarApplication, linking to the doc application/awel"
+  },
+  "sidebar.sidebarApplication.doc.Benchmark": {
+    "message": "基准测试",
+    "description": "The label for the doc item Benchmark in sidebar sidebarApplication, linking to the doc modules/benchmark"
+  },
+  "sidebar.docsSidebar.category.Development Guide": {
+    "message": "开发指南",
+    "description": "The label for category Development Guide in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.doc.Use Custom Skills": {
+    "message": "使用自定义技能",
+    "description": "The label for the doc item Use Custom Skills in sidebar docsSidebar, linking to the doc dbgpts/how-to-use-custom-skill"
+  },
+  "sidebar.docsSidebar.doc.Context Management": {
+    "message": "上下文管理",
+    "description": "The label for the doc item Context Management in sidebar docsSidebar, linking to the doc agents/modules/context-management"
+  }
+}

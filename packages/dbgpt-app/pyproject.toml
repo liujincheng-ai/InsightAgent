@@ -1,0 +1,86 @@
+[project]
+name = "dbgpt-app"
+version = "0.8.2"
+description = "Add your description here"
+authors = [
+    { name = "csunny", email = "cfqcsunny@gmail.com" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">= 3.10"
+
+dependencies = [
+    "dbgpt-acc-auto",
+    "dbgpt[client,cli,agent,simple_framework,framework,code,proxy_openai,proxy_tongyi,proxy_zhipuai]",
+    "dbgpt-ext[rag,storage_chromadb]",
+    "dbgpt-serve",
+    "dbgpt-client",
+    "dbgpt-sandbox",
+    "aiofiles",
+    "httpx>=0.24.0",
+    "pyparsing",
+]
+
+[project.urls]
+Homepage = "https://github.com/liujincheng-ai/InsightAgent"
+Documentation = "https://liujincheng-ai.github.io/InsightAgent/docs/overview"
+Repository = "https://github.com/liujincheng-ai/InsightAgent.git"
+Issues = "https://github.com/liujincheng-ai/InsightAgent/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+cache = [
+    "rocksdict",
+]
+observability = [
+    "opentelemetry-api",
+    "opentelemetry-sdk",
+    "opentelemetry-exporter-otlp",
+]
+base = [
+    "dbgpt[client,cli,agent,simple_framework,framework,code]"
+]
+dbgpts = [
+    # For build dbgpts apps, we will be removed in the future.
+    "build",
+    "poetry"
+]
+
+[tool.uv]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dbgpt_app"]
+exclude = [
+    "src/dbgpt_app/**/tests",
+    "src/dbgpt_app/**/tests/*",
+    "src/dbgpt_app/tests",
+    "src/dbgpt_app/tests/*",
+    "src/dbgpt_app/**/examples",
+    "src/dbgpt_app/**/examples/*"
+]
+
+[tool.hatch.build.targets.sdist.force-include]
+# Builtin skills
+"../../skills/csv-data-analysis" = "skills/csv-data-analysis"
+"../../skills/skill-creator" = "skills/skill-creator"
+"../../skills/financial-report-analyzer" = "skills/financial-report-analyzer"
+"../../skills/walmart-sales-analyzer" = "skills/walmart-sales-analyzer"
+"../../skills/agent-browser" = "skills/agent-browser"
+# Builtin example files
+"../../docker/examples/excel/Walmart_Sales.csv" = "examples/excel/Walmart_Sales.csv"
+"../../docker/examples/fin_report/pdf/2020-01-23__浙江海翔药业股份有限公司__002099__海翔药业__2019年__年度报告.pdf" = "examples/fin_report/pdf/2020-01-23__浙江海翔药业股份有限公司__002099__海翔药业__2019年__年度报告.pdf"
+# Pilot workspace template files (source of truth: pilot/)
+"../../pilot/meta_data/alembic.ini" = "pilot_tpl/meta_data/alembic.ini"
+"../../pilot/meta_data/alembic/README" = "pilot_tpl/meta_data/alembic/README"
+"../../pilot/meta_data/alembic/env.py" = "pilot_tpl/meta_data/alembic/env.py"
+"../../pilot/meta_data/alembic/script.py.mako" = "pilot_tpl/meta_data/alembic/script.py.mako"
+"../../pilot/benchmark_meta_data/2025_07_27_public_500_standard_benchmark_question_list.xlsx" = "pilot_tpl/benchmark_meta_data/2025_07_27_public_500_standard_benchmark_question_list.xlsx"
+"../../pilot/examples/Walmart_Sales.db" = "pilot_tpl/examples/Walmart_Sales.db"
+
+[tool.hatch.build.hooks.custom]
+

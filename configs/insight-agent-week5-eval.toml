@@ -1,0 +1,39 @@
+[system]
+language = "${env:DBGPT_LANG:-zh}"
+api_keys = []
+encrypt_key = "${env:DBGPT_ENCRYPT_KEY:-insight_agent_local_dev_only}"
+
+[service.web]
+host = "127.0.0.1"
+port = 5671
+
+[service.web.database]
+type = "sqlite"
+path = "pilot/meta_data/dbgpt.db"
+
+[service.model.worker]
+host = "127.0.0.1"
+
+[rag.storage]
+
+[rag.storage.vector]
+type = "chroma"
+persist_path = "pilot/data"
+
+[models]
+
+[[models.llms]]
+name = "deepseek-v4-flash"
+provider = "proxy/deepseek"
+thinking_enabled = false
+api_key = "${env:DEEPSEEK_API_KEY}"
+
+[[models.llms]]
+name = "deepseek-v4-pro"
+provider = "proxy/deepseek"
+thinking_enabled = false
+api_key = "${env:DEEPSEEK_API_KEY}"
+
+[[models.embeddings]]
+name = "BAAI/bge-small-zh-v1.5"
+provider = "hf"

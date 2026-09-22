@@ -1,0 +1,88 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, data_privacy policy, and support
+# documentation.
+
+name: Upload Python Package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (e.g. 0.7.0rc0)'
+        required: true
+        type: string
+      publish_to_testpypi:
+        description: 'Publish to TestPyPI'
+        required: false
+        type: boolean
+        default: false
+      publish_to_pypi:
+        description: 'Publish to PyPI'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: python
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+          
+      - name: Update version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            export DB_GPT_VERSION=${{ inputs.version }} make package
+            echo "Updating version in all files to $DB_GPT_VERSION"
+            cd scripts
+            uv run update_version_all.py $DB_GPT_VERSION -y
+            cd ..
+          else
+            echo "Prepping package for release"
+          fi
+      
+      - name: Install the project
+        run: uv sync --all-packages --dev
+              
+      - name: Build package using Make
+        run: |
+          make build  
+          ls dist/
+      
+      - name: Upload wheel as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-packages
+          path: dist/*
+          retention-days: 7
+      
+      - name: Publish package to TestPyPI
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_to_testpypi == true }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
+      
+      - name: Publish package distributions to PyPI
+        if: ${{ github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.publish_to_pypi == true) }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

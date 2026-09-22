@@ -1,0 +1,108 @@
+[project]
+name = "dbgpt-ext"
+version = "0.8.2"
+description = "Add your description here"
+authors = [
+    { name = "csunny", email = "cfqcsunny@gmail.com" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">= 3.10"
+
+dependencies = [
+    "dbgpt>=0.7.0",
+    "pymysql",
+]
+
+[project.urls]
+Homepage = "https://github.com/liujincheng-ai/InsightAgent"
+Documentation = "https://liujincheng-ai.github.io/InsightAgent/docs/overview"
+Repository = "https://github.com/liujincheng-ai/InsightAgent.git"
+Issues = "https://github.com/liujincheng-ai/InsightAgent/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+rag = [
+    "spacy==3.7",
+    "markdown",
+    "bs4",
+    "python-pptx",
+    "python-docx",
+    "olefile",
+    "pypdf",
+    "pdfplumber",
+]
+graph_rag = [
+    # For visualization in code
+    "networkx",
+    "dbgpt-tugraph-plugins>=0.1.1",
+    "neo4j"
+]
+datasource_mysql = [
+    # mysqlclient 2.2.x have pkg-config issue on 3.10+
+    # If you want to install psycopg2 and mysqlclient in ubuntu, you should install
+    # libpq-dev and libmysqlclient-dev first.
+    "mysqlclient==2.1.0",
+]
+datasource_oracle = [
+    "oracledb==3.1.0",  # use python-oracledb，new driver for Oracle
+]
+
+datasource_postgres = [
+    # "psycopg2", # In production, you can install psycopg2 instead of psycopg2-binary
+    "psycopg2-binary",
+]
+datasource_clickhouse = [
+    "clickhouse-connect",
+]
+datasource_spark = ["pyspark"]
+datasource_mssql = ["pymssql"]
+datasource_hive = [
+    "pyhive",
+    "thrift",
+    "thrift_sasl",
+]
+datasource_vertica = ["vertica-python"]
+datasource_maxcompute = ["pyodps"]
+datasource_duckdb = [
+    "duckdb",
+    "duckdb-engine==0.9.1",
+]
+# datasource_doris = ["pydoris>=1.0.2,<2.0.0"]
+storage_milvus = ["pymilvus"]
+storage_weaviate = ["weaviate-client"]
+storage_chromadb = [
+    "onnxruntime>=1.14.1,<=1.18.1",
+    "chromadb>=0.4.22"
+    ]
+storage_elasticsearch = ["elasticsearch"]
+storage_qdrant = ["qdrant-client>=1.17.1; python_version < '3.13'"]
+storage_obvector = ["pyobvector"]
+storage_valkey = ["valkey-glide>=2.3.0"]
+
+file_oss = [
+    "oss2" # Aliyun OSS
+]
+file_s3 = [
+    "boto3"
+]
+
+[tool.uv]
+managed = true
+dev-dependencies = [
+    "pytest>=8.3.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dbgpt_ext"]
+exclude = [
+    "src/dbgpt_ext/**/tests",
+    "src/dbgpt_ext/**/tests/*",
+    "src/dbgpt_ext/tests",
+    "src/dbgpt_ext/tests/*",
+    "src/dbgpt_ext/**/examples",
+    "src/dbgpt_ext/**/examples/*"
+]

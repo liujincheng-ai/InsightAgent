@@ -1,0 +1,65 @@
+# Japanese translations for PACKAGE package.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-19 00:06+0800\n"
+"PO-Revision-Date: 2025-02-23 13:40+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:57
+msgid "Database host, e.g., localhost"
+msgstr "データベースホスト、例: localhost"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:58
+msgid "Database port, e.g., 3306"
+msgstr "データベースポート、例: 3306"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:59
+msgid "Database user to connect"
+msgstr "接続に使用するデータベースユーザー"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:60
+msgid "Database name"
+msgstr "データベース名"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:61
+msgid "Database driver, e.g., mysql+pymysql"
+msgstr "データベースドライバー、例: mysql+pymysql"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:66
+msgid ""
+"Database password, you can write your password directly, of course, you can "
+"also use environment variables, such as ${env:DBGPT_DB_PASSWORD}"
+msgstr ""
+"データベースパスワードです。パスワードを直接入力することもできますし、環境変数を使用することもできます。例: ${env:DBGPT_DB_PASSWORD}"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:75
+msgid "Connection pool size, default 5"
+msgstr "接続プールのサイズ、デフォルトは 5"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:78
+msgid "Max overflow connections, default 10"
+msgstr "最大オーバーフロー接続数、デフォルトは 10"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:81
+msgid "Connection pool timeout, default 30"
+msgstr "接続プールのタイムアウト時間、デフォルトは 30 秒"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:84
+msgid "Connection pool recycle, default 3600"
+msgstr "接続プールのリサイクル時間、デフォルトは 3600 秒"
+
+#: ../packages/dbgpt-core/src/dbgpt/datasource/rdbms/base.py:87
+msgid "Connection pool pre ping, default True"
+msgstr "コネクションプールの事前ピング、デフォルトは True"

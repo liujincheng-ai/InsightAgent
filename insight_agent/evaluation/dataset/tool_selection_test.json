@@ -1,0 +1,268 @@
+{
+  "dataset_name": "InsightAgent Week 2 Tool Calling",
+  "version": "2026-09-16-v1",
+  "dataset_status": "frozen-before-model-run",
+  "split_policy": "24 dev / 12 test / 4 challenge; only dev may guide optimization",
+  "cases": [
+    {
+      "id": "w2-dev-sales-01", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "分析华东刹车系统 2026Q2 销售下滑的主要原因，列出前 5 个下降产品和渠道贡献。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "刹车系统", "current_quarter": "2026Q2", "top_n": 5}}],
+      "tags": ["explicit_intent", "channel_contribution"]
+    },
+    {
+      "id": "w2-dev-sales-02", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "华南滤清系统 2026Q2 的销售变化由什么驱动？同时给出环比、同比和全国趋势。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华南", "category": "滤清系统", "current_quarter": "2026Q2", "top_n": 5}}],
+      "tags": ["paraphrase", "national_trend"]
+    },
+    {
+      "id": "w2-dev-sales-03", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "诊断华北点火系统在 2026Q1 的增长来源，只看贡献最大的 3 个产品。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华北", "category": "点火系统", "current_quarter": "2026Q1", "top_n": 3}}],
+      "tags": ["growth", "top_n"]
+    },
+    {
+      "id": "w2-dev-sales-04", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "复盘华东悬挂系统 2025 年第四季度的销售变化，找出前 10 个产品贡献因素。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "悬挂系统", "current_quarter": "2025Q4", "top_n": 10}}],
+      "tags": ["natural_quarter", "top_n"]
+    },
+    {
+      "id": "w2-dev-sales-05", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "为什么华南照明系统在 2026Q2 表现发生变化？请从产品、渠道和毛利率角度归因。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华南", "category": "照明系统", "current_quarter": "2026Q2", "top_n": 5}}],
+      "tags": ["gross_margin", "multi_dimension"]
+    },
+    {
+      "id": "w2-dev-sales-06", "split": "dev", "case_type": "sales_diagnosis",
+      "question": "华北雨刮及易损件 2026Q2 卖得不如上季度，请给出前 8 项下降贡献和渠道影响。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华北", "category": "雨刮及易损件", "current_quarter": "2026Q2", "top_n": 8}}],
+      "tags": ["colloquial", "top_n"]
+    },
+    {
+      "id": "w2-test-sales-07", "split": "test", "case_type": "sales_diagnosis",
+      "question": "请对华东滤清系统 2026Q1 做销售归因，说明同比、环比以及哪个渠道拖累最大。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "滤清系统", "current_quarter": "2026Q1", "top_n": 5}}],
+      "tags": ["held_out", "channel_contribution"]
+    },
+    {
+      "id": "w2-test-sales-08", "split": "test", "case_type": "sales_diagnosis",
+      "question": "华南刹车系统 2025Q3 的变化是区域自身问题还是全国共同趋势？给出前 4 个产品。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华南", "category": "刹车系统", "current_quarter": "2025Q3", "top_n": 4}}],
+      "tags": ["held_out", "national_comparison"]
+    },
+    {
+      "id": "w2-test-sales-09", "split": "test", "case_type": "sales_diagnosis",
+      "question": "解释华北悬挂系统在 2026 年第二季度的销售和毛利变化，最多返回 6 个产品因素。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华北", "category": "悬挂系统", "current_quarter": "2026Q2", "top_n": 6}}],
+      "tags": ["held_out", "natural_quarter"]
+    },
+    {
+      "id": "w2-challenge-sales-10", "split": "challenge", "case_type": "sales_diagnosis",
+      "question": "客户都说华东点火系统 2026Q2 不好卖；先别列流失客户，只诊断销售变化、渠道贡献和前三个产品因素。",
+      "expected_calls": [{"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "点火系统", "current_quarter": "2026Q2", "top_n": 3}}],
+      "tags": ["negative_boundary", "customer_distractor"]
+    },
+
+    {
+      "id": "w2-dev-loss-01", "split": "dev", "case_type": "customer_loss",
+      "question": "找出华东刹车系统 2026Q2 疑似停止采购或下滑超过 50% 的前 10 名客户。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "刹车系统", "current_quarter": "2026Q2", "decline_threshold": 0.5, "top_n": 10}}],
+      "tags": ["explicit_intent", "threshold"]
+    },
+    {
+      "id": "w2-dev-loss-02", "split": "dev", "case_type": "customer_loss",
+      "question": "华南滤清系统 2026Q2 哪些 A 级客户采购明显减少？按下降贡献列前 5 名，阈值 30%。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华南", "category": "滤清系统", "current_quarter": "2026Q2", "decline_threshold": 0.3, "top_n": 5}}],
+      "tags": ["a_customer", "custom_threshold"]
+    },
+    {
+      "id": "w2-dev-loss-03", "split": "dev", "case_type": "customer_loss",
+      "question": "检查华北点火系统 2026Q1 的客户流失风险，列出停止采购和大幅下滑客户。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华北", "category": "点火系统", "current_quarter": "2026Q1", "decline_threshold": 0.5, "top_n": 10}}],
+      "tags": ["risk_warning", "default_arguments"]
+    },
+    {
+      "id": "w2-dev-loss-04", "split": "dev", "case_type": "customer_loss",
+      "question": "华东悬挂系统 2025Q4 的客户下降主要由谁贡献？只返回前 7 个风险客户。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "悬挂系统", "current_quarter": "2025Q4", "decline_threshold": 0.5, "top_n": 7}}],
+      "tags": ["contribution", "top_n"]
+    },
+    {
+      "id": "w2-dev-loss-05", "split": "dev", "case_type": "customer_loss",
+      "question": "针对华南照明系统 2026Q2，筛出采购降幅达到 40% 的客户，并标记核心 A 级客户。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华南", "category": "照明系统", "current_quarter": "2026Q2", "decline_threshold": 0.4, "top_n": 10}}],
+      "tags": ["custom_threshold", "a_customer"]
+    },
+    {
+      "id": "w2-dev-loss-06", "split": "dev", "case_type": "customer_loss",
+      "question": "2026 年第二季度华北雨刮及易损件有哪些客户不再采购？同时给出客户下降贡献前 8 名。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华北", "category": "雨刮及易损件", "current_quarter": "2026Q2", "decline_threshold": 0.5, "top_n": 8}}],
+      "tags": ["natural_quarter", "stopped_purchase"]
+    },
+    {
+      "id": "w2-test-loss-07", "split": "test", "case_type": "customer_loss",
+      "question": "给我华东照明系统 2026Q1 的客户预警名单：降幅至少 25%，按影响取前 6 名。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "照明系统", "current_quarter": "2026Q1", "decline_threshold": 0.25, "top_n": 6}}],
+      "tags": ["held_out", "custom_threshold"]
+    },
+    {
+      "id": "w2-test-loss-08", "split": "test", "case_type": "customer_loss",
+      "question": "哪些华南点火系统客户在 2025Q4 从有采购变成零采购？返回前 10 名风险项。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华南", "category": "点火系统", "current_quarter": "2025Q4", "decline_threshold": 0.5, "top_n": 10}}],
+      "tags": ["held_out", "zero_purchase"]
+    },
+    {
+      "id": "w2-test-loss-09", "split": "test", "case_type": "customer_loss",
+      "question": "分析华北刹车系统 2026Q2 客户采购萎缩情况，重点看下降超过一半的 A 级客户。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华北", "category": "刹车系统", "current_quarter": "2026Q2", "decline_threshold": 0.5, "top_n": 10}}],
+      "tags": ["held_out", "a_customer"]
+    },
+    {
+      "id": "w2-challenge-loss-10", "split": "challenge", "case_type": "customer_loss",
+      "question": "不要做经销商健康打分。请找出华东滤清系统 2026Q2 停止采购或下降 35% 以上的客户，取前 4 名。",
+      "expected_calls": [{"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "滤清系统", "current_quarter": "2026Q2", "decline_threshold": 0.35, "top_n": 4}}],
+      "tags": ["negative_boundary", "dealer_distractor"]
+    },
+
+    {
+      "id": "w2-dev-health-01", "split": "dev", "case_type": "dealer_health",
+      "question": "评估华东经销商 2026Q2 健康度，列出风险最高的前 10 家及扣分原因。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华东", "current_quarter": "2026Q2", "top_n": 10}}],
+      "tags": ["explicit_intent", "risk_ranking"]
+    },
+    {
+      "id": "w2-dev-health-02", "split": "dev", "case_type": "dealer_health",
+      "question": "华南地区 2026Q2 哪些经销商健康分最低？只看前 5 名并解释四项扣分。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华南", "current_quarter": "2026Q2", "top_n": 5}}],
+      "tags": ["score", "top_n"]
+    },
+    {
+      "id": "w2-dev-health-03", "split": "dev", "case_type": "dealer_health",
+      "question": "给华北经销商做 2026Q1 风险排序，返回最需要优先干预的 3 家。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华北", "current_quarter": "2026Q1", "top_n": 3}}],
+      "tags": ["intervention", "top_n"]
+    },
+    {
+      "id": "w2-dev-health-04", "split": "dev", "case_type": "dealer_health",
+      "question": "复盘华东经销商 2025 年第四季度健康状况，说明高风险等级和具体扣分项。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华东", "current_quarter": "2025Q4", "top_n": 10}}],
+      "tags": ["natural_quarter", "deductions"]
+    },
+    {
+      "id": "w2-dev-health-05", "split": "dev", "case_type": "dealer_health",
+      "question": "按销售变化、活跃天数、折扣和毛利率评估华南经销商 2026Q1，列前 8 家。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华南", "current_quarter": "2026Q1", "top_n": 8}}],
+      "tags": ["rule_terms", "top_n"]
+    },
+    {
+      "id": "w2-dev-health-06", "split": "dev", "case_type": "dealer_health",
+      "question": "华北 2026Q2 经销商风险分层如何？请返回健康度最差的 6 家和原因。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华北", "current_quarter": "2026Q2", "top_n": 6}}],
+      "tags": ["risk_level", "paraphrase"]
+    },
+    {
+      "id": "w2-test-health-07", "split": "test", "case_type": "dealer_health",
+      "question": "列出华东 2025Q3 最应先干预的 4 家经销商，给出健康分和扣分依据。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华东", "current_quarter": "2025Q3", "top_n": 4}}],
+      "tags": ["held_out", "intervention"]
+    },
+    {
+      "id": "w2-test-health-08", "split": "test", "case_type": "dealer_health",
+      "question": "检查华南经销商在 2026 年第二季度的经营健康状态，按风险从高到低取 7 家。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华南", "current_quarter": "2026Q2", "top_n": 7}}],
+      "tags": ["held_out", "natural_quarter"]
+    },
+    {
+      "id": "w2-test-health-09", "split": "test", "case_type": "dealer_health",
+      "question": "华北 2025Q4 经销商健康评分中，谁的扣分最多？返回前 5 家。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华北", "current_quarter": "2025Q4", "top_n": 5}}],
+      "tags": ["held_out", "deductions"]
+    },
+    {
+      "id": "w2-challenge-health-10", "split": "challenge", "case_type": "dealer_health",
+      "question": "不需要分析某个品类的销售下降，也不要列普通客户。请给华东经销商做 2026Q2 健康评分，取风险前 3。",
+      "expected_calls": [{"tool": "dealer_health_analysis_tool", "arguments": {"region": "华东", "current_quarter": "2026Q2", "top_n": 3}}],
+      "tags": ["negative_boundary", "sales_distractor"]
+    },
+
+    {
+      "id": "w2-dev-sql-01", "split": "dev", "case_type": "no_business_tool",
+      "question": "华东 2026Q2 的总销售额是多少？",
+      "expected_calls": [{"tool": "sql_query", "arguments": {"sql": "__READ_ONLY_SELECT__"}}],
+      "tags": ["simple_aggregate", "negative_business_boundary"]
+    },
+    {
+      "id": "w2-dev-sql-02", "split": "dev", "case_type": "no_business_tool",
+      "question": "2026Q2 哪个汽车配件品类的销量最高？",
+      "expected_calls": [{"tool": "sql_query", "arguments": {"sql": "__READ_ONLY_SELECT__"}}],
+      "tags": ["ranking", "quantity"]
+    },
+    {
+      "id": "w2-dev-sql-03", "split": "dev", "case_type": "no_business_tool",
+      "question": "统计华南 2025Q4 经销商渠道有多少个不同客户。",
+      "expected_calls": [{"tool": "sql_query", "arguments": {"sql": "__READ_ONLY_SELECT__"}}],
+      "tags": ["distinct_count", "dealer_word_distractor"]
+    },
+    {
+      "id": "w2-test-sql-04", "split": "test", "case_type": "no_business_tool",
+      "question": "华北刹车系统 2026Q1 一共卖了多少件？",
+      "expected_calls": [{"tool": "sql_query", "arguments": {"sql": "__READ_ONLY_SELECT__"}}],
+      "tags": ["held_out", "simple_quantity"]
+    },
+    {
+      "id": "w2-test-sql-05", "split": "test", "case_type": "no_business_tool",
+      "question": "列出 2026Q2 销售额最高的 5 个产品名称和金额。",
+      "expected_calls": [{"tool": "sql_query", "arguments": {"sql": "__READ_ONLY_SELECT__"}}],
+      "tags": ["held_out", "top_n_sql"]
+    },
+
+    {
+      "id": "w2-dev-combo-01", "split": "dev", "case_type": "combination",
+      "question": "先诊断华东刹车系统 2026Q2 的销售下滑原因，再列出下滑超过 50% 的前 5 名风险客户。",
+      "expected_calls": [
+        {"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "刹车系统", "current_quarter": "2026Q2", "top_n": 5}},
+        {"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "刹车系统", "current_quarter": "2026Q2", "decline_threshold": 0.5, "top_n": 5}}
+      ],
+      "tags": ["sales_plus_loss", "ordered"]
+    },
+    {
+      "id": "w2-dev-combo-02", "split": "dev", "case_type": "combination",
+      "question": "分析华南滤清系统 2026Q2 的销售变化，同时评估华南经销商健康度前 4 名。",
+      "expected_calls": [
+        {"tool": "sales_diagnosis_tool", "arguments": {"region": "华南", "category": "滤清系统", "current_quarter": "2026Q2", "top_n": 5}},
+        {"tool": "dealer_health_analysis_tool", "arguments": {"region": "华南", "current_quarter": "2026Q2", "top_n": 4}}
+      ],
+      "tags": ["sales_plus_health"]
+    },
+    {
+      "id": "w2-dev-combo-03", "split": "dev", "case_type": "combination",
+      "question": "找出华北点火系统 2026Q1 下降 40% 以上的前 6 名客户，并给华北经销商做风险前 6 名健康排序。",
+      "expected_calls": [
+        {"tool": "customer_loss_analysis_tool", "arguments": {"region": "华北", "category": "点火系统", "current_quarter": "2026Q1", "decline_threshold": 0.4, "top_n": 6}},
+        {"tool": "dealer_health_analysis_tool", "arguments": {"region": "华北", "current_quarter": "2026Q1", "top_n": 6}}
+      ],
+      "tags": ["loss_plus_health"]
+    },
+    {
+      "id": "w2-test-combo-04", "split": "test", "case_type": "combination",
+      "question": "复盘华东照明系统 2025Q4 的销售变化，并找出停止采购或下滑一半以上的前 3 名客户。",
+      "expected_calls": [
+        {"tool": "sales_diagnosis_tool", "arguments": {"region": "华东", "category": "照明系统", "current_quarter": "2025Q4", "top_n": 5}},
+        {"tool": "customer_loss_analysis_tool", "arguments": {"region": "华东", "category": "照明系统", "current_quarter": "2025Q4", "decline_threshold": 0.5, "top_n": 3}}
+      ],
+      "tags": ["held_out", "sales_plus_loss"]
+    },
+    {
+      "id": "w2-challenge-combo-05", "split": "challenge", "case_type": "combination",
+      "question": "对华南刹车系统 2026Q2 做完整业务诊断：解释销售变化，列出下降 30% 以上的前 4 名风险客户，再给华南经销商健康风险前 4 名。不要使用普通 SQL 替代领域规则。",
+      "expected_calls": [
+        {"tool": "sales_diagnosis_tool", "arguments": {"region": "华南", "category": "刹车系统", "current_quarter": "2026Q2", "top_n": 5}},
+        {"tool": "customer_loss_analysis_tool", "arguments": {"region": "华南", "category": "刹车系统", "current_quarter": "2026Q2", "decline_threshold": 0.3, "top_n": 4}},
+        {"tool": "dealer_health_analysis_tool", "arguments": {"region": "华南", "current_quarter": "2026Q2", "top_n": 4}}
+      ],
+      "tags": ["all_three", "negative_sql_boundary"]
+    }
+  ]
+}

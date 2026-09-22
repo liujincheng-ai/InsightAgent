@@ -1,0 +1,635 @@
+{
+  "dataset_version": "week1-sql-semantic-v1",
+  "dataset_status": "frozen-before-model-run",
+  "database_fingerprint": "529e9fc1e3d1d8f2dd5ca8721511eb8c0e8f4966b902cb2a041e2677f3aa0ada",
+  "split": "dev",
+  "cases": [
+    {
+      "id": "w1-dev-01",
+      "type": "text_to_sql",
+      "question": "2026 年第二季度哪个区域销售额环比下降最多？",
+      "semantic_tags": [
+        "time",
+        "aggregation"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT r.region_name, ROUND(SUM(CASE WHEN f.sale_date >= DATE '2026-01-01' AND f.sale_date < DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) q1_sales, ROUND(SUM(CASE WHEN f.sale_date >= DATE '2026-04-01' AND f.sale_date < DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) q2_sales FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id GROUP BY r.region_name ORDER BY (q2_sales-q1_sales) ASC LIMIT 1",
+      "gold_result": {
+        "columns": [
+          "region_name",
+          "q1_sales",
+          "q2_sales"
+        ],
+        "rows": [
+          [
+            "华东",
+            15727133.31,
+            15228822.09
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-02",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 销售额的环比和同比分别是多少？",
+      "semantic_tags": [
+        "time",
+        "fact_completeness"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) q2_2026_sales, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) q1_2026_sales, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2025-04-01' AND f.sale_date<DATE '2025-07-01' THEN f.sales_amount ELSE 0 END),2) q2_2025_sales FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id WHERE r.region_name='华东'",
+      "gold_result": {
+        "columns": [
+          "q2_2026_sales",
+          "q1_2026_sales",
+          "q2_2025_sales"
+        ],
+        "rows": [
+          [
+            15228822.09,
+            15727133.31,
+            14952425.25
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-03",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 哪个汽车配件品类销售额环比下降最多？",
+      "semantic_tags": [
+        "join",
+        "time",
+        "top_n"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT p.category, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) q1_sales, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) q2_sales FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' GROUP BY p.category ORDER BY (q2_sales-q1_sales) ASC LIMIT 1",
+      "gold_result": {
+        "columns": [
+          "category",
+          "q1_sales",
+          "q2_sales"
+        ],
+        "rows": [
+          [
+            "刹车系统",
+            1615224.29,
+            1087378.79
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-04",
+      "type": "text_to_sql",
+      "question": "华东刹车系统 2026 Q2 各渠道销售额相比 Q1 如何变化？",
+      "semantic_tags": [
+        "join",
+        "time",
+        "grouping"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT f.channel, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) q1_sales, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) q2_sales FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND p.category='刹车系统' GROUP BY f.channel ORDER BY (q2_sales-q1_sales)",
+      "gold_result": {
+        "columns": [
+          "channel",
+          "q1_sales",
+          "q2_sales"
+        ],
+        "rows": [
+          [
+            "经销商",
+            719664.72,
+            324352.47
+          ],
+          [
+            "直营网点",
+            264420.87,
+            187501.18
+          ],
+          [
+            "电商",
+            194846.05,
+            153562.73
+          ],
+          [
+            "汽修连锁",
+            267057.2,
+            246296.67
+          ],
+          [
+            "大客户直供",
+            169235.45,
+            175665.74
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-05",
+      "type": "text_to_sql",
+      "question": "哪三个客户对华东刹车系统 2026 Q2 相比 Q1 的销售额下降贡献最大？",
+      "semantic_tags": [
+        "join",
+        "contribution",
+        "top_n"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT c.customer_name, c.customer_level, f.channel, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END)-SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) decline_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id JOIN dim_customer c ON c.customer_id=f.customer_id WHERE r.region_name='华东' AND p.category='刹车系统' GROUP BY c.customer_name,c.customer_level,f.channel HAVING SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END)>SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END) ORDER BY decline_amount DESC LIMIT 3",
+      "gold_result": {
+        "columns": [
+          "customer_name",
+          "customer_level",
+          "channel",
+          "decline_amount"
+        ],
+        "rows": [
+          [
+            "华东核心经销商三号",
+            "A",
+            "经销商",
+            158586.31
+          ],
+          [
+            "华东核心经销商一号",
+            "A",
+            "经销商",
+            131145.36
+          ],
+          [
+            "华东核心经销商二号",
+            "A",
+            "经销商",
+            64321.46
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-06",
+      "type": "text_to_sql",
+      "question": "华东和华南刹车系统 2026 Q2 的销售额环比表现有何不同？",
+      "semantic_tags": [
+        "join",
+        "time",
+        "multi_dimension"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT r.region_name, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) q1_sales, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),2) q2_sales FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name IN ('华东','华南') AND p.category='刹车系统' GROUP BY r.region_name ORDER BY r.region_name",
+      "gold_result": {
+        "columns": [
+          "region_name",
+          "q1_sales",
+          "q2_sales"
+        ],
+        "rows": [
+          [
+            "华东",
+            1615224.29,
+            1087378.79
+          ],
+          [
+            "华南",
+            1608329.54,
+            1761223.1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-07",
+      "type": "text_to_sql",
+      "question": "华东刹车系统 2026 Q1 和 Q2 的加权毛利率分别是多少，变化多少个百分点？",
+      "semantic_tags": [
+        "weighted_margin",
+        "fact_completeness"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT ROUND(100*SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.gross_profit ELSE 0 END)/NULLIF(SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),0),4) q1_margin_pct, ROUND(100*SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.gross_profit ELSE 0 END)/NULLIF(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END),0),4) q2_margin_pct FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND p.category='刹车系统'",
+      "gold_result": {
+        "columns": [
+          "q1_margin_pct",
+          "q2_margin_pct"
+        ],
+        "rows": [
+          [
+            28.909,
+            26.1251
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-08",
+      "type": "text_to_sql",
+      "question": "列出华东 2026 Q2 相比 Q1 销售额逆势增长最多的 5 个产品。",
+      "semantic_tags": [
+        "join",
+        "top_n",
+        "time"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT p.product_name, ROUND(SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END)-SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END),2) growth_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' GROUP BY p.product_name HAVING SUM(CASE WHEN f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' THEN f.sales_amount ELSE 0 END)>SUM(CASE WHEN f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-04-01' THEN f.sales_amount ELSE 0 END) ORDER BY growth_amount DESC,p.product_name LIMIT 5",
+      "gold_result": {
+        "columns": [
+          "product_name",
+          "growth_amount"
+        ],
+        "rows": [
+          [
+            "德远转向灯",
+            157732.17
+          ],
+          [
+            "锐联燃油滤清器",
+            120776.91
+          ],
+          [
+            "启航减震器",
+            78922.99
+          ],
+          [
+            "启航前照灯",
+            73578.64
+          ],
+          [
+            "恒驰空气滤清器",
+            62470.27
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-09",
+      "type": "text_to_sql",
+      "question": "2026 年 1 月到 6 月全公司每月销售额是多少？",
+      "semantic_tags": [
+        "time",
+        "aggregation"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT TO_CHAR(DATE_TRUNC('month',f.sale_date),'YYYY-MM') sales_month, ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f WHERE f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-07-01' GROUP BY 1 ORDER BY 1",
+      "gold_result": {
+        "columns": [
+          "sales_month",
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            "2026-01",
+            26412918.38
+          ],
+          [
+            "2026-02",
+            26385627.35
+          ],
+          [
+            "2026-03",
+            26116624.56
+          ],
+          [
+            "2026-04",
+            26173033.22
+          ],
+          [
+            "2026-05",
+            26200207.54
+          ],
+          [
+            "2026-06",
+            26132866.84
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-10",
+      "type": "text_to_sql",
+      "question": "华东刹车系统经销商渠道 2026 年 1 月到 6 月每月销售额是多少？",
+      "semantic_tags": [
+        "scope_retention",
+        "time",
+        "join"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT TO_CHAR(DATE_TRUNC('month',f.sale_date),'YYYY-MM') sales_month, ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND p.category='刹车系统' AND f.channel='经销商' AND f.sale_date>=DATE '2026-01-01' AND f.sale_date<DATE '2026-07-01' GROUP BY 1 ORDER BY 1",
+      "gold_result": {
+        "columns": [
+          "sales_month",
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            "2026-01",
+            243954.46
+          ],
+          [
+            "2026-02",
+            217663.28
+          ],
+          [
+            "2026-03",
+            258046.98
+          ],
+          [
+            "2026-04",
+            126956.55
+          ],
+          [
+            "2026-05",
+            91907.15
+          ],
+          [
+            "2026-06",
+            105488.77
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-11",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 销量最高的品类是哪一个？注意查询销量而不是销售额。",
+      "semantic_tags": [
+        "sales_vs_quantity",
+        "join"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT p.category, SUM(f.quantity) sales_quantity FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY p.category ORDER BY sales_quantity DESC,p.category LIMIT 1",
+      "gold_result": {
+        "columns": [
+          "category",
+          "sales_quantity"
+        ],
+        "rows": [
+          [
+            "滤清系统",
+            20501
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-12",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 哪个品类的销售明细加权平均折扣率最高？",
+      "semantic_tags": [
+        "weighted_average",
+        "join"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT p.category, ROUND(100*SUM(f.sales_amount*f.discount_rate)/NULLIF(SUM(f.sales_amount),0),4) weighted_discount_pct FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY p.category ORDER BY weighted_discount_pct DESC,p.category LIMIT 1",
+      "gold_result": {
+        "columns": [
+          "category",
+          "weighted_discount_pct"
+        ],
+        "rows": [
+          [
+            "刹车系统",
+            10.4133
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-13",
+      "type": "text_to_sql",
+      "question": "2026 Q2 各交易区域有多少家活跃经销商？",
+      "semantic_tags": [
+        "distinct",
+        "transaction_region"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT r.region_name, COUNT(DISTINCT f.customer_id) active_dealers FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id WHERE f.channel='经销商' AND f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY r.region_name ORDER BY r.region_name",
+      "gold_result": {
+        "columns": [
+          "region_name",
+          "active_dealers"
+        ],
+        "rows": [
+          [
+            "华东",
+            10
+          ],
+          [
+            "华中",
+            10
+          ],
+          [
+            "华北",
+            10
+          ],
+          [
+            "华南",
+            10
+          ],
+          [
+            "西南",
+            10
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-14",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 刹车系统的销售额和销量分别是多少？",
+      "semantic_tags": [
+        "sales_vs_quantity",
+        "fact_completeness"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT ROUND(SUM(f.sales_amount),2) sales_amount, SUM(f.quantity) sales_quantity FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND p.category='刹车系统' AND f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01'",
+      "gold_result": {
+        "columns": [
+          "sales_amount",
+          "sales_quantity"
+        ],
+        "rows": [
+          [
+            1087378.79,
+            10085
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-15",
+      "type": "text_to_sql",
+      "question": "华东 2026 Q2 销售额最高的 3 个产品是什么？",
+      "semantic_tags": [
+        "top_n",
+        "join"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT p.product_name, ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id JOIN dim_product p ON p.product_id=f.product_id WHERE r.region_name='华东' AND f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY p.product_name ORDER BY sales_amount DESC,p.product_name LIMIT 3",
+      "gold_result": {
+        "columns": [
+          "product_name",
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            "锐联玻璃水泵",
+            837680.24
+          ],
+          [
+            "德远皮带",
+            754998.58
+          ],
+          [
+            "恒驰雨刮电机",
+            723980.91
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-16",
+      "type": "text_to_sql",
+      "question": "按交易发生区域统计 2026 Q2 销售额，列出前 3 名。",
+      "semantic_tags": [
+        "transaction_region",
+        "top_n"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT r.region_name, ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id WHERE f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY r.region_name ORDER BY sales_amount DESC,r.region_name LIMIT 3",
+      "gold_result": {
+        "columns": [
+          "region_name",
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            "华南",
+            15920127.38
+          ],
+          [
+            "西南",
+            15864723.15
+          ],
+          [
+            "华中",
+            15762523.24
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-17",
+      "type": "text_to_sql",
+      "question": "2027 Q1 华东销售额是多少？",
+      "semantic_tags": [
+        "no_data",
+        "time"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f JOIN dim_region r ON r.region_id=f.region_id WHERE r.region_name='华东' AND f.sale_date>=DATE '2027-01-01' AND f.sale_date<DATE '2027-04-01'",
+      "gold_result": {
+        "columns": [
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            null
+          ]
+        ]
+      }
+    },
+    {
+      "id": "w1-dev-18",
+      "type": "text_to_sql",
+      "question": "2026 Q2 全国各渠道销售额是多少？",
+      "semantic_tags": [
+        "grouping",
+        "aggregation"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": false,
+      "expected_clarification_terms": [],
+      "gold_sql": "SELECT f.channel, ROUND(SUM(f.sales_amount),2) sales_amount FROM fact_sales f WHERE f.sale_date>=DATE '2026-04-01' AND f.sale_date<DATE '2026-07-01' GROUP BY f.channel ORDER BY sales_amount DESC,f.channel",
+      "gold_result": {
+        "columns": [
+          "channel",
+          "sales_amount"
+        ],
+        "rows": [
+          [
+            "经销商",
+            34561823.7
+          ],
+          [
+            "汽修连锁",
+            14428456.65
+          ],
+          [
+            "直营网点",
+            10801516.26
+          ],
+          [
+            "大客户直供",
+            9460670.02
+          ],
+          [
+            "电商",
+            9253640.97
+          ]
+        ]
+      }
+    }
+  ]
+}

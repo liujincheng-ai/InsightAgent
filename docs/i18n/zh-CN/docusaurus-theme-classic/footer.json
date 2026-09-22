@@ -1,0 +1,82 @@
+{
+  "footer.title.Community": {
+    "message": "社区",
+    "description": "Footer title: Community"
+  },
+  "footer.title.Github": {
+    "message": "GitHub",
+    "description": "Footer title: Github"
+  },
+  "footer.title.More": {
+    "message": "更多",
+    "description": "Footer title: More"
+  },
+  "footer.link.label.Discord": {
+    "message": "Discord",
+    "description": "Footer link: Discord"
+  },
+  "footer.link.label.Dockerhub": {
+    "message": "Dockerhub",
+    "description": "Footer link: Dockerhub"
+  },
+  "footer.link.label.Github": {
+    "message": "GitHub",
+    "description": "Footer link: Github"
+  },
+  "footer.link.label.HuggingFace": {
+    "message": "HuggingFace",
+    "description": "Footer link: HuggingFace"
+  },
+  "footer.link.label.Hacker News": {
+    "message": "Hacker News",
+    "description": "Footer link: Hacker News"
+  },
+  "footer.link.label.Twitter": {
+    "message": "Twitter",
+    "description": "Footer link: Twitter"
+  },
+  "footer.copyright": {
+    "message": "版权所有 © {year} InsightAgent",
+    "description": "Footer copyright"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.Github": {
+    "message": "Github",
+    "description": "The title of the footer links column with title=Github in the footer"
+  },
+  "link.title.More": {
+    "message": "More",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/erwfqcMP"
+  },
+  "link.item.label.Dockerhub": {
+    "message": "Dockerhub",
+    "description": "The label of footer link with label=Dockerhub linking to https://hub.docker.com/u/eosphorosai"
+  },
+  "link.item.label.Github": {
+    "message": "Github",
+    "description": "The label of footer link with label=Github linking to https://github.com/liujincheng-ai/InsightAgent"
+  },
+  "link.item.label.HuggingFace": {
+    "message": "HuggingFace",
+    "description": "The label of footer link with label=HuggingFace linking to https://huggingface.co/eosphoros"
+  },
+  "link.item.label.Hacker News": {
+    "message": "Hacker News",
+    "description": "The label of footer link with label=Hacker News linking to https://news.ycombinator.com/item?id=36038815"
+  },
+  "link.item.label.Twitter": {
+    "message": "Twitter",
+    "description": "The label of footer link with label=Twitter linking to https://twitter.com/DbGpt80100"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 InsightAgent",
+    "description": "The footer copyright"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "dataset_version": "week1-sql-semantic-v1",
+  "dataset_status": "frozen-before-model-run",
+  "database_fingerprint": "529e9fc1e3d1d8f2dd5ca8721511eb8c0e8f4966b902cb2a041e2677f3aa0ada",
+  "split": "challenge",
+  "cases": [
+    {
+      "id": "w1-challenge-01",
+      "type": "text_to_sql",
+      "question": "华东最近表现怎么样？",
+      "semantic_tags": [
+        "ambiguity",
+        "metric",
+        "time"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": true,
+      "expected_clarification_terms": [
+        "指标",
+        "时间范围"
+      ],
+      "gold_facts": {
+        "behavior": "clarify_before_query"
+      }
+    },
+    {
+      "id": "w1-challenge-02",
+      "type": "text_to_sql",
+      "question": "哪个区域最好？",
+      "semantic_tags": [
+        "ambiguity",
+        "metric",
+        "time"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": true,
+      "expected_clarification_terms": [
+        "指标",
+        "时间范围"
+      ],
+      "gold_facts": {
+        "behavior": "clarify_before_query"
+      }
+    },
+    {
+      "id": "w1-challenge-03",
+      "type": "text_to_sql",
+      "question": "按客户区域比较 2026 Q2 销售额。",
+      "semantic_tags": [
+        "ambiguity",
+        "region_dimension"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": true,
+      "expected_clarification_terms": [
+        "交易发生区域",
+        "客户所属区域"
+      ],
+      "gold_facts": {
+        "behavior": "clarify_before_query"
+      }
+    },
+    {
+      "id": "w1-challenge-04",
+      "type": "text_to_sql",
+      "question": "近期销售下降最多的品类是什么？",
+      "semantic_tags": [
+        "ambiguity",
+        "time",
+        "comparison"
+      ],
+      "numeric_tolerance": 0.02,
+      "grading": "deterministic",
+      "requires_clarification": true,
+      "expected_clarification_terms": [
+        "时间范围",
+        "比较基准"
+      ],
+      "gold_facts": {
+        "behavior": "clarify_before_query"
+      }
+    }
+  ]
+}

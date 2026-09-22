@@ -1,0 +1,29 @@
+{
+  "dataset_version": "day3-v1",
+  "dataset_status": "frozen-before-pro-run",
+  "database": "insight_agent",
+  "knowledge_base": "汽车配件企业制度库",
+  "numeric_tolerance": 0.01,
+  "policy": {
+    "use_fresh_conversation_per_case": true,
+    "preserve_raw_trajectory": true,
+    "do_not_modify_gold_facts_after_a_failure": true
+  },
+  "cases": [
+    {"id": "d3-sql-01", "type": "sql", "question": "2026 年第二季度哪个区域销售额下降最多？", "expected_facts": {"region": "华东", "qoq_change_pct": -3.17}, "tolerance": 0.01},
+    {"id": "d3-sql-02", "type": "sql", "question": "华东 2026 Q2 的环比和同比分别是多少？", "expected_facts": {"sales_2026_q2": 15228822.09, "qoq_change_pct": -3.17, "yoy_change_pct": 1.85}, "tolerance": 0.01},
+    {"id": "d3-sql-03", "type": "sql", "question": "华东 Q2 哪个汽车配件品类下降最多？", "expected_facts": {"category": "刹车系统", "qoq_change_pct": -32.68}, "tolerance": 0.01},
+    {"id": "d3-sql-04", "type": "sql", "question": "华东和华南刹车系统表现有何不同？", "expected_facts": {"华东_qoq_change_pct": -32.68, "华南_qoq_change_pct": 9.51}, "tolerance": 0.01},
+    {"id": "d3-sql-05", "type": "sql", "question": "华东刹车系统毛利率是否下降？", "expected_facts": {"gross_margin_2026_q1_pct": 28.91, "gross_margin_2026_q2_pct": 26.13, "change_pp": -2.78}, "tolerance": 0.01},
+    {"id": "d3-rag-01", "type": "rag", "question": "A 级经销商连续销售下降时应采取什么措施？", "expected_facts": ["专项预警", "整改计划", "联合拜访"], "expected_sources": [{"document": "经销商分级与考核管理制度.md", "section": "4.2"}], "tolerance": 0.01},
+    {"id": "d3-rag-02", "type": "rag", "question": "核心客户出现流失风险时由谁负责？", "expected_facts": ["客户经理", "区域销售经理", "客户运营部"], "expected_sources": [{"document": "重点客户流失预警办法.md", "section": "3.3"}], "tolerance": 0.01},
+    {"id": "d3-rag-03", "type": "rag", "question": "折扣超过标准时需要什么审批？", "expected_facts": ["8%", "12%", "15%", "不得拆单"], "expected_sources": [{"document": "汽车配件价格与折扣管理办法.md", "section": "4.2"}], "tolerance": 0.01},
+    {"id": "d3-rag-04", "type": "rag", "question": "以上三个答案分别来自哪份制度、哪个章节？", "expected_facts": ["经销商", "客户流失", "价格与折扣"], "expected_sources": [{"document": "经销商分级与考核管理制度.md", "section": "4.2"}, {"document": "重点客户流失预警办法.md", "section": "3.3"}, {"document": "汽车配件价格与折扣管理办法.md", "section": "4.2"}], "tolerance": 0.01},
+    {"id": "d3-tool-01", "type": "tool", "question": "用销售诊断工具分析华东刹车系统 2026Q2 的销售变化和主要下降渠道。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"current_sales": 1087378.79, "qoq_change_rate": -0.3268, "primary_channel": "经销商"}, "tolerance": 0.01},
+    {"id": "d3-tool-02", "type": "tool", "question": "用销售诊断工具分析华东刹车系统 2026Q1 的销售变化。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"current_sales": 1615224.29, "qoq_change_rate": 0.0917}, "tolerance": 0.01},
+    {"id": "d3-tool-03", "type": "tool", "question": "用销售诊断工具分析华南刹车系统 2026Q2 的销售变化。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"current_sales": 1761223.10, "qoq_change_rate": 0.0951}, "tolerance": 0.01},
+    {"id": "d3-agent-01", "type": "integrated", "question": "分析 2026 年第二季度华东区域刹车系统配件销售下滑的主要因素，并结合经销商管理制度提出改进建议，生成带图表和引用依据的经营分析报告。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"current_sales": 1087378.79, "qoq_change_rate": -0.3268, "primary_channel": "经销商"}, "expected_sources": [{"document": "经销商分级与考核管理制度.md", "section": "4.2"}], "tolerance": 0.01},
+    {"id": "d3-agent-02", "type": "integrated", "question": "华东刹车系统 2026Q2 下滑是否属于全国性趋势？请用销售诊断、制度依据和图表说明。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"华东_qoq_change_rate": -0.3268, "全国对比": "华东弱于全国"}, "expected_sources": [{"document": "2026年度经营目标.md", "section": "4.2"}], "tolerance": 0.01},
+    {"id": "d3-agent-03", "type": "integrated", "question": "针对华东刹车系统经销商渠道 2026Q2 的下降，给出有数据和制度依据的整改建议。", "expected_tool": "sales_diagnosis_tool", "expected_facts": {"primary_channel": "经销商", "channel_decline_contribution_rate": 0.7489}, "expected_sources": [{"document": "经销商分级与考核管理制度.md", "section": "4.2"}], "tolerance": 0.01}
+  ]
+}

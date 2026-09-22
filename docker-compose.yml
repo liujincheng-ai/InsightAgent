@@ -1,0 +1,54 @@
+# To run current docker compose file, you should prepare the silliconflow api key in your environment.
+# SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY} docker compose up -d
+services:
+  db:
+    image: mysql/mysql-server
+    environment:
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'aa123456'
+    ports:
+      - 3306:3306
+    volumes:
+      - dbgpt-myql-db:/var/lib/mysql
+      - ./docker/examples/my.cnf:/etc/my.cnf
+      - ./docker/examples/sqls:/docker-entrypoint-initdb.d
+      - ./assets/schema/dbgpt.sql:/docker-entrypoint-initdb.d/dbgpt.sql
+    restart: unless-stopped
+    networks:
+      - dbgptnet
+  webserver:
+    image: eosphorosai/dbgpt-openai:latest
+    command: dbgpt start webserver --config /app/configs/dbgpt-proxy-siliconflow-mysql.toml
+    environment:
+      - SILICONFLOW_API_KEY=${SILICONFLOW_API_KEY}
+      - MYSQL_PASSWORD=aa123456
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=dbgpt
+      - MYSQL_USER=root
+    volumes:
+      - ./configs:/app/configs
+      - /data:/data
+      # May be you can mount your models to container
+      - /data/models:/app/models
+      - dbgpt-data:/app/pilot/data
+      - dbgpt-message:/app/pilot/message
+    depends_on:
+      - db
+    ports:
+      - 5670:5670/tcp
+    # webserver may be failed, it must wait all sqls in /docker-entrypoint-initdb.d execute finish.
+    restart: unless-stopped
+    networks:
+      - dbgptnet
+    ipc: host
+volumes:
+  dbgpt-myql-db:
+  dbgpt-data:
+  dbgpt-message:
+  dbgpt-alembic-versions:
+networks:
+  dbgptnet:
+    driver: bridge
+    name: dbgptnet

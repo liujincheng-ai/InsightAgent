@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "frozen_at": "2026-09-19",
+  "scope": "InsightAgent",
+  "dataset": {
+    "path": "insight_agent/evaluation/dataset/failure_cases.json",
+    "sha256": "446c84d32df7bf181a5f477850dfbc6b59ebcbb24d042b90b41cfb2d5d8851cc",
+    "case_count": 20
+  },
+  "policy": {
+    "shared_request_recovery_budget": 1,
+    "circuit_breaker_identical_failure_threshold": 2,
+    "non_retryable_failure_types": [
+      "permission_denied",
+      "unknown"
+    ],
+    "preserve_verified_partial_results": true
+  },
+  "production_max_steps": {
+    "database": 5,
+    "knowledge": 6,
+    "integrated": 5
+  },
+  "benchmark_case_ceiling": {
+    "database": 5,
+    "knowledge": 6,
+    "integrated": 8
+  },
+  "step_budget_evidence": {
+    "source_runs": "week4-candidate2-20260918-after-deepseek-v4-flash-all-run1..3",
+    "database": {
+      "observations": 18,
+      "p95": 3,
+      "max": 3
+    },
+    "knowledge": {
+      "observations": 15,
+      "p95": 5,
+      "max": 5
+    },
+    "integrated": {
+      "observations": 27,
+      "p95": 7,
+      "max": 7
+    }
+  },
+  "flash_acceptance": {
+    "model": "deepseek-v4-flash",
+    "repeats": 3,
+    "temperature": 0.0,
+    "candidate": "candidate2",
+    "after_mean_failure_recovery_rate": 0.972222,
+    "after_mean_termination_rate": 1.0,
+    "after_mean_non_retryable_blind_retry_rate": 0.0,
+    "after_mean_repeated_call_rate": 0.0
+  },
+  "original_pro_run": {
+    "model": "deepseek-v4-pro",
+    "profile": "after",
+    "repeats": 1,
+    "temperature": 0.0,
+    "rerun_only_after_explicit_user_request": true,
+    "result_directory": "week4-final-pro-all-20260919",
+    "failure_recovery_rate": 0.666667,
+    "termination_rate": 1.0
+  },
+  "optimized_pro_acceptance": {
+    "model": "deepseek-v4-pro",
+    "profile": "after",
+    "temperature": 0.0,
+    "result_directory": "week4-pro-optimized-final-20260919-after-deepseek-v4-pro-all-run1",
+    "same_dataset_post_failure_regression": true,
+    "pass_rate": 0.9,
+    "failure_recovery_rate": 0.916667,
+    "termination_rate": 1.0,
+    "non_retryable_blind_retry_rate": 0.0,
+    "repeated_call_rate": 0.0,
+    "selection_rule": "Recovery >= 0.80, termination = 1.00, blind retry = 0.00; later candidates that regress a hard gate are rejected."
+  }
+}

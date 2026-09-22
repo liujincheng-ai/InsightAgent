@@ -1,0 +1,525 @@
+import logging
+import os
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
+
+from dbgpt.agent.core.context.budget import DEFAULT_MAX_CONTEXT_TOKENS
+from dbgpt.datasource.parameter import BaseDatasourceParameters
+from dbgpt.model.parameter import (
+    ModelsDeployParameters,
+    ModelServiceConfig,
+)
+from dbgpt.storage.cache.manager import ModelCacheParameters
+from dbgpt.storage.vector_store.base import VectorStoreConfig
+from dbgpt.util.configure import HookConfig
+from dbgpt.util.i18n_utils import _
+from dbgpt.util.parameter_utils import BaseParameters
+from dbgpt.util.tracer import TracerParameters
+from dbgpt.util.utils import LoggingParameters
+from dbgpt_ext.datasource.rdbms.conn_sqlite import SQLiteConnectorParameters
+from dbgpt_ext.storage.graph_store.tugraph_store import TuGraphStoreConfig
+from dbgpt_ext.storage.vector_store.chroma_store import ChromaVectorConfig
+from dbgpt_ext.storage.vector_store.elastic_store import ElasticsearchStoreConfig
+from dbgpt_serve.core import BaseServeConfig
+from dbgpt_serve.core.config import GPTsAppConfig
+
+logger = logging.getLogger(__name__)
+
+_DEFAULT_MAX_PARALLEL_SUBAGENTS = 3
+_MAX_PARALLEL_SUBAGENTS_ENV_VAR = "DBGPT_MAX_PARALLEL_SUBAGENTS"
+
+
+@dataclass
+class SystemParameters:
+    """System parameters."""
+
+    language: str = field(
+        default="en",
+        metadata={
+            "help": _("Language setting"),
+            "valid_values": ["en", "zh", "fr", "ja", "ko", "ru"],
+        },
+    )
+    log_level: str = field(
+        default="INFO",
+        metadata={
+            "help": _("Logging level"),
+            "valid_values": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        },
+    )
+    api_keys: List[str] = field(
+        default_factory=list,
+        metadata={
+            "help": _("API keys"),
+        },
+    )
+    encrypt_key: Optional[str] = field(
+        default="your_secret_key",
+        metadata={"help": _("The key to encrypt the data")},
+    )
+
+
+@dataclass
+class StorageConfig(BaseParameters):
+    __cfg_type__ = "app"
+
+    vector: Optional[VectorStoreConfig] = field(
+        default_factory=lambda: ChromaVectorConfig(),
+        metadata={
+            "help": _("default vector type"),
+        },
+    )
+    graph: Optional[TuGraphStoreConfig] = field(
+        default=None,
+        metadata={
+            "help": _("default graph type"),
+        },
+    )
+    full_text: Optional[ElasticsearchStoreConfig] = field(
+        default=None,
+        metadata={
+            "help": _("default full text type"),
+        },
+    )
+
+
+@dataclass
+class RagParameters(BaseParameters):
+    """Rag configuration."""
+
+    __cfg_type__ = "app"
+
+    chunk_size: Optional[int] = field(
+        default=500,
+        metadata={"help": _("Whether to verify the SSL certificate of the database")},
+    )
+    chunk_overlap: Optional[int] = field(
+        default=50,
+        metadata={
+            "help": _(
+                "The default thread pool size, If None, use default config of python "
+                "thread pool"
+            )
+        },
+    )
+    similarity_top_k: Optional[int] = field(
+        default=10,
+        metadata={"help": _("knowledge search top k")},
+    )
+    similarity_score_threshold: Optional[float] = field(
+        default=0.0,
+        metadata={"help": _("knowledge search top similarity score")},
+    )
+    query_rewrite: Optional[bool] = field(
+        default=False,
+        metadata={"help": _("knowledge search rewrite")},
+    )
+    max_chunks_once_load: Optional[int] = field(
+        default=10,
+        metadata={"help": _("knowledge max chunks once load")},
+    )
+    max_threads: Optional[int] = field(
+        default=1,
+        metadata={"help": _("knowledge max load thread")},
+    )
+    rerank_top_k: Optional[int] = field(
+        default=3,
+        metadata={"help": _("knowledge rerank top k")},
+    )
+    storage: StorageConfig = field(
+        default_factory=lambda: StorageConfig(),
+        metadata={"help": _("Storage configuration")},
+    )
+    knowledge_graph_chunk_search_top_k: Optional[int] = field(
+        default=5,
+        metadata={"help": _("knowledge graph search top k")},
+    )
+    kg_enable_summary: Optional[bool] = field(
+        default=False,
+        metadata={"help": _("graph community summary enabled")},
+    )
+    llm_model: Optional[str] = field(
+        default=None,
+        metadata={"help": _("kg extract llm model")},
+    )
+    kg_extract_top_k: Optional[int] = field(
+        default=5,
+        metadata={"help": _("kg extract top k")},
+    )
+    kg_extract_score_threshold: Optional[float] = field(
+        default=0.3,
+        metadata={"help": _("kg extract score threshold")},
+    )
+    kg_community_top_k: Optional[int] = field(
+        default=50,
+        metadata={"help": _("kg community top k")},
+    )
+    kg_community_score_threshold: Optional[float] = field(
+        default=0.3,
+        metadata={"help": _("kg_community_score_threshold")},
+    )
+    kg_triplet_graph_enabled: Optional[bool] = field(
+        default=True,
+        metadata={"help": _("kg_triplet_graph_enabled")},
+    )
+    kg_document_graph_enabled: Optional[bool] = field(
+        default=True,
+        metadata={"help": _("kg_document_graph_enabled")},
+    )
+    kg_chunk_search_top_k: Optional[int] = field(
+        default=5,
+        metadata={"help": _("kg_chunk_search_top_k")},
+    )
+    kg_extraction_batch_size: Optional[int] = field(
+        default=3,
+        metadata={"help": _("kg_extraction_batch_size")},
+    )
+    kg_community_summary_batch_size: Optional[int] = field(
+        default=20,
+        metadata={"help": _("kg_community_summary_batch_size")},
+    )
+    kg_embedding_batch_size: Optional[int] = field(
+        default=20,
+        metadata={"help": _("kg_embedding_batch_size")},
+    )
+    kg_similarity_top_k: Optional[int] = field(
+        default=5,
+        metadata={"help": _("kg_similarity_top_k")},
+    )
+    kg_similarity_score_threshold: Optional[float] = field(
+        default=0.7,
+        metadata={"help": _("kg_similarity_score_threshold")},
+    )
+    kg_enable_text_search: Optional[bool] = field(
+        default=False,
+        metadata={"help": _("kg_enable_text_search")},
+    )
+    kg_text2gql_model_enabled: Optional[bool] = field(
+        default=False,
+        metadata={"help": _("kg_text2gql_model_enabled")},
+    )
+    kg_text2gql_model_name: Optional[str] = field(
+        default=None,
+        metadata={"help": _("text2gql_model_name")},
+    )
+    bm25_k1: Optional[float] = field(
+        default=2.0,
+        metadata={"help": _("bm25_k1")},
+    )
+    bm25_b: Optional[float] = field(
+        default=0.75,
+        metadata={"help": _("bm25_b")},
+    )
+
+
+@dataclass
+class AgentContextParameters(BaseParameters):
+    """Agent context-window management configuration."""
+
+    __cfg_type__ = "service"
+
+    max_context_tokens: Optional[int] = field(
+        default=DEFAULT_MAX_CONTEXT_TOKENS,
+        metadata={
+            "help": _(
+                "Maximum context-window tokens for agent calls. "
+                "Zero enables detection from the active model metadata."
+            )
+        },
+    )
+    reserved_tokens: int = field(
+        default=4096,
+        metadata={"help": _("Tokens reserved for model output")},
+    )
+    warning_threshold: float = field(
+        default=0.70,
+        metadata={"help": _("Context usage ratio that triggers light compaction")},
+    )
+    error_threshold: float = field(
+        default=0.90,
+        metadata={"help": _("Context usage ratio that triggers LLM compaction")},
+    )
+    critical_threshold: float = field(
+        default=0.95,
+        metadata={"help": _("Context usage ratio considered critical")},
+    )
+    min_keep_recent_rounds: int = field(
+        default=3,
+        metadata={"help": _("Minimum recent ReAct rounds to keep uncompressed")},
+    )
+    max_observation_age_rounds: int = field(
+        default=5,
+        metadata={"help": _("Observation age before micro-compaction can truncate")},
+    )
+    truncated_observation_max_chars: int = field(
+        default=200,
+        metadata={"help": _("Maximum chars kept for old compacted observations")},
+    )
+    min_keep_tokens: int = field(
+        default=10000,
+        metadata={"help": _("Minimum tokens to keep when dropping old rounds")},
+    )
+    max_compact_failures: int = field(
+        default=3,
+        metadata={"help": _("Consecutive compaction failures before circuit break")},
+    )
+    tool_result_threshold: int = field(
+        default=100000,
+        metadata={"help": _("Characters allowed per tool result before persistence")},
+    )
+    turn_result_budget: int = field(
+        default=200000,
+        metadata={"help": _("Aggregate inline tool-result characters per turn")},
+    )
+    preview_size: int = field(
+        default=1500,
+        metadata={"help": _("Preview characters retained for persisted results")},
+    )
+    tool_overrides: Dict[str, int] = field(
+        default_factory=dict,
+        metadata={"help": _("Per-tool result persistence thresholds")},
+    )
+    max_parallel_subagents: int = field(
+        default=_DEFAULT_MAX_PARALLEL_SUBAGENTS,
+        metadata={
+            "help": _(
+                "Max concurrent sub-agents per dispatch_parallel_tasks call. "
+                "Higher values fan out more sub-tasks at once but multiply "
+                "token cost. The DBGPT_MAX_PARALLEL_SUBAGENTS environment "
+                "variable overrides this value."
+            )
+        },
+    )
+
+    def __post_init__(self):
+        if self.max_context_tokens is None or self.max_context_tokens < 0:
+            self.max_context_tokens = DEFAULT_MAX_CONTEXT_TOKENS
+
+        env_value = os.getenv(_MAX_PARALLEL_SUBAGENTS_ENV_VAR)
+        if env_value is not None:
+            try:
+                parsed_env_value = int(env_value)
+            except ValueError:
+                logger.warning(
+                    "Ignoring invalid %s=%r; using configured value %s",
+                    _MAX_PARALLEL_SUBAGENTS_ENV_VAR,
+                    env_value,
+                    self.max_parallel_subagents,
+                )
+            else:
+                if parsed_env_value > 0:
+                    self.max_parallel_subagents = parsed_env_value
+                else:
+                    logger.warning(
+                        "Ignoring non-positive %s=%r; using configured value %s",
+                        _MAX_PARALLEL_SUBAGENTS_ENV_VAR,
+                        env_value,
+                        self.max_parallel_subagents,
+                    )
+
+        if self.max_parallel_subagents <= 0:
+            logger.warning(
+                "Invalid max_parallel_subagents=%s; using default %s",
+                self.max_parallel_subagents,
+                _DEFAULT_MAX_PARALLEL_SUBAGENTS,
+            )
+            self.max_parallel_subagents = _DEFAULT_MAX_PARALLEL_SUBAGENTS
+
+
+@dataclass
+class ServiceWebParameters(BaseParameters):
+    __cfg_type__ = "service"
+    host: str = field(default="0.0.0.0", metadata={"help": _("Webserver deploy host")})
+    port: int = field(
+        default=5670, metadata={"help": _("Webserver deploy port, default is 5670")}
+    )
+    light: Optional[bool] = field(
+        default=False, metadata={"help": _("Run Webserver in light mode")}
+    )
+    controller_addr: Optional[str] = field(
+        default=None,
+        metadata={
+            "help": _(
+                "The Model controller address to connect. If None, read model "
+                "controller address from environment key `MODEL_SERVER`."
+            )
+        },
+    )
+    database: BaseDatasourceParameters = field(
+        default_factory=lambda: SQLiteConnectorParameters(
+            path="pilot/meta_data/dbgpt.db"
+        ),
+        metadata={
+            "help": _(
+                "Database connection config, now support SQLite, OceanBase and MySQL"
+            )
+        },
+    )
+    model_storage: Optional[str] = field(
+        default=None,
+        metadata={
+            "help": _(
+                "The storage type of model configures, if None, use the default "
+                "storage(current database). When you run in light mode, it will not "
+                "use any storage."
+            ),
+            "valid_values": ["database", "memory"],
+        },
+    )
+    trace: Optional[TracerParameters] = field(
+        default=None,
+        metadata={
+            "help": _("Tracer config for web server, if None, use global tracer config")
+        },
+    )
+    log: Optional[LoggingParameters] = field(
+        default=None,
+        metadata={
+            "help": _(
+                "Logging configuration for web server, if None, use global config"
+            )
+        },
+    )
+    disable_alembic_upgrade: Optional[bool] = field(
+        default=False,
+        metadata={
+            "help": _(
+                "Whether to disable alembic to initialize and upgrade database metadata"
+            )
+        },
+    )
+    db_ssl_verify: Optional[bool] = field(
+        default=False,
+        metadata={"help": _("Whether to verify the SSL certificate of the database")},
+    )
+    default_thread_pool_size: Optional[int] = field(
+        default=None,
+        metadata={
+            "help": _(
+                "The default thread pool size, If None, use default config of python "
+                "thread pool"
+            )
+        },
+    )
+    remote_embedding: Optional[bool] = field(
+        default=False,
+        metadata={
+            "help": _(
+                "Whether to enable remote embedding models. If it is True, you need"
+                " to start a embedding model through `dbgpt start worker --worker_type "
+                "text2vec --model_name xxx --model_path xxx`"
+            )
+        },
+    )
+    remote_rerank: Optional[bool] = field(
+        default=False,
+        metadata={
+            "help": _(
+                "Whether to enable remote rerank models. If it is True, you need"
+                " to start a rerank model through `dbgpt start worker --worker_type "
+                "text2vec --rerank --model_name xxx --model_path xxx`"
+            )
+        },
+    )
+    awel_dirs: Optional[str] = field(
+        default=None,
+        metadata={"help": _("The directories to search awel files, split by `,`")},
+    )
+    new_web_ui: bool = field(
+        default=True,
+        metadata={"help": _("Whether to use the new web UI, default is True")},
+    )
+    model_cache: ModelCacheParameters = field(
+        default_factory=ModelCacheParameters,
+        metadata={"help": _("Model cache configuration")},
+    )
+    embedding_model_max_seq_len: Optional[int] = field(
+        default=512,
+        metadata={
+            "help": _("The max sequence length of the embedding model, default is 512")
+        },
+    )
+    agent_context: AgentContextParameters = field(
+        default_factory=AgentContextParameters,
+        metadata={"help": _("Agent context-window management configuration")},
+    )
+    cors_allowed_origins: str = field(
+        default="*",
+        metadata={
+            "help": _(
+                "Comma-separated allowed CORS origins. Default '*' allows all "
+                "(any website can read API responses cross-origin). Set to "
+                "explicit origins to restrict, e.g. "
+                "http://localhost:3000,https://your-app.com."
+            )
+        },
+    )
+
+
+@dataclass
+class ServiceConfig(BaseParameters):
+    __cfg_type__ = "service"
+
+    web: ServiceWebParameters = field(
+        default_factory=ServiceWebParameters,
+        metadata={"help": _("Web service configuration")},
+    )
+    model: ModelServiceConfig = field(
+        default_factory=ModelServiceConfig,
+        metadata={"help": _("Model service configuration")},
+    )
+
+
+@dataclass
+class ApplicationConfig(BaseParameters):
+    """Application configuration."""
+
+    hooks: List[HookConfig] = field(
+        default_factory=list,
+        metadata={
+            "help": _(
+                "Configuration hooks, which will be executed before the configuration "
+                "loading"
+            ),
+        },
+    )
+
+    system: SystemParameters = field(
+        default_factory=SystemParameters,
+        metadata={
+            "help": _("System configuration"),
+        },
+    )
+    service: ServiceConfig = field(default_factory=ServiceConfig)
+    models: ModelsDeployParameters = field(
+        default_factory=ModelsDeployParameters,
+        metadata={
+            "help": _("Model deployment configuration"),
+        },
+    )
+    serves: List[BaseServeConfig] = field(
+        default_factory=list,
+        metadata={
+            "help": _("Serve configuration"),
+        },
+    )
+    rag: RagParameters = field(
+        default_factory=lambda: RagParameters(),
+        metadata={"help": _("Rag Knowledge Parameters")},
+    )
+    app: GPTsAppConfig = field(
+        default_factory=lambda: GPTsAppConfig(),
+        metadata={"help": _("GPTs application configuration")},
+    )
+    trace: TracerParameters = field(
+        default_factory=TracerParameters,
+        metadata={
+            "help": _("Global tracer configuration"),
+        },
+    )
+    log: LoggingParameters = field(
+        default_factory=LoggingParameters,
+        metadata={
+            "help": _("Logging configuration"),
+        },
+    )

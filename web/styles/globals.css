@@ -1,0 +1,204 @@
+@import './katex-override.css';
+@import './opencode-theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: var(--joy-fontFamily-body, var(--joy-Josefin Sans, sans-serif));
+  line-height: var(--joy-lineHeight-md, 1.5);
+  --antd-primary-color: #0069fe;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-appearance: none;
+}
+
+.light {
+  color: #333;
+  background-color: #f7f7f7;
+}
+
+.dark {
+  color: #f7f7f7;
+  background-color: #151622;
+}
+
+.dark-sub-bg {
+  background-color: rgb(35, 38, 44);
+}
+
+.ant-btn-primary {
+  background-color: var(--antd-primary-color);
+}
+
+.ant-pagination .ant-pagination-prev * {
+  color: var(--antd-primary-color) !important;
+}
+
+.ant-pagination .ant-pagination-next * {
+  color: var(--antd-primary-color) !important;
+}
+
+.ant-pagination .ant-pagination-item a {
+  color: rgb(176, 176, 191);
+}
+
+.ant-pagination .ant-pagination-item.ant-pagination-item-active {
+  background-color: var(--antd-primary-color) !important;
+}
+
+.ant-pagination .ant-pagination-item.ant-pagination-item-active a {
+  color: white !important;
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+.dark :where(.css-dev-only-do-not-override-18iikkb).ant-tabs .ant-tabs-tab-btn {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-18iikkb).ant-form-item .ant-form-item-label>label {
+  height: 36px;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+.animation-iteration-count-1 {
+  animation-iteration-count: 1;
+}
+
+.react-flow__panel {
+  display: none !important;
+}
+
+#home-container .ant-tabs-tab-active {
+  font-size: 16px;
+}
+
+#home-container .ant-tabs-tab {
+  font-size: 16px;
+}
+
+#home-container .ant-card-body {
+  padding: 12px 24px;
+}
+
+pre {
+  width: 100%;
+  overflow: auto;
+  white-space: pre-wrap;
+  padding-left: 0.5rem;
+}
+
+/* Floating buttons z-index system */
+.z-float-helper {
+  z-index: 997;
+}
+
+.z-prompt-bot {
+  z-index: 998;
+}
+
+.z-scroll-buttons {
+  z-index: 999;
+}
+
+/* Responsive floating button layout */
+@media (max-width: 768px) {
+  .float-button-container {
+    right: 1rem !important;
+    gap: 0.5rem;
+  }
+  
+  .float-button-container button {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .float-button-container {
+    right: 1.5rem !important;
+    gap: 0.5rem;
+  }
+  
+  .float-button-container button {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+}
+
+table {
+  display: block;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.rc-md-editor {
+  height: inherit;
+}
+
+.rc-md-editor .editor-container>.section {
+  border-right: none !important;
+}

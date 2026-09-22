@@ -1,0 +1,95 @@
+{
+  "dataset_version": "v1",
+  "random_seed": 20260904,
+  "status": "verified",
+  "generated_at_utc": "2026-09-05T15:44:00.120188+00:00",
+  "synthetic_data_notice": "This dataset is fully synthetic and contains no real company or personal information.",
+  "row_counts": {
+    "regions": 5,
+    "products": 36,
+    "customers": 150,
+    "sales": 60000,
+    "min_date": "2025-01-01",
+    "max_date": "2026-06-30"
+  },
+  "integrity_checks": {
+    "null_rows": 0,
+    "invalid_sales_formula": 0,
+    "invalid_profit_formula": 0,
+    "out_of_range_rows": 0,
+    "dimension_mismatch_rows": 0
+  },
+  "scenario": {
+    "id": "east_china_brake_q2_decline",
+    "period": "2026Q2",
+    "qoq_comparison_period": "2026Q1",
+    "yoy_comparison_period": "2025Q2",
+    "region": "华东",
+    "category": "刹车系统"
+  },
+  "expected_metrics": {
+    "current_sales": 1087378.79,
+    "qoq_sales_change_pct": -32.6794,
+    "yoy_sales_change_pct": -29.2719,
+    "average_discount_change_pp": 4.1782,
+    "gross_margin_change_pp": -2.7839,
+    "dealer_decline_contribution_pct": 74.8917,
+    "south_china_brake_yoy_change_pct": 17.0038
+  },
+  "expected_primary_channel": "经销商",
+  "expected_top_decline_customers": [
+    "华东核心经销商三号",
+    "华东核心经销商一号",
+    "华东核心经销商二号"
+  ],
+  "top_customer_evidence": [
+    {
+      "customer_name": "华东核心经销商三号",
+      "customer_level": "A",
+      "channel": "经销商",
+      "baseline_sales": 173822.25,
+      "current_sales": 15235.94,
+      "decline_amount": 158586.31
+    },
+    {
+      "customer_name": "华东核心经销商一号",
+      "customer_level": "A",
+      "channel": "经销商",
+      "baseline_sales": 156841.37,
+      "current_sales": 25696.01,
+      "decline_amount": 131145.36
+    },
+    {
+      "customer_name": "华东核心经销商二号",
+      "customer_level": "A",
+      "channel": "经销商",
+      "baseline_sales": 90182.13,
+      "current_sales": 25860.67,
+      "decline_amount": 64321.46
+    },
+    {
+      "customer_name": "华东经销商客户08",
+      "customer_level": "C",
+      "channel": "经销商",
+      "baseline_sales": 69548.26,
+      "current_sales": 20949.19,
+      "decline_amount": 48599.07
+    },
+    {
+      "customer_name": "华东经销商客户05",
+      "customer_level": "B",
+      "channel": "经销商",
+      "baseline_sales": 45365.2,
+      "current_sales": 10904.73,
+      "decline_amount": 34460.47
+    }
+  ],
+  "csv_sha256": {
+    "dim_customer.csv": "941132ca4f7a05608874e5cc91c80bd399f2971c964d9a6178a5311051c40d8c",
+    "dim_product.csv": "e4a35c984c748296dcce7ffd25cd56a011298e6c1d3ffef32c65af48ffa86db6",
+    "dim_region.csv": "db9f3207f9bada2b80db0acd003513cfd9883ab4dec84312519bf169119f02c6",
+    "fact_sales.csv": "0273d6c2f26302548e6321cd3c9c511f1433a94709886b38f0aea1f291a51221"
+  },
+  "dataset_fingerprint": "529e9fc1e3d1d8f2dd5ca8721511eb8c0e8f4966b902cb2a041e2677f3aa0ada",
+  "validation_result": "all_checks_passed"
+}

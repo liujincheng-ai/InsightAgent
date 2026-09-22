@@ -1,0 +1,454 @@
+# Chinese translations for PACKAGE package
+# PACKAGE 软件包的简体中文翻译.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-19 07:51+0800\n"
+"PO-Revision-Date: 2025-02-23 13:40+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embedding_factory.py:245
+msgid "Default Embeddings"
+msgstr "默认嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embedding_factory.py:249
+msgid "Default embeddings(using default embedding model of current system)"
+msgstr "默认嵌入（使用当前系统的默认嵌入模型）"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:61
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:37
+msgid "Device to run model. If None, the device is automatically determined"
+msgstr "运行模型的设备。若为 None，则自动确定设备"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:68
+msgid "Path of the cache folder."
+msgstr "缓存文件夹的路径"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:75
+msgid "Normalize embeddings."
+msgstr "对嵌入进行归一化处理"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:81
+msgid "Run encode() on multiple GPUs."
+msgstr "在多个 GPU 上运行 encode() 方法"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:87
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:53
+msgid "Keyword arguments to pass to the model."
+msgstr "传递给模型的关键字参数"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:93
+msgid "Keyword arguments to pass when calling the `encode` method."
+msgstr "调用 `encode` 方法时要传递的关键字参数"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:100
+msgid "Instruction to use for embedding documents. Just for Instructor model."
+msgstr "用于嵌入文档的指令。仅适用于 Instructor 模型"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:108
+msgid "Instruction to use for embedding query. Just for Instructor model."
+msgstr "用于嵌入查询的指令。仅适用于 Instructor 模型"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:147
+msgid "HuggingFace Embeddings"
+msgstr "HuggingFace 嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:150
+msgid "HuggingFace sentence_transformers embedding models."
+msgstr "HuggingFace sentence_transformers 嵌入模型"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:153
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:285
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:548
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:714
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:32
+msgid "Model Name"
+msgstr "模型名称"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:158
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:290
+msgid "Model name to use."
+msgstr "要使用的模型名称"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:279
+msgid "HuggingFace Instructor Embeddings"
+msgstr "HuggingFace Instructor 嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:282
+msgid "HuggingFace Instructor embeddings."
+msgstr "HuggingFace Instructor 嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:293
+msgid "Embed Instruction"
+msgstr "嵌入指令"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:298
+msgid "Instruction to use for embedding documents."
+msgstr "用于嵌入文档的指令"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:301
+msgid "Query Instruction"
+msgstr "查询指令"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:306
+msgid "Instruction to use for embedding query."
+msgstr "用于嵌入查询的指令。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:536
+msgid "HuggingFace Inference API Embeddings"
+msgstr "HuggingFace 推理 API 嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:539
+msgid "HuggingFace Inference API embeddings."
+msgstr "HuggingFace 推理 API 嵌入。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:542
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:706
+msgid "API Key"
+msgstr "API 密钥"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:545
+msgid "Your API key for the HuggingFace Inference API."
+msgstr "您在 HuggingFace 推理 API 中的 API 密钥。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:553
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:719
+msgid "The name of the model to use for text embeddings."
+msgstr "用于文本嵌入的模型名称。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:659
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:703
+msgid "The URL of the embeddings API."
+msgstr "嵌入 API 的 URL。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:665
+msgid "The API key for the embeddings API."
+msgstr "嵌入 API 的 API 密钥。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:672
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:186
+msgid ""
+"The real model name to pass to the provider, default is None. If backend is "
+"None, use name as the real model name."
+msgstr ""
+"传递给提供者的实际模型名称，默认为 None。如果后端为 None，则使用名称作为实际模型名称。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:681
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:727
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:195
+msgid "The timeout for the request in seconds."
+msgstr "请求的超时时间（秒）。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:692
+msgid "OpenAPI Embeddings"
+msgstr "OpenAPI 嵌入"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:695
+msgid "OpenAPI embeddings."
+msgstr "OpenAPI 嵌入。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:698
+msgid "API URL"
+msgstr "API URL"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:711
+msgid "Your API key for the Open API."
+msgstr "您在 Open API 中的 API 密钥。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:722
+msgid "Timeout"
+msgstr "超时时间"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:924
+msgid "The GTE models are trained by Alibaba DAMO Academy, supporting Chinese."
+msgstr "GTE 模型由阿里巴巴达摩院训练，支持中文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:934
+msgid "The GTE models are trained by Alibaba DAMO Academy, supporting English."
+msgstr "GTE 模型由阿里巴巴达摩院训练，支持英文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:944
+msgid ""
+"The embedding model are trained by MokaAI, this version support English and "
+"Chinese."
+msgstr "该嵌入模型由 MokaAI 训练，此版本支持英文和中文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:954
+msgid ""
+"The embedding model are trained by MokaAI, this version support Chinese."
+msgstr "该嵌入模型由 MokaAI 训练，此版本支持中文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:969
+msgid "The embedding model are trained by HKUNLP, it support English."
+msgstr "该嵌入模型由香港大学自然语言处理实验室训练，支持英文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:987
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/embeddings.py:997
+msgid "The embedding model are trained by OpenAI, it support English."
+msgstr "该嵌入模型由 OpenAI 训练，支持英文。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:45
+msgid "Max length for input sequences. Longer sequences will be truncated."
+msgstr "输入序列的最大长度，更长的序列将被截断。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:173
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:333
+msgid "The URL of the rerank API."
+msgstr "重排序 API 的 URL。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:179
+#: ../packages/dbgpt-core/src/dbgpt/rag/embedding/rerank.py:339
+msgid "The API key for the rerank API."
+msgstr "重排序 API 的 API 密钥。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:18
+msgid "Chunk Manager Operator"
+msgstr "分块管理算子"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:20
+msgid " Split Knowledge Documents into chunks."
+msgstr "将知识文档拆分为分块。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:24
+msgid "Chunk Split Parameters"
+msgstr "分块拆分参数"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:27
+msgid "Chunk Split Parameters."
+msgstr "分块拆分参数。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:35
+msgid "Knowledge"
+msgstr "知识"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:38
+msgid "The knowledge to be loaded."
+msgstr "要加载的知识。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:43
+msgid "Chunks"
+msgstr "分块"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/chunk_manager.py:46
+msgid "The split chunks by chunk manager."
+msgstr "由分块管理器拆分的分块。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:16
+msgid "Query Rewrite Operator"
+msgstr "查询重写算子"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:19
+msgid "Query rewrite operator."
+msgstr "查询重写算子。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:22
+msgid "Query context"
+msgstr "查询上下文"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:22
+msgid "query context"
+msgstr "查询上下文"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:27
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:31
+msgid "Rewritten queries"
+msgstr "重写的查询"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:36
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:38
+msgid "LLM Client"
+msgstr "大语言模型客户端"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:39
+msgid "The LLM Client."
+msgstr "大语言模型客户端。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:42
+msgid "Model name"
+msgstr "模型名称"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:47
+msgid "LLM model name."
+msgstr "大语言模型名称。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:50
+msgid "Prompt language"
+msgstr "提示语言"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:55
+msgid "Prompt language."
+msgstr "提示语言。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:58
+msgid "Number of results"
+msgstr "结果数量"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/operators/rewrite.py:63
+msgid "rewrite query number."
+msgstr "重写查询数量。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:212
+msgid "Character Text Splitter"
+msgstr "字符文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:217
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:428
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:830
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:873
+msgid "Separator"
+msgstr "分隔符"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:220
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:431
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:833
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:876
+msgid "Separator to split the text."
+msgstr "用于分割文本的分隔符。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:257
+msgid "Recursive Character Text Splitter"
+msgstr "递归字符文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:271
+msgid "Split text by characters recursively."
+msgstr "递归地按字符分割文本。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:336
+msgid "Spacy Text Splitter"
+msgstr "Spacy 文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:341
+msgid "Pipeline"
+msgstr "管道"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:344
+msgid "Spacy pipeline to use for tokenization."
+msgstr "用于分词的 Spacy 管道。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:349
+msgid "Split text by sentences using Spacy."
+msgstr "使用 Spacy 按句子分割文本。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:399
+msgid "Markdown Header Text Splitter"
+msgstr "Markdown 标题文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:404
+msgid "Return Each Line"
+msgstr "返回每一行"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:407
+msgid "Return each line with associated headers."
+msgstr "返回每一行及其关联的标题。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:412
+msgid "Chunk Size"
+msgstr "块大小"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:415
+msgid "Size of each chunk."
+msgstr "每个块的大小。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:420
+msgid "Chunk Overlap"
+msgstr "块重叠"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:423
+msgid "Overlap between chunks."
+msgstr "块之间的重叠。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:436
+msgid "Split markdown text by headers."
+msgstr "按标题分割 Markdown 文本。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:825
+msgid "Separator Text Splitter"
+msgstr "分隔符文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:838
+msgid "Split text by separator."
+msgstr "按分隔符分割文本。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:868
+msgid "Page Text Splitter"
+msgstr "页面文本分割器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/text_splitter/text_splitter.py:881
+msgid "Split text by page."
+msgstr "按页面分割文本。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:26
+msgid "Query Rewrite"
+msgstr "查询重写"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:29
+msgid "Query rewrite."
+msgstr "查询重写。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:35
+msgid "The LLM model name."
+msgstr "大语言模型名称。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:41
+msgid "The llm client."
+msgstr "大语言模型客户端。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:44
+msgid "Language"
+msgstr "语言"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rewrite.py:47
+msgid "The language of the query rewrite prompt."
+msgstr "查询重写提示的语言。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:88
+msgid "Default Ranker"
+msgstr "默认排序器"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:91
+msgid "Default ranker(Rank by score)."
+msgstr "默认排序器（按分数排序）。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:94
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:184
+msgid "Top k"
+msgstr "前 k 个"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:97
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:187
+msgid "The number of top k documents."
+msgstr "前 k 个文档的数量。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:178
+msgid "CrossEncoder Rerank"
+msgstr "交叉编码器重排序"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:181
+msgid "CrossEncoder ranker."
+msgstr "交叉编码器排序器。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:190
+msgid "Rerank Model"
+msgstr "重排序模型"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:193
+msgid "rerank model name, e.g., 'BAAI/bge-reranker-base'."
+msgstr "重排序模型名称，例如 'BAAI/bge-reranker-base'。"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:196
+msgid "device"
+msgstr "设备"
+
+#: ../packages/dbgpt-core/src/dbgpt/rag/retriever/rerank.py:199
+msgid "device name, e.g., 'cpu'."
+msgstr "设备名称，例如 'cpu'。"

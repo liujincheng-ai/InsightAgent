@@ -1,0 +1,10 @@
+diff --git a/docs/sidebars.js b/docs/sidebars.js
+index 667b5910..77904c28 100755
+--- a/docs/sidebars.js
++++ b/docs/sidebars.js
+@@ -851,4 +851,4 @@ const sidebars = {
+ };
+
+
+-module.exports = sidebars;
++module.exports = { ...sidebars, docsSidebar: sidebars.tutorialSidebar };

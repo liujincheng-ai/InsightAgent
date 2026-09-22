@@ -1,0 +1,155 @@
+# French translations for PACKAGE package.
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-19 00:06+0800\n"
+"PO-Revision-Date: 2025-02-23 13:40+0800\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:44
+msgid "Knowledge Space Operator"
+msgstr "Opérateur d'espace de connaissances"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:47
+msgid "knowledge space retriever operator."
+msgstr "Opérateur de récupération d'espace de connaissances."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:48
+msgid "Query"
+msgstr "Requête"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:48
+msgid "user query"
+msgstr "Requête utilisateur"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:51
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:54
+msgid "related chunk content"
+msgstr "Contenu de bloc associé"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:59
+msgid "Space Name"
+msgstr "Nom de l'espace"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:65
+msgid "space name."
+msgstr "Nom de l'espace."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:125
+msgid "Knowledge Space Prompt Builder Operator"
+msgstr "Opérateur de construction d'invite d'espace de connaissances"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:127
+msgid "Build messages from prompt template and chat history."
+msgstr "Construire des messages à partir d'un modèle d'invite et de l'historique de chat."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:132
+msgid "Chat Prompt Template"
+msgstr "Modèle d'invite de chat"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:135
+msgid "The chat prompt template."
+msgstr "Le modèle d'invite de chat."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:138
+msgid "History Key"
+msgstr "Clé de l'historique"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:143
+msgid "The key of history in prompt dict."
+msgstr "La clé de l'historique dans le dictionnaire d'invite."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:146
+msgid "String History"
+msgstr "Historique sous forme de chaîne"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:151
+msgid "Whether to convert the history to string."
+msgstr "Si l'historique doit être converti en chaîne de caractères."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:156
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:160
+msgid "user input"
+msgstr "Entrée de l'utilisateur"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:163
+msgid "space related context"
+msgstr "Contexte lié à l'espace"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:167
+msgid "context of knowledge space."
+msgstr "Contexte de l'espace de connaissances."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:170
+msgid "History"
+msgstr "Historique"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:174
+msgid "The history."
+msgstr "L'historique."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:179
+msgid "Formatted Messages"
+msgstr "Messages formatés"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/operators/knowledge_space.py:183
+msgid "The formatted messages."
+msgstr "Les messages formatés."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:20
+msgid "RAG Serve Configurations"
+msgstr "Configurations du service RAG"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:23
+msgid "This configuration is for the RAG serve module."
+msgstr "Cette configuration est destinée au module de service RAG."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:34
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:38
+msgid "Embedding Model"
+msgstr "Modèle d'encastrement"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:42
+msgid "Whether to verify the SSL certificate of the database"
+msgstr "Vérifier ou non le certificat SSL de la base de données"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:48
+msgid ""
+"The default thread pool size, If None, use default config of python thread "
+"pool"
+msgstr "Taille par défaut du pool de threads. Si None, utilisez la configuration par défaut du pool de threads Python."
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:55
+msgid "knowledge search top k"
+msgstr "Recherche de connaissances des k premiers résultats"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:59
+msgid "knowledge search top similarity score"
+msgstr "Score de similarité maximal dans la recherche de connaissances"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:63
+msgid "knowledge search rewrite"
+msgstr "Reécriture de la recherche de connaissances"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:67
+msgid "knowledge max chunks once load"
+msgstr "Nombre maximal de blocs de connaissances chargés en une seule fois"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:71
+msgid "knowledge max load thread"
+msgstr "Nombre maximal de threads de chargement de connaissances"
+
+#: ../packages/dbgpt-serve/src/dbgpt_serve/rag/config.py:75
+msgid "knowledge rerank top k"
+msgstr "Reclassement des k premiers résultats de la recherche de connaissances"

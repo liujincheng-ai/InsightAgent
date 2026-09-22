@@ -1,0 +1,145 @@
+{
+  "dataset_version": "day2-v1",
+  "database": "insight_agent",
+  "datasource_name": "InsightAgent汽车配件销售库",
+  "baseline_model": "deepseek-v4-flash",
+  "evaluation_policy": {
+    "fresh_conversation_per_case": true,
+    "score_first_generated_sql_only": true,
+    "pro_results_may_replace_flash_baseline": false,
+    "numeric_tolerance": 0.02
+  },
+  "cases": [
+    {
+      "id": "sql-01",
+      "question": "2026 年第二季度哪个区域销售额下降最多？",
+      "scope": "2026 Q2 相对 2026 Q1 的区域销售额环比变化",
+      "gold_facts": {
+        "region": "华东",
+        "qoq_change_pct": -3.17
+      }
+    },
+    {
+      "id": "sql-02",
+      "question": "华东 2026 Q2 的环比和同比分别是多少？",
+      "scope": "华东全部产品销售额；环比基准 2026 Q1，同比基准 2025 Q2",
+      "gold_facts": {
+        "sales_2026_q2": 15228822.09,
+        "qoq_change_pct": -3.17,
+        "yoy_change_pct": 1.85
+      }
+    },
+    {
+      "id": "sql-03",
+      "question": "华东 Q2 哪个汽车配件品类下降最多？",
+      "scope": "华东 2026 Q2 相对 2026 Q1 的品类销售额环比变化",
+      "gold_facts": {
+        "category": "刹车系统",
+        "qoq_change_pct": -32.68
+      }
+    },
+    {
+      "id": "sql-04",
+      "question": "华东刹车系统各渠道销售变化如何？",
+      "scope": "华东刹车系统 2026 Q2 相对 2026 Q1",
+      "gold_facts": {
+        "channels": [
+          {"channel": "经销商", "qoq_change_pct": -54.93, "decline_contribution_pct": 74.89},
+          {"channel": "直营网点", "qoq_change_pct": -29.09, "decline_contribution_pct": 14.57},
+          {"channel": "电商", "qoq_change_pct": -21.19, "decline_contribution_pct": 7.82},
+          {"channel": "汽修连锁", "qoq_change_pct": -7.77, "decline_contribution_pct": 3.93},
+          {"channel": "大客户直供", "qoq_change_pct": 3.80, "decline_contribution_pct": -1.22}
+        ],
+        "primary_decline_channel": "经销商"
+      }
+    },
+    {
+      "id": "sql-05",
+      "question": "哪三个客户对华东刹车系统下降贡献最大？",
+      "scope": "华东刹车系统 2026 Q2 相对 2026 Q1 的客户销售额下降贡献",
+      "gold_facts": {
+        "top_customers_in_order": [
+          "华东核心经销商三号",
+          "华东核心经销商一号",
+          "华东核心经销商二号"
+        ],
+        "all_are_level_a_dealers": true
+      }
+    },
+    {
+      "id": "sql-06",
+      "question": "华东和华南刹车系统表现有何不同？",
+      "scope": "2026 Q2 刹车系统环比与同比对比",
+      "gold_facts": {
+        "华东": {"qoq_change_pct": -32.68, "yoy_change_pct": -29.27},
+        "华南": {"qoq_change_pct": 9.51, "yoy_change_pct": 17.00}
+      }
+    },
+    {
+      "id": "sql-07",
+      "question": "华东刹车系统毛利率是否下降？",
+      "scope": "销售额加权毛利率；2026 Q2 相对 2026 Q1",
+      "gold_facts": {
+        "gross_margin_2026_q1_pct": 28.91,
+        "gross_margin_2026_q2_pct": 26.13,
+        "change_pp": -2.78,
+        "conclusion": "下降"
+      }
+    },
+    {
+      "id": "sql-08",
+      "question": "哪些产品在华东逆势增长？",
+      "scope": "华东整体 2026 Q2 环比下降时，具体产品同期销售额环比为正",
+      "gold_facts": {
+        "product_count": 14,
+        "products": [
+          "德远转向灯",
+          "启航减震器",
+          "锐联燃油滤清器",
+          "启航前照灯",
+          "恒驰空气滤清器",
+          "德远点火模块",
+          "安途牌照灯",
+          "锐联高压线",
+          "锐联玻璃水泵",
+          "德远皮带",
+          "德远空调滤清器",
+          "恒驰雨刮电机",
+          "新程张紧轮",
+          "启航火花塞"
+        ]
+      }
+    },
+    {
+      "id": "sql-09",
+      "question": "2026 年每月销售趋势是什么？",
+      "scope": "全部区域和产品；数据截止 2026-06-30",
+      "gold_facts": {
+        "monthly_sales": [
+          {"month": "2026-01", "sales": 26412918.38},
+          {"month": "2026-02", "sales": 26385627.35},
+          {"month": "2026-03", "sales": 26116624.56},
+          {"month": "2026-04", "sales": 26173033.22},
+          {"month": "2026-05", "sales": 26200207.54},
+          {"month": "2026-06", "sales": 26132866.84}
+        ]
+      }
+    },
+    {
+      "id": "sql-10",
+      "question": "经销商渠道销售下降从哪个月开始？",
+      "scope": "华东—刹车系统—经销商渠道；按月销售额环比观察下降阶段",
+      "gold_facts": {
+        "decline_phase_start_month": "2026-04",
+        "sales_2026_03": 258046.98,
+        "sales_2026_04": 126956.55,
+        "april_mom_change_pct": -50.80,
+        "sales_2026_05": 91907.15,
+        "may_mom_change_pct": -27.61,
+        "sales_2026_06": 105488.77,
+        "june_mom_change_pct": 14.78,
+        "interpretation": "4 月进入显著下降阶段，5 月继续下降；6 月虽环比回升，但仍远低于 3 月水平。"
+      }
+    }
+  ]
+}

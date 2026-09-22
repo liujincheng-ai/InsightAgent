@@ -1,0 +1,1477 @@
+{
+  "name": "InsightAgent Week 3 RAG Retrieval and Citation Benchmark",
+  "version": "1.0.2",
+  "dataset_status": "frozen-before-final-run",
+  "frozen_at": "2026-09-17",
+  "annotation_audit": "Dev scorer audit added meaning-preserving answer aliases and removed one fact not asked by its question; test/challenge questions were not inspected.",
+  "split_policy": "Only dev may guide tuning; test and challenge remain frozen.",
+  "case_type_counts": {
+    "single_document": 15,
+    "multi_document": 10,
+    "exact_clause": 10,
+    "no_answer": 5
+  },
+  "acceptance_thresholds": {
+    "document_hit_at_5": 0.9,
+    "mrr": 0.8,
+    "answer_fact_accuracy": 0.9,
+    "citation_precision": 0.9,
+    "no_answer_accuracy": 1.0,
+    "fabricated_citation_count": 0
+  },
+  "cases": [
+    {
+      "id": "w3-dev-single-01",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "A级经销商连续下降后，公司要求采取哪些整改措施？",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "专项预警",
+          "accepted_values": [
+            "1个工作日内发出专项预警"
+          ]
+        },
+        {
+          "name": "书面整改计划",
+          "accepted_values": [
+            "5个工作日内提交书面整改计划"
+          ]
+        },
+        {
+          "name": "联合拜访",
+          "accepted_values": [
+            "10个工作日内完成一次联合客户拜访"
+          ]
+        },
+        {
+          "name": "观察期",
+          "accepted_values": [
+            "30日整改观察期"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "3个工作日内提交说明"
+      ],
+      "should_answer": true,
+      "tags": [
+        "dealer",
+        "version_conflict"
+      ]
+    },
+    {
+      "id": "w3-dev-single-02",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "什么情况会触发经销商经营预警？系统预警能否直接证明客户即将流失？",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "3.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "连续下降",
+          "accepted_values": [
+            "连续两个月环比下降"
+          ]
+        },
+        {
+          "name": "季度阈值",
+          "accepted_values": [
+            "季度销售额环比下降超过20%",
+            "环比下降超过20%"
+          ]
+        },
+        {
+          "name": "预警边界",
+          "accepted_values": [
+            "不直接证明客户即将流失"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "预警即证明客户即将流失"
+      ],
+      "should_answer": true,
+      "tags": [
+        "dealer",
+        "boundary"
+      ]
+    },
+    {
+      "id": "w3-dev-single-03",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "A级经销商降级由谁提出、谁批准？",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "5.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "提出人",
+          "accepted_values": [
+            "区域销售经理提出"
+          ]
+        },
+        {
+          "name": "批准人",
+          "accepted_values": [
+            "销售总监批准"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "区域负责人直接调整等级"
+      ],
+      "should_answer": true,
+      "tags": [
+        "dealer",
+        "approval"
+      ]
+    },
+    {
+      "id": "w3-dev-single-04",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "重点客户的数据预警包含哪些可量化条件？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "2.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "月度条件",
+          "accepted_values": [
+            "月度销售额连续两个月环比下降"
+          ]
+        },
+        {
+          "name": "同比条件",
+          "accepted_values": [
+            "季度销售额同比下降超过20%"
+          ]
+        },
+        {
+          "name": "采购间隔",
+          "accepted_values": [
+            "最近60天没有有效采购"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "threshold"
+      ]
+    },
+    {
+      "id": "w3-dev-single-05",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "重点客户风险颜色如何按条件数量分级？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "2.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "黄色",
+          "accepted_values": [
+            "满足一项为黄色关注"
+          ]
+        },
+        {
+          "name": "橙色",
+          "accepted_values": [
+            "满足两项为橙色预警"
+          ]
+        },
+        {
+          "name": "红色",
+          "accepted_values": [
+            "满足三项及以上",
+            "明确表达停止合作意向为红色预警"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "预警分数直接当作流失事实"
+      ],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "classification"
+      ]
+    },
+    {
+      "id": "w3-dev-single-06",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "重点客户流失预警中，客户经理、区域销售经理和客户运营部分别负责什么？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "3.3"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "客户经理",
+          "accepted_values": [
+            "客户经理是第一责任人",
+            "联系客户、核验原因、提出方案并更新进展"
+          ]
+        },
+        {
+          "name": "区域销售经理",
+          "accepted_values": [
+            "协调价格、库存、技术和售后资源"
+          ]
+        },
+        {
+          "name": "客户运营部",
+          "accepted_values": [
+            "预警监控、时限提醒、证据完整性检查和闭环督办"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "roles"
+      ]
+    },
+    {
+      "id": "w3-dev-single-07",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "黄色、橙色和红色客户预警各有什么处理时限？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "4.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "黄色时限",
+          "accepted_values": [
+            "10个工作日内完成核验"
+          ]
+        },
+        {
+          "name": "橙色时限",
+          "accepted_values": [
+            "5个工作日内提交方案"
+          ]
+        },
+        {
+          "name": "红色时限",
+          "accepted_values": [
+            "1个工作日内升级",
+            "3个工作日内完成首次管理层复盘"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "deadline"
+      ]
+    },
+    {
+      "id": "w3-dev-single-08",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "一般订单的标准折扣上限是多少，谁可以按已批准方案执行？",
+      "gold_sources": [
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "3.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "标准上限",
+          "accepted_values": [
+            "一般订单折扣不超过8%",
+            "不超过8%",
+            "标准折扣上限是8%"
+          ]
+        },
+        {
+          "name": "执行人",
+          "accepted_values": [
+            "客户经理可以按已批准的客户方案执行"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "price",
+        "threshold"
+      ]
+    },
+    {
+      "id": "w3-dev-single-09",
+      "split": "dev",
+      "case_type": "single_document",
+      "question": "什么情况会触发折扣与毛利专项复核，由哪些部门负责？",
+      "gold_sources": [
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "5.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "触发条件",
+          "accepted_values": [
+            "平均折扣上升超过3个百分点且毛利率同步下降"
+          ]
+        },
+        {
+          "name": "负责部门",
+          "accepted_values": [
+            "财务部与销售运营部"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "price",
+        "margin"
+      ]
+    },
+    {
+      "id": "w3-test-single-10",
+      "split": "test",
+      "case_type": "single_document",
+      "question": "重点安全类产品预计多久内缺货可以申请紧急补货，谁审批？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "3.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "缺货窗口",
+          "accepted_values": [
+            "预计7天内缺货"
+          ]
+        },
+        {
+          "name": "审批人",
+          "accepted_values": [
+            "供应链经理审批"
+          ]
+        },
+        {
+          "name": "申请依据",
+          "accepted_values": [
+            "客户影响、需求依据、运输成本和临时替代方案"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "inventory",
+        "approval"
+      ]
+    },
+    {
+      "id": "w3-test-single-11",
+      "split": "test",
+      "case_type": "single_document",
+      "question": "库存进入滞销复核的条件是什么？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "滞销条件",
+          "accepted_values": [
+            "连续90天无销售且无已确认订单"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "inventory",
+        "threshold"
+      ]
+    },
+    {
+      "id": "w3-test-single-12",
+      "split": "test",
+      "case_type": "single_document",
+      "question": "涉及人身安全风险或批量失效时属于什么级别，应立即采取什么措施？",
+      "gold_sources": [
+        {
+          "document": "产品质量与售后处理规范.md",
+          "section": "2.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "问题级别",
+          "accepted_values": [
+            "一级问题"
+          ]
+        },
+        {
+          "name": "停止出库",
+          "accepted_values": [
+            "立即停止相关批次继续出库"
+          ]
+        },
+        {
+          "name": "上报时限",
+          "accepted_values": [
+            "2小时内上报质量负责人"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "quality",
+        "safety"
+      ]
+    },
+    {
+      "id": "w3-test-single-13",
+      "split": "test",
+      "case_type": "single_document",
+      "question": "一二三级质量问题的首次响应时限分别是多少？",
+      "gold_sources": [
+        {
+          "document": "产品质量与售后处理规范.md",
+          "section": "3.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "一级响应",
+          "accepted_values": [
+            "一级问题2小时内响应"
+          ]
+        },
+        {
+          "name": "二级响应",
+          "accepted_values": [
+            "二级问题1个工作日内响应"
+          ]
+        },
+        {
+          "name": "三级响应",
+          "accepted_values": [
+            "三级问题2个工作日内响应"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "quality",
+        "deadline"
+      ]
+    },
+    {
+      "id": "w3-test-single-14",
+      "split": "test",
+      "case_type": "single_document",
+      "question": "什么销售下降幅度要求区域负责人组织专项诊断？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "2.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "环比阈值",
+          "accepted_values": [
+            "季度销售额环比下降超过10%"
+          ]
+        },
+        {
+          "name": "同比阈值",
+          "accepted_values": [
+            "同比下降超过15%"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "goals",
+        "threshold"
+      ]
+    },
+    {
+      "id": "w3-challenge-single-15",
+      "split": "challenge",
+      "case_type": "single_document",
+      "question": "月度经营报告应在什么时候完成，并注明哪些分析信息？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "4.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "完成时间",
+          "accepted_values": [
+            "每月第5个工作日前"
+          ]
+        },
+        {
+          "name": "报告信息",
+          "accepted_values": [
+            "数据截止日期、统计口径和异常阈值"
+          ]
+        },
+        {
+          "name": "内容分层",
+          "accepted_values": [
+            "分别列示事实、可能因素和建议"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "goals",
+        "reporting"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-01",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "华东某A级经销商季度销售环比下降25%，公司应先认定什么风险，并按现行制度采取哪些关键动作？",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "3.2"
+        },
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "4.2"
+        },
+        {
+          "document": "2026年度经营目标.md",
+          "section": "2.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "经营异常",
+          "accepted_values": [
+            "季度销售额环比下降超过20%触发经营预警",
+            "触发经营预警"
+          ]
+        },
+        {
+          "name": "专项诊断",
+          "accepted_values": [
+            "区域负责人应组织专项诊断"
+          ]
+        },
+        {
+          "name": "整改动作",
+          "accepted_values": [
+            "专项预警",
+            "书面整改计划",
+            "联合客户拜访",
+            "30日整改观察期"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "直接取消A级资格",
+        "3个工作日内提交说明"
+      ],
+      "should_answer": true,
+      "tags": [
+        "dealer",
+        "goals",
+        "version_conflict"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-02",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "重点客户达到橙色预警并提出13%折扣诉求时，谁负责处置，折扣由谁审批？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "3.2"
+        },
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "3.3"
+        },
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "客户责任",
+          "accepted_values": [
+            "客户经理是第一责任人",
+            "第一责任人是客户经理",
+            "第一责任人"
+          ]
+        },
+        {
+          "name": "协调责任",
+          "accepted_values": [
+            "区域销售经理负责协调",
+            "区域销售经理负责复核挽回方案并协调"
+          ]
+        },
+        {
+          "name": "折扣审批",
+          "accepted_values": [
+            "销售总监和财务总监共同审批"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "可以流失风险为由绕过审批"
+      ],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "price",
+        "approval"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-03",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "刹车系统预计7天内缺货且可能影响安全类客户时，紧急补货和质量响应分别依据什么规则？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "3.2"
+        },
+        {
+          "document": "产品质量与售后处理规范.md",
+          "section": "2.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "紧急补货",
+          "accepted_values": [
+            "可发起紧急补货",
+            "供应链经理审批"
+          ]
+        },
+        {
+          "name": "安全风险",
+          "accepted_values": [
+            "一级问题",
+            "立即停止相关批次继续出库",
+            "2小时内上报质量负责人"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "inventory",
+        "quality",
+        "safety"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-04",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "A级经销商调整等级时，经营分析系统和审批流程各有什么边界？",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "5.1"
+        },
+        {
+          "document": "2026年度经营目标.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "审批流程",
+          "accepted_values": [
+            "区域销售经理提出，销售总监批准",
+            "区域销售经理提出"
+          ]
+        },
+        {
+          "name": "系统边界",
+          "accepted_values": [
+            "经营分析系统只能提供辅助判断",
+            "只能提供辅助判断"
+          ]
+        },
+        {
+          "name": "证据边界",
+          "accepted_values": [
+            "没有数据或制度依据时应明确说明证据不足"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "dealer",
+        "governance"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-05",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "销售下降同时出现缺货和质量投诉时，报告应如何区分可能原因，哪些结论不能直接下？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "4.1"
+        },
+        {
+          "document": "产品质量与售后处理规范.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "库存边界",
+          "accepted_values": [
+            "不能只依据销售额将下降归因于客户需求"
+          ]
+        },
+        {
+          "name": "质量边界",
+          "accepted_values": [
+            "不能仅凭时间相关性认定质量问题导致销售下降"
+          ]
+        },
+        {
+          "name": "证据要求",
+          "accepted_values": [
+            "引用投诉和质量调查证据",
+            "引用实际库存或缺货记录"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "质量问题是销售下降的唯一原因"
+      ],
+      "should_answer": true,
+      "tags": [
+        "causality",
+        "evidence"
+      ]
+    },
+    {
+      "id": "w3-dev-multi-06",
+      "split": "dev",
+      "case_type": "multi_document",
+      "question": "经营报告发现品类折扣上升4个百分点且毛利率连续下降时，应使用什么毛利率口径并启动什么复核？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "2.2"
+        },
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "5.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "毛利率口径",
+          "accepted_values": [
+            "总毛利除以总销售额",
+            "禁止直接平均单笔毛利率"
+          ]
+        },
+        {
+          "name": "专项复核",
+          "accepted_values": [
+            "财务部与销售运营部应开展专项复核",
+            "启动财务部与销售运营部的专项复核"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "margin",
+        "price"
+      ]
+    },
+    {
+      "id": "w3-test-multi-07",
+      "split": "test",
+      "case_type": "multi_document",
+      "question": "红色客户预警涉及超标准折扣时，升级时限和审批纪律是什么？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "4.1"
+        },
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "3.2"
+        },
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "升级时限",
+          "accepted_values": [
+            "1个工作日内升级",
+            "3个工作日内完成首次管理层复盘"
+          ]
+        },
+        {
+          "name": "审批纪律",
+          "accepted_values": [
+            "不得以流失风险为由绕过审批"
+          ]
+        },
+        {
+          "name": "折扣权限",
+          "accepted_values": [
+            "按以下权限审批",
+            "区域销售经理和财务经理",
+            "销售总监和财务总监"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "price",
+        "deadline"
+      ]
+    },
+    {
+      "id": "w3-test-multi-08",
+      "split": "test",
+      "case_type": "multi_document",
+      "question": "刹车系统区域经营报告和库存分析分别必须观察哪些指标，为什么不能只看销售额？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "3.1"
+        },
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "2.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "经营指标",
+          "accepted_values": [
+            "销售额、销量、平均折扣和加权毛利率"
+          ]
+        },
+        {
+          "name": "库存指标",
+          "accepted_values": [
+            "库存周转天数、缺货次数、滞销数量和在途数量"
+          ]
+        },
+        {
+          "name": "判断边界",
+          "accepted_values": [
+            "单看期末库存不能判断供应是否健康"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "goals",
+        "inventory",
+        "metrics"
+      ]
+    },
+    {
+      "id": "w3-test-multi-09",
+      "split": "test",
+      "case_type": "multi_document",
+      "question": "重点客户一次恢复下单后能否立即关闭流失风险，经销商等级恢复又需要什么条件？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "4.2"
+        },
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "5.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "客户关闭边界",
+          "accepted_values": [
+            "一次新订单但未恢复稳定采购时只能降级观察"
+          ]
+        },
+        {
+          "name": "等级恢复",
+          "accepted_values": [
+            "连续两个考核周期恢复目标后，可以申请重新评定"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "一次新订单即可直接关闭"
+      ],
+      "should_answer": true,
+      "tags": [
+        "customer",
+        "dealer",
+        "closure"
+      ]
+    },
+    {
+      "id": "w3-challenge-multi-10",
+      "split": "challenge",
+      "case_type": "multi_document",
+      "question": "超过15%的折扣申请如果涉及经营系统建议，应如何审批并保留什么边界？",
+      "gold_sources": [
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "4.2"
+        },
+        {
+          "document": "2026年度经营目标.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "审批链",
+          "accepted_values": [
+            "销售总监和财务总监审核",
+            "总经理批准"
+          ]
+        },
+        {
+          "name": "系统边界",
+          "accepted_values": [
+            "经营分析系统只能提供辅助判断"
+          ]
+        },
+        {
+          "name": "证据不足",
+          "accepted_values": [
+            "没有数据或制度依据时应明确说明证据不足"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "price",
+        "governance",
+        "approval"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-01",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "请准确列出《汽车配件价格与折扣管理办法》4.2节的三个现行折扣审批区间和审批人。",
+      "gold_sources": [
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "8至12",
+          "accepted_values": [
+            "超过8%且不超过12%，须由区域销售经理和财务经理共同审批",
+            "超过8%且不超过12%，由区域销售经理和财务经理共同审批"
+          ]
+        },
+        {
+          "name": "12至15",
+          "accepted_values": [
+            "超过12%且不超过15%，须由销售总监和财务总监共同审批",
+            "超过12%且不超过15%，由销售总监和财务总监共同审批"
+          ]
+        },
+        {
+          "name": "超过15",
+          "accepted_values": [
+            "超过15%",
+            "还须总经理批准"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [
+        "10%",
+        "14%",
+        "18%"
+      ],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "version_conflict"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-02",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "请按《经销商分级与考核管理制度》4.2节列出A级经销商连续下降后的五项措施。",
+      "gold_sources": [
+        {
+          "document": "经销商分级与考核管理制度.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "预警",
+          "accepted_values": [
+            "1个工作日内发出专项预警"
+          ]
+        },
+        {
+          "name": "整改计划",
+          "accepted_values": [
+            "5个工作日内提交书面整改计划"
+          ]
+        },
+        {
+          "name": "联合拜访",
+          "accepted_values": [
+            "10个工作日内完成一次联合客户拜访"
+          ]
+        },
+        {
+          "name": "观察",
+          "accepted_values": [
+            "30日整改观察期",
+            "每周跟踪订单、库存、价格和客户反馈"
+          ]
+        },
+        {
+          "name": "复核",
+          "accepted_values": [
+            "发起等级与资源支持复核",
+            "报销售总监审批"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "dealer"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-03",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "《重点客户流失预警办法》3.3节规定的三类核心岗位职责是什么？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "3.3"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "客户经理",
+          "accepted_values": [
+            "第一责任人"
+          ]
+        },
+        {
+          "name": "区域销售经理",
+          "accepted_values": [
+            "协调价格、库存、技术和售后资源"
+          ]
+        },
+        {
+          "name": "客户运营部",
+          "accepted_values": [
+            "预警监控、时限提醒、证据完整性检查和闭环督办"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "roles"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-04",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "《库存与补货管理规范》4.1节为什么禁止仅凭销售额认定需求下降？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "4.1"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "原因拆分",
+          "accepted_values": [
+            "区分需求下降、缺货、价格变化和客户流失"
+          ]
+        },
+        {
+          "name": "禁止结论",
+          "accepted_values": [
+            "存在缺货记录时，不能只依据销售额将下降归因于客户需求",
+            "不能只依据销售额将下降归因于客户需求"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "causality"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-05",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "《产品质量与售后处理规范》第5节对销售下降和质量投诉的因果表述有什么限制？",
+      "gold_sources": [
+        {
+          "document": "产品质量与售后处理规范.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "待验证因素",
+          "accepted_values": [
+            "可以将质量问题列为待验证因素"
+          ]
+        },
+        {
+          "name": "因果限制",
+          "accepted_values": [
+            "不能仅凭时间相关性认定质量问题导致销售下降"
+          ]
+        },
+        {
+          "name": "证据要求",
+          "accepted_values": [
+            "引用投诉和质量调查证据"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "causality"
+      ]
+    },
+    {
+      "id": "w3-dev-exact-06",
+      "split": "dev",
+      "case_type": "exact_clause",
+      "question": "《2026年度经营目标》2.2节规定毛利率应如何计算，禁止什么做法？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "2.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "公式",
+          "accepted_values": [
+            "总毛利除以总销售额"
+          ]
+        },
+        {
+          "name": "禁止",
+          "accepted_values": [
+            "禁止直接平均单笔毛利率"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "metric"
+      ]
+    },
+    {
+      "id": "w3-test-exact-07",
+      "split": "test",
+      "case_type": "exact_clause",
+      "question": "《2026年度经营目标》第5节对没有数据或制度依据的情况要求如何表述？",
+      "gold_sources": [
+        {
+          "document": "2026年度经营目标.md",
+          "section": "5"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "证据不足",
+          "accepted_values": [
+            "应明确说明证据不足"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "no_evidence"
+      ]
+    },
+    {
+      "id": "w3-test-exact-08",
+      "split": "test",
+      "case_type": "exact_clause",
+      "question": "《重点客户流失预警办法》4.2节规定风险关闭必须具备什么，一次新订单应如何处理？",
+      "gold_sources": [
+        {
+          "document": "重点客户流失预警办法.md",
+          "section": "4.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "关闭条件",
+          "accepted_values": [
+            "客户沟通记录和后续经营数据"
+          ]
+        },
+        {
+          "name": "一次订单",
+          "accepted_values": [
+            "只能降级观察，不能直接关闭"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "closure"
+      ]
+    },
+    {
+      "id": "w3-test-exact-09",
+      "split": "test",
+      "case_type": "exact_clause",
+      "question": "《汽车配件价格与折扣管理办法》2.2节如何解释0.0800，并规定哪种平均折扣口径？",
+      "gold_sources": [
+        {
+          "document": "汽车配件价格与折扣管理办法.md",
+          "section": "2.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "比例解释",
+          "accepted_values": [
+            "0.0800表示按未折扣成交金额优惠8%"
+          ]
+        },
+        {
+          "name": "监控口径",
+          "accepted_values": [
+            "制度监控默认采用订单行平均折扣率"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "metric"
+      ]
+    },
+    {
+      "id": "w3-challenge-exact-10",
+      "split": "challenge",
+      "case_type": "exact_clause",
+      "question": "《库存与补货管理规范》3.2节的紧急补货触发条件、申请材料和审批人分别是什么？",
+      "gold_sources": [
+        {
+          "document": "库存与补货管理规范.md",
+          "section": "3.2"
+        }
+      ],
+      "expected_facts": [
+        {
+          "name": "触发",
+          "accepted_values": [
+            "重点安全类产品预计7天内缺货"
+          ]
+        },
+        {
+          "name": "材料",
+          "accepted_values": [
+            "客户影响、需求依据、运输成本和临时替代方案"
+          ]
+        },
+        {
+          "name": "审批",
+          "accepted_values": [
+            "供应链经理审批"
+          ]
+        }
+      ],
+      "unacceptable_conclusions": [],
+      "should_answer": true,
+      "tags": [
+        "exact",
+        "approval"
+      ]
+    },
+    {
+      "id": "w3-dev-noanswer-01",
+      "split": "dev",
+      "case_type": "no_answer",
+      "question": "现行制度规定单笔两千万元设备投资由谁审批？",
+      "gold_sources": [],
+      "expected_facts": [],
+      "unacceptable_conclusions": [
+        "两千万元设备投资由总经理审批"
+      ],
+      "should_answer": false,
+      "tags": [
+        "no_answer",
+        "finance"
+      ]
+    },
+    {
+      "id": "w3-dev-noanswer-02",
+      "split": "dev",
+      "case_type": "no_answer",
+      "question": "公司国内出差住宿费每天的报销上限是多少元？",
+      "gold_sources": [],
+      "expected_facts": [],
+      "unacceptable_conclusions": [
+        "住宿费上限为500元",
+        "住宿费上限为800元"
+      ],
+      "should_answer": false,
+      "tags": [
+        "no_answer",
+        "travel"
+      ]
+    },
+    {
+      "id": "w3-dev-noanswer-03",
+      "split": "dev",
+      "case_type": "no_answer",
+      "question": "员工每年有多少天带薪病假，由谁审批？",
+      "gold_sources": [],
+      "expected_facts": [],
+      "unacceptable_conclusions": [
+        "每年10天带薪病假",
+        "由人力资源部审批"
+      ],
+      "should_answer": false,
+      "tags": [
+        "no_answer",
+        "hr"
+      ]
+    },
+    {
+      "id": "w3-test-noanswer-04",
+      "split": "test",
+      "case_type": "no_answer",
+      "question": "信息安全制度要求员工密码多少天强制更换一次？",
+      "gold_sources": [],
+      "expected_facts": [],
+      "unacceptable_conclusions": [
+        "每90天更换密码",
+        "每60天更换密码"
+      ],
+      "should_answer": false,
+      "tags": [
+        "no_answer",
+        "security"
+      ]
+    },
+    {
+      "id": "w3-challenge-noanswer-05",
+      "split": "challenge",
+      "case_type": "no_answer",
+      "question": "销售人员的季度佣金比例是多少，最高封顶多少？",
+      "gold_sources": [],
+      "expected_facts": [],
+      "unacceptable_conclusions": [
+        "季度佣金比例为3%",
+        "最高封顶20万元"
+      ],
+      "should_answer": false,
+      "tags": [
+        "no_answer",
+        "compensation"
+      ]
+    }
+  ]
+}

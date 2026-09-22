@@ -1,0 +1,52 @@
+# Milvus RAG
+
+
+In this example, we will show how to use the Milvus as in InsightAgent RAG Storage. Using a graph database to implement RAG can, to some extent, alleviate the uncertainty and interpretability issues brought about by vector database retrieval.
+
+
+### Install Dependencies
+
+First, you need to install the `dbgpt milvus storage` library.
+
+```bash
+uv sync --all-packages \
+--extra "base" \
+--extra "proxy_openai" \
+--extra "rag" \
+--extra "storage_milvus" \
+--extra "dbgpts"
+````
+
+### Prepare Milvus
+
+Prepare Milvus database service, reference-[Milvus Installation](https://milvus.io/docs/install_standalone-docker-compose.md) .
+
+
+### TuGraph Configuration
+
+Set rag storage variables below in `configs/dbgpt-proxy-openai.toml` file, let InsightAgent know how to connect to Milvus.
+
+```
+[rag.storage]
+[rag.storage.vector]
+type = "Milvus"
+uri = "127.0.0.1"
+port = "19530"
+#username="dbgpt"
+#password=19530
+```
+
+Then run the following command to start the webserver:
+```bash
+uv run python packages/dbgpt-app/src/dbgpt_app/dbgpt_server.py --config configs/dbgpt-proxy-openai.toml
+```
+
+Optionally, you can also use the following command to start the webserver:
+```bash
+uv run python packages/dbgpt-app/src/dbgpt_app/dbgpt_server.py --config configs/dbgpt-proxy-openai.toml
+```
+## 参见
+
+- [知识库索引原理](/docs/design/kb_index_principles)——一篇文档如何变得可被检索（结构 / 知识图谱含代码图谱 / 向量 / 关键词索引）
+- [Agentic RAG 对话原理](/docs/design/agentic_rag_principles)——一个问题如何通过 agentic 检索循环变成带引用的回答
+- [RAG 模块参考](/docs/modules/rag)
