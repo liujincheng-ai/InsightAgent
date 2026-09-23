@@ -150,9 +150,7 @@ def update_from_git(
         url = github_repo + "/archive/refs/heads/" + branch_name + ".zip"
         plugin_repo_name = github_repo.strip("/").split("/")[-1]
     else:
-        url = (
-            "https://github.com/liujincheng-ai/InsightAgent-Plugins/archive/refs/heads/main.zip"
-        )
+        url = "https://github.com/liujincheng-ai/InsightAgent-Plugins/archive/refs/heads/main.zip"
         plugin_repo_name = "InsightAgent-Plugins"
     try:
         session = requests.Session()

@@ -47,9 +47,7 @@ def parse_strict_action_input(
     return {"sql": parsed["sql"].strip()}
 
 
-def normalize_common_tool_args(
-    tool_name: str, tool_args: Any
-) -> Any:
+def normalize_common_tool_args(tool_name: str, tool_args: Any) -> Any:
     """Normalize frequent, unambiguous aliases emitted by chat models."""
 
     if not isinstance(tool_args, dict):

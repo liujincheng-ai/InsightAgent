@@ -238,7 +238,9 @@ class PluginHub:
                     plugin_hub_info.type = ""
                     plugin_hub_info.storage_channel = PluginStorageType.Git.value
                     plugin_hub_info.storage_url = DEFAULT_PLUGIN_REPO
-                    plugin_hub_info.author = getattr(git_plugin, "_author", "InsightAgent")
+                    plugin_hub_info.author = getattr(
+                        git_plugin, "_author", "InsightAgent"
+                    )
                     plugin_hub_info.email = getattr(git_plugin, "_email", "")
                     download_param = {}
                     if branch_name:

@@ -16,9 +16,7 @@ def _decode_sse_event(event: str):
 
 
 def test_generic_react_request_with_knowledge_space_is_a_knowledge_turn() -> None:
-    dialogue = SimpleNamespace(
-        ext_info={"knowledge_space_name": "汽车配件企业制度库"}
-    )
+    dialogue = SimpleNamespace(ext_info={"knowledge_space_name": "汽车配件企业制度库"})
 
     assert agentic_data_api._is_knowledge_turn(dialogue, "full") is True
 
@@ -77,8 +75,10 @@ async def test_closing_stream_cancels_and_awaits_agent_task(monkeypatch) -> None
         finally:
             task_finished.set()
 
-    async def _fake_stream_impl(dialogue, tool_mode="full", agent_task_holder=None):
-        del dialogue, tool_mode
+    async def _fake_stream_impl(
+        dialogue, tool_mode="full", agent_task_holder=None, reliability_runtime=None
+    ):
+        del dialogue, tool_mode, reliability_runtime
         task = asyncio.create_task(_agent_work())
         created_tasks.append(task)
         agent_task_holder.append(task)
@@ -107,8 +107,13 @@ async def test_closing_stream_cancels_and_awaits_agent_task(monkeypatch) -> None
 async def test_runtime_failure_emits_structured_final_and_done(
     monkeypatch, caplog
 ) -> None:
-    async def _failing_stream_impl(dialogue, tool_mode="full", agent_task_holder=None):
-        del dialogue, tool_mode, agent_task_holder
+    async def _failing_stream_impl(
+        dialogue,
+        tool_mode="full",
+        agent_task_holder=None,
+        reliability_runtime=None,
+    ):
+        del dialogue, tool_mode, agent_task_holder, reliability_runtime
         if False:
             yield ""
         raise RuntimeError("model stream failed")
@@ -139,9 +144,12 @@ async def test_runtime_failure_emits_structured_final_and_done(
 @pytest.mark.asyncio
 async def test_runtime_failure_does_not_duplicate_a_final_event(monkeypatch) -> None:
     async def _partially_failing_stream_impl(
-        dialogue, tool_mode="full", agent_task_holder=None
+        dialogue,
+        tool_mode="full",
+        agent_task_holder=None,
+        reliability_runtime=None,
     ):
-        del dialogue, tool_mode, agent_task_holder
+        del dialogue, tool_mode, agent_task_holder, reliability_runtime
         yield agentic_data_api._sse_event(
             AgentFinalAnswer(content="answer").to_sse_payload()
         )
@@ -165,9 +173,19 @@ async def test_runtime_failure_does_not_duplicate_a_final_event(monkeypatch) -> 
 @pytest.mark.asyncio
 async def test_turn_timeout_emits_diagnostic_final_and_done(monkeypatch) -> None:
     async def _slow_stream_impl(
-        dialogue, tool_mode="full", attachment_ctx=None, agent_task_holder=None
+        dialogue,
+        tool_mode="full",
+        attachment_ctx=None,
+        agent_task_holder=None,
+        reliability_runtime=None,
     ):
-        del dialogue, tool_mode, attachment_ctx, agent_task_holder
+        del (
+            dialogue,
+            tool_mode,
+            attachment_ctx,
+            agent_task_holder,
+            reliability_runtime,
+        )
         await asyncio.sleep(1)
         if False:
             yield ""
@@ -207,8 +225,10 @@ async def test_response_disconnect_closes_stream_and_agent_task(monkeypatch) -> 
         finally:
             task_finished.set()
 
-    async def _fake_stream_impl(dialogue, tool_mode="full", agent_task_holder=None):
-        del dialogue, tool_mode
+    async def _fake_stream_impl(
+        dialogue, tool_mode="full", agent_task_holder=None, reliability_runtime=None
+    ):
+        del dialogue, tool_mode, reliability_runtime
         task = asyncio.create_task(_agent_work())
         created_tasks.append(task)
         agent_task_holder.append(task)

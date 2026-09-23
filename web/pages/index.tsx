@@ -4676,9 +4676,7 @@ const Playground: NextPage = () => {
             <div className='absolute bottom-6 left-0 right-0 flex justify-center'>
               <div className='bg-white/60 dark:bg-[#1e1f24]/60 backdrop-blur-sm px-5 py-2.5 rounded-full border border-gray-100 dark:border-gray-700/50 flex items-center gap-3 shadow-sm cursor-pointer hover:shadow-md hover:bg-white/90 dark:hover:bg-[#1e1f24]/90 transition-all duration-300'>
                 <Image src='/LOGO_SMALL.png' alt='InsightAgent' width={22} height={22} className='object-contain' />
-                <span className='text-xs font-medium text-gray-600 dark:text-gray-300 tracking-wide'>
-                  InsightAgent
-                </span>
+                <span className='text-xs font-medium text-gray-600 dark:text-gray-300 tracking-wide'>InsightAgent</span>
                 <span className='text-[10px] text-gray-400 dark:text-gray-500'>·</span>
                 <span className='text-[10px] text-gray-400 dark:text-gray-500'>Evidence-first analytics</span>
               </div>

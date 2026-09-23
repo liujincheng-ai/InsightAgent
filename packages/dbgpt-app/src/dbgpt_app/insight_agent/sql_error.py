@@ -185,11 +185,7 @@ def classify_preflight_error(errors: list[str] | tuple[str, ...]) -> SqlErrorInf
     """Classify deterministic preflight feedback using the same public contract."""
 
     message = "；".join(str(item) for item in errors)
-    if (
-        "只允许 SELECT" in message
-        or "禁止的 DML" in message
-        or "禁止的 DDL" in message
-    ):
+    if "只允许 SELECT" in message or "禁止的 DML" in message or "禁止的 DDL" in message:
         category = "PERMISSION_DENIED"
     elif "只允许一条 SQL 语句" in message:
         # Multiple read-only SELECTs are never executed, but this is a safely
@@ -205,7 +201,6 @@ def classify_preflight_error(errors: list[str] | tuple[str, ...]) -> SqlErrorInf
         error_code=category,
         retryable=category != "PERMISSION_DENIED",
         safe_summary=(
-            f"{_SAFE_GUIDANCE[category]} "
-            f"预检提示：{sanitize_sql_error(message)}"
+            f"{_SAFE_GUIDANCE[category]} 预检提示：{sanitize_sql_error(message)}"
         ),
     )

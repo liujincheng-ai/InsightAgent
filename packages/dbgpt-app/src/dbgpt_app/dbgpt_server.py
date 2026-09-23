@@ -288,7 +288,8 @@ def run_webserver(config_file: str):
     initialize_tracer(
         trace_file,
         system_app=system_app,
-        root_operation_name=trace_config.root_operation_name or "InsightAgent-Webserver",
+        root_operation_name=trace_config.root_operation_name
+        or "InsightAgent-Webserver",
         tracer_parameters=trace_config,
     )
 

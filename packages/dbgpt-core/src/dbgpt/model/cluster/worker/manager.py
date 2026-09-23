@@ -1323,7 +1323,8 @@ def run_worker_manager(
     initialize_tracer(
         trace_file,
         system_app=system_app,
-        root_operation_name=trace_config.root_operation_name or "InsightAgent-ModelWorker",
+        root_operation_name=trace_config.root_operation_name
+        or "InsightAgent-ModelWorker",
         tracer_parameters=trace_config,
     )
     if isinstance(deploy_model_params, LLMDeployModelParameters):

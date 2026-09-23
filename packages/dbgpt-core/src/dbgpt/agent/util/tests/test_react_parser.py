@@ -529,12 +529,14 @@ Action Input: {"demo": true}
         assert len(steps) == 1
         assert steps[0].action == "sql_query"
         assert steps[0].action_input == {"sql": "SELECT 1"}
-        assert parser.parse_current_step(
-            'Thought: {"sql": "SELECT 1", "unexpected": true}'
-        )[0].action is None
         assert (
-            parser.parse_current_step('Thought: {"sql": "SELECT 1"')[0].action
+            parser.parse_current_step(
+                'Thought: {"sql": "SELECT 1", "unexpected": true}'
+            )[0].action
             is None
+        )
+        assert (
+            parser.parse_current_step('Thought: {"sql": "SELECT 1"')[0].action is None
         )
 
     def test_bold_react_markers_are_normalized_but_fenced_headings_are_not(self):
@@ -652,8 +654,8 @@ Action Input: {"demo": true}
         text = (
             "找到制度文件。"
             "<｜｜DSML｜｜tool_calls>"
-            "<｜｜DSML｜｜invoke name=\"kb_cat\">"
-            "<｜｜DSML｜｜parameter name=\"path\" string=\"true\">"
+            '<｜｜DSML｜｜invoke name="kb_cat">'
+            '<｜｜DSML｜｜parameter name="path" string="true">'
             "经销商分级与考核管理制度.md"
             "<｜｜DSML｜｜parameter>"
             "<｜｜DSML｜｜/invoke>"
@@ -737,10 +739,7 @@ Action Input: {"demo": true}
 
     def test_bare_business_arguments_are_rejected_with_specific_feedback(self):
         parser = ReActOutputParser()
-        text = (
-            "{'region': '华东', 'category': '刹车系统', "
-            "'current_quarter': '2026Q2'}"
-        )
+        text = "{'region': '华东', 'category': '刹车系统', 'current_quarter': '2026Q2'}"
 
         assert parser.parse_current_step(text) == []
         assert "Do not output arguments alone" in parser.format_error_message(text)

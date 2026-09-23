@@ -114,7 +114,9 @@ class DefaultLLMClient(LLMClient):
     label=_("Remote LLM Client"),
     name="remote_llm_client",
     category=ResourceCategory.LLM_CLIENT,
-    description=_("Remote LLM client(Connect to the remote InsightAgent model serving)"),
+    description=_(
+        "Remote LLM client(Connect to the remote InsightAgent model serving)"
+    ),
     parameters=[
         Parameter.build_from(
             _("Controller Address"),

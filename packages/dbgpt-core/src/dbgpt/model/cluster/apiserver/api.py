@@ -285,7 +285,10 @@ class APIServer(BaseComponent):
         for m in models:
             model_cards.append(
                 ModelCard(
-                    id=m, root=m, owned_by="InsightAgent", permission=[ModelPermission()]
+                    id=m,
+                    root=m,
+                    owned_by="InsightAgent",
+                    permission=[ModelPermission()],
                 )
             )
         return ModelList(data=model_cards)
@@ -869,7 +872,8 @@ def initialize_apiserver(
     initialize_tracer(
         trace_file,
         system_app=system_app,
-        root_operation_name=trace_config.root_operation_name or "InsightAgent-APIServer",
+        root_operation_name=trace_config.root_operation_name
+        or "InsightAgent-APIServer",
         tracer_parameters=trace_config,
     )
 
