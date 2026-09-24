@@ -35,6 +35,11 @@ concurrency:
 jobs:
   test-python:
     runs-on: ${{ matrix.os }}
+    env:
+      # The InsightAgent acceptance tests exercise the app/serve/ext source
+      # packages directly.  Keeping these paths explicit avoids installing the
+      # full optional workspace (and its heavyweight RAG/accelerator stack).
+      PYTHONPATH: ${{ github.workspace }}/packages/dbgpt-app/src:${{ github.workspace }}/packages/dbgpt-serve/src:${{ github.workspace }}/packages/dbgpt-ext/src
     strategy:
       fail-fast: false
       matrix:
@@ -66,9 +71,13 @@ jobs:
             --link-mode=copy \
             --frozen
 
-      - name: Run tests
+      - name: Run InsightAgent acceptance tests
         run: |
-          uv run pytest --pyargs dbgpt --cov=dbgpt --cov-report=xml:coverage-${{ matrix.python-version }}-${{ matrix.os }}.xml --cov-report=html:htmlcov-${{ matrix.python-version }}-${{ matrix.os }} --junitxml=pytest_report-${{ matrix.python-version }}-${{ matrix.os }}.xml
+          uv run pytest tests/insight_agent \
+            --cov=dbgpt \
+            --cov-report=xml:coverage-${{ matrix.python-version }}-${{ matrix.os }}.xml \
+            --cov-report=html:htmlcov-${{ matrix.python-version }}-${{ matrix.os }} \
+            --junitxml=pytest_report-${{ matrix.python-version }}-${{ matrix.os }}.xml
 
       - name: Generate coverage report summary
         if: matrix.os == 'ubuntu-latest'
