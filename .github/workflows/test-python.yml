@@ -43,10 +43,10 @@ jobs:
         python-version: ["3.10", "3.11"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -61,7 +61,8 @@ jobs:
             --extra rag \
             --extra storage_chromadb \
             --extra dbgpts \
-            --link-mode=copy
+            --link-mode=copy \
+            --frozen
 
       - name: Run tests
         run: |
