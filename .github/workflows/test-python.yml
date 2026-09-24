@@ -74,8 +74,20 @@ jobs:
 
       - name: Run InsightAgent acceptance tests
         run: |
+          output_file="pytest_output-${{ matrix.python-version }}-${{ matrix.os }}.txt"
+          set +e
           uv run --no-sync python -m pytest tests/insight_agent \
-            --junitxml=pytest_report-${{ matrix.python-version }}-${{ matrix.os }}.xml
+            --junitxml=pytest_report-${{ matrix.python-version }}-${{ matrix.os }}.xml \
+            > "$output_file" 2>&1
+          test_status=$?
+          cat "$output_file"
+          {
+            echo "### InsightAgent acceptance-test output"
+            echo '```text'
+            tail -n 160 "$output_file"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$test_status"
 
       - name: Generate test report summary
         if: matrix.os == 'ubuntu-latest'
@@ -105,4 +117,5 @@ jobs:
           name: test-and-coverage-results-${{ matrix.python-version }}-${{ matrix.os }}
           path: |
             pytest_report-${{ matrix.python-version }}-${{ matrix.os }}.xml
+            pytest_output-${{ matrix.python-version }}-${{ matrix.os }}.txt
           if-no-files-found: ignore
