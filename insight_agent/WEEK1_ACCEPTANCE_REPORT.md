@@ -23,9 +23,9 @@ Week 1 已完成业务语义层、语义视图、歧义门禁、通用语义预�
 
 | Split | 数量 | SHA-256 |
 |---|---:|---|
-| dev | 18 | `8c036563431151e65b83f572565ea3548b6cb398c8beaa82ce2b920b842ac3ff` |
-| test | 8 | `10788d601457dec2bd5a82f93135e8fc860cc22c14d78db73f1987817da02bef` |
-| challenge | 4 | `110b96dfc5d630fbd09f5818770a5ed43bab4b98b3d95ab9c0253682fea35b9c` |
+| dev | 18 | `a912a70918cfcd838f77903895ca3dcc93bd29f09e099768edd3102fc5a23728` |
+| test | 8 | `2d35eedb8000de6cb073bd23d91d7e6de70cf300fba5061a7509910c5f7cd647` |
+| challenge | 4 | `562ad043ad7bb0c8550b189de56d5e13fddb94a9fd8dc162738e61da7dc49b4d` |
 
 Gold 结果由时间范围为 2025-01-01 至 2026-06-30、固定随机种子 `20260904` 的 CSV 数据通过 DuckDB 确定性生成。PostgreSQL 语义视图另以 `insight_readonly` 角色完成真实只读抽查；不把该抽查描述成 30 条 Gold SQL 全量 PostgreSQL 复验。
 

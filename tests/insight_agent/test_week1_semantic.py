@@ -26,6 +26,12 @@ ROOT = Path(__file__).resolve().parents[2]
 DATASET_DIR = ROOT / "insight_agent" / "evaluation" / "dataset"
 
 
+def _canonical_sha256(path: Path) -> str:
+    """Hash dataset content independently of the checkout's line endings."""
+    canonical_bytes = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(canonical_bytes).hexdigest()
+
+
 def test_semantic_dataset_has_frozen_18_8_4_contract() -> None:
     datasets = load_semantic_datasets(DATASET_DIR)
     assert validate_semantic_datasets(datasets) == []
@@ -40,19 +46,17 @@ def test_semantic_dataset_has_frozen_18_8_4_contract() -> None:
 def test_semantic_dataset_fingerprints_are_frozen() -> None:
     expected = {
         "sql_semantic_dev.json": (
-            "8c036563431151e65b83f572565ea3548b6cb398c8beaa82ce2b920b842ac3ff"
+            "a912a70918cfcd838f77903895ca3dcc93bd29f09e099768edd3102fc5a23728"
         ),
         "sql_semantic_test.json": (
-            "10788d601457dec2bd5a82f93135e8fc860cc22c14d78db73f1987817da02bef"
+            "2d35eedb8000de6cb073bd23d91d7e6de70cf300fba5061a7509910c5f7cd647"
         ),
         "sql_semantic_challenge.json": (
-            "110b96dfc5d630fbd09f5818770a5ed43bab4b98b3d95ab9c0253682fea35b9c"
+            "562ad043ad7bb0c8550b189de56d5e13fddb94a9fd8dc162738e61da7dc49b4d"
         ),
     }
     for filename, digest in expected.items():
-        assert (
-            hashlib.sha256((DATASET_DIR / filename).read_bytes()).hexdigest() == digest
-        )
+        assert _canonical_sha256(DATASET_DIR / filename) == digest
 
 
 def test_profiles_isolate_schema_and_glossary_content() -> None:
