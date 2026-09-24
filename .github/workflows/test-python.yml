@@ -60,6 +60,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install uv
           python -m pip install -r requirements/dev-requirements.txt
+          python -m pip install psycopg2-binary
           uv sync --package dbgpt \
             --extra client \
             --extra cli \
