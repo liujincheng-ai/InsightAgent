@@ -750,8 +750,8 @@ class OpenAPIEmbeddings(BaseModel, Embeddings):
             openai_embeddings.embed_documents(texts)
 
         Using InsightAgent APIServer's embedding API:
-        To use the InsightAgent APIServer's embedding API, you should deploy InsightAgent according
-        to the `Cluster Deploy
+        To use the InsightAgent APIServer's embedding API, you should deploy
+        InsightAgent according to the `Cluster Deploy
         <https://liujincheng-ai.github.io/InsightAgent/docs/installation/model_service/cluster>`_.
 
         A simple example:

@@ -52,7 +52,8 @@ class OSSStorageConfig(StorageBackendConfig):
         default=None,
         metadata={
             "help": _(
-                "The fixed bucket name to use. If set, all logical buckets in InsightAgent "
+                "The fixed bucket name to use. If set, all logical buckets in "
+                "InsightAgent "
                 "will be mapped to this bucket. We suggest you set this value to avoid "
                 "bucket name conflicts."
             )
@@ -62,7 +63,8 @@ class OSSStorageConfig(StorageBackendConfig):
         default="dbgpt-fs-",
         metadata={
             "help": _(
-                "The prefix of the bucket name. If set, all logical buckets in InsightAgent "
+                "The prefix of the bucket name. If set, all logical buckets in "
+                "InsightAgent "
                 "will be prefixed with this value. Just work when fixed_bucket is None."
             )
         },

@@ -78,8 +78,8 @@ class BaseDatasourceParameters(BaseParameters, RegisterParameters):
     def _persisted_state_mapping(cls) -> Dict[str, str]:
         """Return the mapping of persisted state.
 
-        Tell how to save the persisted state to the database(InsightAgent datasource serve
-        module).
+        Tell how to save the persisted state to the database(InsightAgent
+        datasource serve module).
         """
         return {
             "host": "db_host",

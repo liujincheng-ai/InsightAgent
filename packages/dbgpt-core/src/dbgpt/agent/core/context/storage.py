@@ -1,7 +1,7 @@
 """Tool result persistence — saves oversized outputs to filesystem with preview + path.
 
-Ported from hermes-agent's ``tools/tool_result_storage.py`` and adapted for InsightAgent's
-agent architecture.
+Ported from hermes-agent's ``tools/tool_result_storage.py`` and adapted for
+InsightAgent's agent architecture.
 
 Storage layout::
 

@@ -36,8 +36,8 @@ logger = logging.getLogger(__name__)
 thread_local = threading.local()
 _IS_BENCHMARK = os.getenv("DB_GPT_MODEL_BENCHMARK", "False").lower() == "true"
 
-# If some model is not in the blacklist, but it still affects the loading of InsightAgent,
-# you can add it to the blacklist.
+# If some model is not in the blacklist, but it still affects the loading of
+# InsightAgent, you can add it to the blacklist.
 __BLACK_LIST_MODEL_PROMPT = []
 
 

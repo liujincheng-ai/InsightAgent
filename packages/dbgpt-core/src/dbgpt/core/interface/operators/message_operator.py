@@ -113,8 +113,8 @@ class PreChatHistoryLoadOperator(
 ):
     """The operator to prepare the storage conversation.
 
-    In InsightAgent, conversation record and the messages in the conversation are stored in
-    the storage,
+    In InsightAgent, conversation record and the messages in the conversation
+    are stored in the storage,
     and they can store in different storage(for high performance).
 
     This operator just load the conversation and messages from storage.

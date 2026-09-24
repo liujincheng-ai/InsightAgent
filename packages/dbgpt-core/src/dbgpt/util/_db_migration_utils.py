@@ -228,8 +228,9 @@ rm -rf pilot/meta_data/alembic/versions/*
 rm -rf pilot/meta_data/alembic/dbgpt.db
 ```
 
-If your database is a shared database, and you run InsightAgent in multiple instances, you \
-should make sure that all migration scripts are same in all instances, in this case,
+If your database is a shared database, and you run InsightAgent in multiple
+instances, you should make sure that all migration scripts are same in all
+instances, in this case,
 wo strongly recommend you close migration feature by setting \
 `--disable_alembic_upgrade`.
 and use `dbgpt db migration` command to manage migration scripts.
@@ -239,9 +240,9 @@ and use `dbgpt db migration` command to manage migration scripts.
 def _check_database_migration_status(alembic_cfg: AlembicConfig, engine: Engine):
     """Check if the database is at the latest migration revision.
 
-    If your database is a shared database, and you run InsightAgent in multiple instances,
-    you should make sure that all migration scripts are same in all instances, in this
-    case,
+    If your database is a shared database, and you run InsightAgent in multiple
+    instances, you should make sure that all migration scripts are same in all
+    instances, in this case,
     wo strongly recommend you close migration feature by setting
     `disable_alembic_upgrade` to True.
     and use `dbgpt db migration` command to manage migration scripts.

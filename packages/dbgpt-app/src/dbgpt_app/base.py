@@ -73,7 +73,8 @@ def _initialize_db_storage(param: ServiceConfig, system_app: SystemApp):
         db_name = db_config.database
     else:
         raise ValueError(
-            "InsightAgent only support SQLite, MySQL and OceanBase database as metadata "
+            "InsightAgent only support SQLite, MySQL and OceanBase database "
+            "as metadata "
             "storage database"
         )
 
@@ -152,12 +153,13 @@ def _migration_db_storage(
         else:
             warn_msg = """For safety considerations, MySQL Database not support DDL \
             init and upgrade. "
-                "1.If you are use InsightAgent firstly, please manually execute the following\
-                 command to initialize, 
+                "1.If you are use InsightAgent firstly, please manually execute the "
+                "following command to initialize, "
                 `mysql -h127.0.0.1 -uroot -p{your_password} \
                 < ./assets/schema/dbgpt.sql` "
-                "2.If there are any changes to the table columns in the InsightAgent database,
-                 it is necessary to compare with the InsightAgent/assets/schema/dbgpt.sql file
+                "2.If there are any changes to the table columns in the InsightAgent "
+                "database, it is necessary to compare with the "
+                "InsightAgent/assets/schema/dbgpt.sql "
                  and manually make the columns changes in the MySQL database instance.
                  """
             logger.warning(warn_msg)

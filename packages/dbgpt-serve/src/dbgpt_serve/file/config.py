@@ -25,8 +25,8 @@ SERVER_APP_TABLE_NAME = "dbgpt_serve_file"
     category=ResourceCategory.COMMON,
     tags={"order": TAGS_ORDER_HIGH},
     description=_(
-        "This configuration is for the file serve module. In InsightAgent, you can store your"
-        "files in the file server."
+        "This configuration is for the file serve module. In InsightAgent, you "
+        "can store your files in the file server."
     ),
     show_in_ui=False,
     skip_fields=["backends"],

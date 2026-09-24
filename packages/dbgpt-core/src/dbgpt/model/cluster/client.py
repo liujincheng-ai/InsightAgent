@@ -150,9 +150,9 @@ class RemoteLLMClient(DefaultLLMClient):
         auto_convert_message (bool, optional): auto convert the message to
             ModelRequest. Defaults to False.
 
-    If you start InsightAgent model cluster, the controller address is the address of the
-    Model Controller(`dbgpt start controller`, the default port of model controller
-    is 8000).
+    If you start InsightAgent model cluster, the controller address is the
+    address of the Model Controller(`dbgpt start controller`, the default port
+    of model controller is 8000).
     Otherwise, if you already have a running InsightAgent server(start it by
     `dbgpt start webserver --port ${remote_port}`), you can use the address of the
     `http://${remote_ip}:${remote_port}`.

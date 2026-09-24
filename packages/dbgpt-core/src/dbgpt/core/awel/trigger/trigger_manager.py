@@ -1,6 +1,7 @@
 """Trigger manager for AWEL.
 
-After InsightAgent started, the trigger manager will be initialized and register all triggers
+After InsightAgent started, the trigger manager will be initialized and
+register all triggers.
 """
 
 import logging

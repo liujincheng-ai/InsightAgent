@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 class Serve(BaseServe):
     """Serve component for InsightAgent
 
-    Message InsightAgent conversation history and provide API for other components to access.
+    Message InsightAgent conversation history and provide API for other
+    components to access.
 
     TODO: Move some Http API in app to this component.
     """

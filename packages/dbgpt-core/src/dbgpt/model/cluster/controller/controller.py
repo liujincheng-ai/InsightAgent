@@ -289,7 +289,8 @@ def _create_registry(controller_params: ModelControllerParameters) -> ModelRegis
             db_name = db_config.database
         else:
             raise ValueError(
-                "InsightAgent only support SQLite, MySQL and OceanBase database as metadata "
+                "InsightAgent only support SQLite, MySQL and OceanBase database "
+                "as metadata "
                 "storage database"
             )
         connector = db_config.create_connector()
